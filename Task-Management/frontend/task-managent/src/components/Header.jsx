@@ -14,7 +14,7 @@ const Header = () => {
             height="40"
             className="d-inline-block align-text-top me-2 rounded-circle"
           />
-          Tasky
+          Tasker
         </a>
         <div className="d-flex align-items-center">
           <button className="btn bg-transparent border-0 text-light p-0 me-2">
