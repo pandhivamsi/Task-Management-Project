@@ -13,7 +13,7 @@ const ProjectForm = ({ onProjectSaved, onClose }) => {
     axios
       .post("http://localhost:8080/projects", formData)
       .then((res) => {
-        onProjectSaved(res.data); // Pass new project back to parent
+        onProjectSaved(res.data); 
         setFormData({ projectName: "" });
         onClose();
       })

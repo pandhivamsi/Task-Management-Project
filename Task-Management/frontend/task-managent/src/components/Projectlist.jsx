@@ -38,7 +38,6 @@ const Projectlist = () => {
 
   return (
     <>
-      {/* DROPDOWN INSIDE HEADER */}
       <div className="dropdown">
         <button
           className="btn btn-light dropdown-toggle text-uppercase ms-1 py-2 px-1 fw-bold fs-6"
@@ -74,7 +73,7 @@ const Projectlist = () => {
         </ul>
       </div>
 
-      {/* FORM BELOW HEADER */}
+      
       {/* {showForm && 
         // <ProjectForm
         //   onProjectSaved={handleProjectSaved}
