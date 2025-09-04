@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ProjectForm from "./Projectform";
-import { useNavigate } from "react-router-dom";
 
 const Projectlist = () => {
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState("");
   const [showForm, setShowForm] = useState(false);
-  const navigate = useNavigate();
 
-  const openProjectForm=()=>{
-    setShowForm(true)
-    navigate("/projectform")
-  }
 
   useEffect(() => {
     axios
@@ -33,7 +27,6 @@ const Projectlist = () => {
 
   const handleProjectSaved = (newProject) => {
     setProjects((prev) => [...prev, newProject]);
-    setSelectedProject(newProject.projectName);
   };
 
   return (
@@ -52,7 +45,7 @@ const Projectlist = () => {
           {projects.map((p) => (
             <li key={p.id}>
               <button
-                className="dropdown-item"
+                className="dropdown-item text-uppercase"
                 onClick={() => handleSelectProject(p.projectName)}
               >
                 {p.projectName}
@@ -65,23 +58,19 @@ const Projectlist = () => {
           <li>
             <button
               className="dropdown-item text-primary"
-              onClick={() => openProjectForm()}
+              onClick={() => setShowForm(true)}
             >
               + Add Project
             </button>
           </li>
         </ul>
       </div>
-
-      
-      {/* {showForm && 
-        // <ProjectForm
-        //   onProjectSaved={handleProjectSaved}
-        //   onClose={() => setShowForm(false)}
-        // />
-        // navigate("/projectform")
-        
-      } */}
+      {showForm && 
+        <ProjectForm
+          onProjectSaved={handleProjectSaved}
+          onClose={() => setShowForm(false)}
+        />
+      }
     </>
   );
 };

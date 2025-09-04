@@ -22,7 +22,7 @@ const Header = () => {
         {/* Left: Logo + Project List */}
         <div className="d-flex align-items-center gap-3">
           <a
-            className="navbar-brand text-white fw-bold d-flex align-items-center"
+            className="navbar-brand text-white fw-bold d-flex align-items-center ms-0"
             href="#"
           >
             <img
@@ -30,7 +30,7 @@ const Header = () => {
               alt="Logo"
               width="40"
               height="40"
-              className="rounded-circle me-2"
+              className="rounded-circle"
             />
             Tasker
           </a>
@@ -42,7 +42,7 @@ const Header = () => {
           {/* Support Button */}
           <button
             onClick={openCalendly}
-            className="btn bg-transparent border-0 text-light p-2 me-2"
+            className="btn bg-transparent border-0 text-light p-2 me-1"
           >
             <BsQuestionCircle size={22} />
           </button>
@@ -71,7 +71,7 @@ const Header = () => {
           </div>
 
           {/* Menu + Profile */}
-          <button className="btn bg-transparent border-0 text-light p-0 ms-2 me-2">
+          <button className="btn bg-transparent border-0 text-light p-0 ms-2">
             <BsThreeDotsVertical size={22} />
           </button>
           <Profile />
