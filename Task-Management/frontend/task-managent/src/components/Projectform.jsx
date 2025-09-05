@@ -1,50 +1,51 @@
+// ProjectForm.jsx
 import React, { useState } from "react";
-import axios from "axios";
-import Header from "./Header";
 
-const ProjectForm = ({ onProjectSaved, onClose }) => {
-  const [formData, setFormData] = useState({ projectName: "" });
-
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+const ProjectForm = ({ onClose, onProjectSaved }) => {
+  const [projectName, setProjectName] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8080/projects", formData)
-      .then((res) => {
-        onProjectSaved(res.data); 
-        setFormData({ projectName: "" });
-        onClose();
-      })
-      .catch((err) => console.error("Error saving project:", err));
+    if (projectName.trim()) {
+      onProjectSaved({ projectName: projectName });
+      setProjectName("");
+      onClose(); 
+    }
   };
 
   return (
-    <div>
-         <Header/>
-    
-    <div className="container mt-3">
-      <div className="mx-auto" style={{ maxWidth: "400px" }}>
-        <form
-          className="border p-3 bg-light rounded shadow-sm"
-          onSubmit={handleSubmit}
-        >
-          <input
-            className="form-control mb-2"
-            type="text"
-            name="projectName"
-            placeholder="Project Name"
-            value={formData.projectName}
-            onChange={handleChange}
-            required
-          />
-          <button className="btn btn-success w-100" type="submit">
-            Save Project
-          </button>
-        </form>
+    <div
+      className="modal show d-block"
+      tabIndex="-1"
+      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Create Project</h5>
+            <button
+              type="button"
+              className="btn-close"
+              onClick={onClose}
+            ></button>
+          </div>
+
+          <div className="modal-body">
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                className="form-control mb-3"
+                placeholder="Project Name"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+              />
+              <button type="submit" className="btn btn-primary" style={{ marginLeft: "21rem" }}>
+                Save Project
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
     </div>
   );
 };
