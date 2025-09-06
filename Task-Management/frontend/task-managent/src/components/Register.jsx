@@ -1,92 +1,143 @@
-import React, { useState } from 'react'
-import './Register.css'
-import Header from './Header'
-// import Footer from './Footer'
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from './Header';
 
 const Register = () => {
-
-    const navigate = useNavigate()
-    const [uname, setUName] = useState("")
-    const [role, setRole] = useState("")
-    const [password, setPassword] = useState("")
-    const [cpassword, setCPassword] = useState("")
+    const [uname, setUName] = useState("");
+    const [role, setRole] = useState("");
+    const [password, setPassword] = useState("");
+    const [cpassword, setCPassword] = useState("");
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
 
     const register = (e) => {
-        e.preventDefault()
-        if (role && password && cpassword && uname) {
-            if (password !== cpassword) {
-                setError("Password and Confirm password should be same");
-                return;
-            }
-            if (role !== "ROLE_USER" && role !== "ROLE_ADMIN") {
-                setError("Role is not proper");
-                return;
-            }
-            fetch('http://localhost:9000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: uname,
-                    role: role,
-                    password: password
-                })
-            })
-                .then(res => {
-                    navigate("/")
-                    return res.text();
-                })
-                .catch(err => {
-                    setError(err.message);
-                });
-        }
-        else {
-            setError("Details not proper")
-        }
-    }
+        e.preventDefault();
+        setError("");
+        setSuccess("");
 
-    const signIn = (e) => {
-        e.preventDefault()
-        navigate("/")
-    }
+        if (!uname || !role || !password || !cpassword) {
+            setError("Details not proper");
+            return;
+        }
+
+        if (password !== cpassword) {
+            setError("Password and Confirm password should be same");
+            return;
+        }
+
+        if (role !== "ROLE_USER" && role !== "ROLE_ADMIN") {
+            setError("Role is not proper");
+            return;
+        }
+
+        fetch('http://localhost:9000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: uname,
+                role: role,
+                password: password
+            })
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Failed to register");
+            return res.text();
+        })
+        .then(() => {
+            setSuccess("Registration successful ✅");
+        })
+        .catch(err => {
+            setError(err.message);
+        });
+    };
 
     return (
         <div>
-            <Header />
-            <div className="card">
-                <div className="card-header">
-                    <div className="text-header">Register</div>
+        <Header/>
+        <div className="d-flex justify-content-center mt-5">
+            <div className="card shadow" style={{ width: '350px' }}>
+                <div 
+                    className="card-header text-white text-center"
+                    style={{ backgroundColor: "#002B5B" }}  // 🔵 Custom dark blue color
+                >
+                    <h5 className="mb-0">Register</h5>
                 </div>
-                {error && <p className="error-message">{error}</p>}
+
+                {error && <p className="text-danger text-center mt-2">{error}</p>}
+                {success && <p className="text-success text-center mt-2">{success}</p>}
+
                 <div className="card-body">
-                    <form action="#">
-                        <div className="form-group">
-                            <label htmlFor="username">Username:</label>
-                            <input required className="form-control" name="username" id="username" type="text" onChange={(e) => { setUName(e.target.value) }} placeholder="Enter username" />
+                    <form onSubmit={register}>
+                        <div className="mb-3">
+                            <label htmlFor="username" className="form-label">Username:</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="username" 
+                                placeholder="Enter username" 
+                                value={uname}
+                                onChange={(e) => setUName(e.target.value)} 
+                                required 
+                            />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Role:</label>
-                            <input required className="form-control" name="role" id="role" type="text" onChange={(e) => { setRole(e.target.value) }} placeholder="Enter role : ROLE_USER" />
+                        <div className="mb-3">
+                            <label htmlFor="role" className="form-label">Role:</label>
+                            <input 
+                                type="text" 
+                                className="form-control" 
+                                id="role" 
+                                placeholder="Enter role : ROLE_USER" 
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)} 
+                                required 
+                            />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password:</label>
-                            <input required className="form-control" name="password" id="password" type="password" onChange={(e) => { setPassword(e.target.value) }} placeholder="Enter password" />
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password:</label>
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                id="password" 
+                                placeholder="Enter password" 
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required 
+                            />
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="confirm-password">Confirm Password:</label>
-                            <input required className="form-control" name="confirm-password" id="confirm-password" type="password" onChange={(e) => { setCPassword(e.target.value) }} placeholder="Enter password" />
+                        <div className="mb-3">
+                            <label htmlFor="confirm-password" className="form-label">Confirm Password:</label>
+                            <input 
+                                type="password" 
+                                className="form-control" 
+                                id="confirm-password" 
+                                placeholder="Enter password" 
+                                value={cpassword}
+                                onChange={(e) => setCPassword(e.target.value)} 
+                                required 
+                            />
                         </div>
-                        <button className='btn' onClick={register}>Register</button><br />
-                        <a href="" onClick={signIn}>Have account? Sign in</a>
+                        <div className="text-center">
+                            <button 
+                                type="submit" 
+                                className="btn w-50 text-white" 
+                                style={{ backgroundColor: "#002B5B" }} // 🔵 same dark blue button
+                            >
+                                Register
+                            </button>
+                        </div>
+                        <div className="text-center mt-2">
+                            <a href="/" style={{ color: "#002B5B" }}>
+                                Have account? Sign in
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
-            {/* <Footer /> */}
         </div>
-    )
-}
+        </div>
+    );
+};
 
-export default Register
+export default Register;
