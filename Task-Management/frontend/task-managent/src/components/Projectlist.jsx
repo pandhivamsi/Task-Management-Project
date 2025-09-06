@@ -33,7 +33,7 @@ const Projectlist = () => {
     <>
       <div className="dropdown">
         <button
-          className="btn btn-light dropdown-toggle text-uppercase ms-1 py-2 px-1 fw-bold fs-6"
+          className="btn btn-light dropdown-toggle text-uppercase ms-1 py-2 px-1 fw-bold fs-6 border-0"
           style={{ backgroundColor: "transparent", color: "white" }}
           type="button"
           data-bs-toggle="dropdown"
