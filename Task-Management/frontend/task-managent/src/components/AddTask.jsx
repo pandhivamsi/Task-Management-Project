@@ -353,12 +353,12 @@ const AddTask = () => {
           </div>
         </div>
       )}
-          <div className = "d-flex flex-wrap gap-3">
+          {/* <div className = "d-flex flex-wrap gap-3"> */}
+      {/* <Card user={users}/>
       <Card user={users}/>
       <Card user={users}/>
-      <Card user={users}/>
-      <Card user={users}/>
-      </div>
+      <Card user={users}/> */}
+      {/* </div> */}
     </div>
   );
 };

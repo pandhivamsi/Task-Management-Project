@@ -2,6 +2,7 @@ import Header from './Header'
 import AddTask from './AddTask'
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa";
+import Filter from './Filter';
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
@@ -95,110 +96,13 @@ const Dashboard = () => {
             </li>
           </ul>
         </div>
-
-        {/* Filter Button */}
-        <button
-          className="btn border rounded-pill shadow-sm text-dark bg-transparent fs-7 fw-bold me-2 mt-0 py-1"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#mainFilterOffcanvas"
-          aria-controls="mainFilterOffcanvas"
-        >
-          <FaFilter className="me-2" />
-          Filters
-        </button>
-      </div>
-
-      {/* Main Filter Offcanvas */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex="-1"
-        id="mainFilterOffcanvas"
-        aria-labelledby="mainFilterOffcanvasLabel"
-      >
-        <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="mainFilterOffcanvasLabel">
-            Filters
-          </h5>
-          <button
-            type="button"
-            className="btn-close text-reset"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="offcanvas-body p-0">
-          <ul className="list-group list-group-flush">
-            {categories.map((cat) => (
-              <li
-                key={cat.name}
-                className="list-group-item d-flex justify-content-between align-items-center"
-                onClick={() => openSubFilter(cat)}
-                style={{ cursor: "pointer" }}
-              >
-                {cat.name} <span>&gt;</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Sub Filter Offcanvas */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex="-1"
-        id="subFilterOffcanvas"
-        aria-labelledby="subFilterOffcanvasLabel"
-      >
-        <div className="offcanvas-header">
-          <button
-            className="btn btn-link text-decoration-none ms-0"
-            onClick={openMainFilter}
-          >
-            ◀ Back
-          </button>
-          <h5 className="offcanvas-title ms-auto me-0" id="subFilterOffcanvasLabel">
-            {activeCategory ? activeCategory.name : "Options"}
-          </h5>
-          <button
-            type="button"
-            className="btn-close text-reset "
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="offcanvas-body">
-          {activeCategory &&
-            activeCategory.options.map((option) => (
-              <div className="form-check" key={option}>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={`${activeCategory.name}-${option}`}
-                  checked={filters[activeCategory.name].includes(option)}
-                  onChange={() =>
-                    handleCheckboxChange(activeCategory.name, option)
-                  }
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`${activeCategory.name}-${option}`}
-                >
-                  {option}
-                </label>
-              </div>
-            ))}
-        </div>
-      </div>
-
-      {/* Main Content Area */}
-      <div
-        className="bg-light m-3 p-3 border"
-        style={{ minHeight: "90vh" }}
-      >
-        <div className="bg-primary w-90 h-30 p-2 text-white mx-0 mt-0 ">
+        <AddTask/>
+        <Filter/>  
+    </div>
+    <div className="bg-light m-3 p-3 border" style={{ minHeight: "90vh" }}>
+        <div className="bg-primary p-2 text-white">
           <input
-            className="p-0 mx-5 bg-transparent border-0 text-white"
+            className="p-0 ms-3 bg-transparent border-0 text-white"
             type="text"
             value={selectedOption}
             readOnly
