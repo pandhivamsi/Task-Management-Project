@@ -1,15 +1,24 @@
 // ProjectForm.jsx
+import axios from "axios";
 import React, { useState } from "react";
 
 const ProjectForm = ({ onClose, onProjectSaved }) => {
   const [projectName, setProjectName] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (projectName.trim()) {
-      onProjectSaved({ projectName: projectName });
-      setProjectName("");
-      onClose(); 
+      try {
+        const res = await axios.post("http://localhost:8080/projects", {
+          projectName: projectName,
+        });
+        onProjectSaved(res.data);
+
+        setProjectName("");
+        onClose();
+      } catch (err) {
+        console.error("Error saving project:", err);
+      }
     }
   };
 
