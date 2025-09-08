@@ -7,14 +7,19 @@ const Dashboard = () => {
   const [filters, setFilters] = useState({
     Department: [],
     Role: [],
-    Priority: []
+    Priority: [],
+  });
+  const [draftFilters, setDraftFilters] = useState({
+    Department: [],
+    Role: [],
+    Priority: [],
   });
   const [activeCategory, setActiveCategory] = useState(null);
 
   const categories = [
     { name: "Department", options: ["HR", "Engineering", "Sales"] },
     { name: "Role", options: ["Manager", "Developer", "Intern"] },
-    { name: "Priority", options: ["High", "Medium", "Low"] }
+    { name: "Priority", options: ["High", "Medium", "Low"] },
   ];
 
   const handleSelect = (option) => {
@@ -22,7 +27,7 @@ const Dashboard = () => {
   };
 
   const handleCheckboxChange = (category, value) => {
-    setFilters((prev) => {
+    setDraftFilters((prev) => {
       const updated = { ...prev };
       if (updated[category].includes(value)) {
         updated[category] = updated[category].filter((v) => v !== value);
@@ -33,84 +38,111 @@ const Dashboard = () => {
     });
   };
 
-  const openMainFilter = () => {
-    const mainCanvas = document.getElementById("mainFilterOffcanvas");
-    const subCanvas = document.getElementById("subFilterOffcanvas");
-    if (subCanvas) {
-      const bsSub = window.bootstrap.Offcanvas.getInstance(subCanvas);
-      if (bsSub) bsSub.hide();
-    }
-    if (mainCanvas) {
-      const bsMain = window.bootstrap.Offcanvas.getOrCreateInstance(mainCanvas);
-      bsMain.show();
-    }
+  const clearFilters = () => {
+    setDraftFilters({
+      Department: [],
+      Role: [],
+      Priority: [],
+    });
   };
 
-  const openSubFilter = (category) => {
-    setActiveCategory(category);
-    const mainCanvas = document.getElementById("mainFilterOffcanvas");
-    const subCanvas = document.getElementById("subFilterOffcanvas");
-    if (mainCanvas) {
-      const bsMain = window.bootstrap.Offcanvas.getInstance(mainCanvas);
-      if (bsMain) bsMain.hide();
-    }
-    if (subCanvas) {
-      const bsSub = window.bootstrap.Offcanvas.getOrCreateInstance(subCanvas);
-      bsSub.show();
-    }
+  const openOffcanvas = () => {
+    setDraftFilters({ ...filters }); // load current filters into draft
   };
+
+  const saveFilters = () => {
+    setFilters({ ...draftFilters }); // apply draft filters
+  };
+
+  const appliedFiltersList = Object.entries(filters)
+    .flatMap(([category, values]) => values.map((val) => `${category}: ${val}`));
 
   return (
     <div>
       <Header />
 
       <div className="d-flex justify-content-between align-items-center mt-2 px-2">
-        {/* Dropdown for selecting cards */}
-        <div className="dropdown">
-          <button
-            className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold py-1"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            {selectedOption}
-          </button>
-          <ul className="dropdown-menu">
-            <li>
+        <div className="d-flex align-items-center">
+
+          <div className="dropdown">
+            <button
+              className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold py-1"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {selectedOption}
+            </button>
+            <ul className="dropdown-menu">
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => handleSelect("All cards")}
+                >
+                  All cards
+                </button>
+              </li>
+              <li>
+                <button
+                  className="dropdown-item"
+                  onClick={() => handleSelect("My cards")}
+                >
+                  My cards
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {appliedFiltersList.length > 0 && (
+            <div
+              className="d-flex align-items-center border rounded-pill px-2 bg-light ms-2"
+              style={{
+                maxWidth: "420px",
+                overflowX: "auto",
+                whiteSpace: "nowrap",
+                scrollbarWidth: "none",
+              }}
+              onWheel={(e) => {
+                e.currentTarget.scrollLeft += e.deltaY;
+              }}
+            >
+              <style>
+                {`
+                  div::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}
+              </style>
+              <span className="small text-muted me-2 flex-grow-1">
+                Filter: {appliedFiltersList.join(", ")}
+              </span>
               <button
-                className="dropdown-item"
-                onClick={() => handleSelect("All cards")}
-              >
-                All cards
-              </button>
-            </li>
-            <li>
-              <button
-                className="dropdown-item"
-                onClick={() => handleSelect("My cards")}
-              >
-                My cards
-              </button>
-            </li>
-          </ul>
+                className="btn-close btn-sm flex-shrink-0"
+                aria-label="Clear filters"
+                onClick={() =>
+                  setFilters({ Department: [], Role: [], Priority: [] })
+                }
+              ></button>
+            </div>
+          )}
         </div>
 
-        {/* Filter Button */}
         <button
           className="btn border rounded-pill shadow-sm text-dark bg-transparent fs-7 fw-bold me-2 mt-0 py-1"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#mainFilterOffcanvas"
           aria-controls="mainFilterOffcanvas"
+          onClick={openOffcanvas}
         >
           <FaFilter className="me-2" />
           Filters
         </button>
       </div>
 
-      {/* Main Filter Offcanvas */}
+      {/* Offcanvas */}
       <div
-        className="offcanvas offcanvas-end"
+        className="offcanvas offcanvas-end w-25 mt-5"
         tabIndex="-1"
         id="mainFilterOffcanvas"
         aria-labelledby="mainFilterOffcanvasLabel"
@@ -121,88 +153,96 @@ const Dashboard = () => {
           </h5>
           <button
             type="button"
+            className="btn btn-link text-danger"
+            onClick={clearFilters}
+          >
+            Clear Filters
+          </button>
+          <button
+            type="button"
             className="btn-close text-reset"
             data-bs-dismiss="offcanvas"
             aria-label="Close"
           ></button>
         </div>
-        <div className="offcanvas-body p-0">
-          <ul className="list-group list-group-flush">
-            {categories.map((cat) => (
-              <li
-                key={cat.name}
-                className="list-group-item d-flex justify-content-between align-items-center"
-                onClick={() => openSubFilter(cat)}
-                style={{ cursor: "pointer" }}
-              >
-                {cat.name} <span>&gt;</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
 
-      {/* Sub Filter Offcanvas */}
-      <div
-        className="offcanvas offcanvas-end"
-        tabIndex="-1"
-        id="subFilterOffcanvas"
-        aria-labelledby="subFilterOffcanvasLabel"
-      >
-        <div className="offcanvas-header">
-          <button
-            className="btn btn-link text-decoration-none ms-0"
-            onClick={openMainFilter}
-          >
-            ◀ Back
-          </button>
-          <h5 className="offcanvas-title ms-auto me-0" id="subFilterOffcanvasLabel">
-            {activeCategory ? activeCategory.name : "Options"}
-          </h5>
-          <button
-            type="button"
-            className="btn-close text-reset "
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div className="offcanvas-body">
-          {activeCategory &&
-            activeCategory.options.map((option) => (
-              <div className="form-check" key={option}>
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id={`${activeCategory.name}-${option}`}
-                  checked={filters[activeCategory.name].includes(option)}
-                  onChange={() =>
-                    handleCheckboxChange(activeCategory.name, option)
-                  }
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`${activeCategory.name}-${option}`}
+        <div className="offcanvas-body d-flex flex-column p-0">
+          <div className="d-flex flex-grow-1">
+            <div
+              className="list-group flex-shrink-0 p-3"
+              style={{ width: "180px" }}
+            >
+              {categories.map((cat) => (
+                <button
+                  key={cat.name}
+                  className={`list-group-item list-group-item-action ${
+                    activeCategory === cat.name ? "active" : ""
+                  }`}
+                  onClick={() => setActiveCategory(cat.name)}
                 >
-                  {option}
-                </label>
-              </div>
-            ))}
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex-grow-1 ps-1">
+              {activeCategory ? (
+                <>
+                  <h6>{activeCategory}</h6>
+                  {categories
+                    .find((c) => c.name === activeCategory)
+                    ?.options.map((option) => (
+                      <div className="form-check" key={option}>
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          id={`${activeCategory}-${option}`}
+                          checked={draftFilters[activeCategory]?.includes(option)}
+                          onChange={() =>
+                            handleCheckboxChange(activeCategory, option)
+                          }
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`${activeCategory}-${option}`}
+                        >
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                </>
+              ) : (
+                <p className="text-muted">Select a category</p>
+              )}
+            </div>
+          </div>
+
+          <div className="p-3 border-top mt-auto d-flex justify-content-end">
+            <button
+              className="btn btn-secondary me-2"
+              data-bs-dismiss="offcanvas"  // closes offcanvas automatically
+            >
+              Cancel
+            </button>
+            <button
+              className="btn btn-primary"
+              data-bs-dismiss="offcanvas"  // closes offcanvas automatically
+              onClick={saveFilters}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div
-        className="bg-light m-3 p-3 border"
-        style={{ minHeight: "90vh" }}
-      >
-        <div className="bg-primary w-90 h-30 p-2 text-white mx-0 mt-0 ">
-          <input
-            className="p-0 mx-5 bg-transparent border-0 text-white"
-            type="text"
-            value={selectedOption}
-            readOnly
-          />
-        </div>
+      {/* Example extra UI */}
+      <div className="bg-primary w-80 h-25 p-2 text-white m-1 mx-4">
+        <input
+          className="p-1 mx-5 bg-transparent border-0 text-white"
+          type="text"
+          value={selectedOption}
+          readOnly
+        />
       </div>
     </div>
   );
