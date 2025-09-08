@@ -16,7 +16,7 @@ const Header = () => {
     navigate("/support");
   };
   return (
-    <nav className="navbar navbar-expand-lg px-4" style={{ backgroundColor: "#003366" }}>
+    <nav className="navbar px-4 sticky-top " style={{ backgroundColor: "#003366" }}>
       <div className="container-fluid d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-3">
           <a className="navbar-brand text-white fw-bold d-flex align-items-center ms-0" href="#">
