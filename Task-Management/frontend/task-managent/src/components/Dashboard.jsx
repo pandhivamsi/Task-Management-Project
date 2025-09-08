@@ -47,11 +47,11 @@ const Dashboard = () => {
   };
 
   const openOffcanvas = () => {
-    setDraftFilters({ ...filters }); // load current filters into draft
+    setDraftFilters({ ...filters }); 
   };
 
   const saveFilters = () => {
-    setFilters({ ...draftFilters }); // apply draft filters
+    setFilters({ ...draftFilters });  
   };
 
   const appliedFiltersList = Object.entries(filters)
@@ -140,7 +140,7 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* Offcanvas */}
+   
       <div
         className="offcanvas offcanvas-end w-25 mt-5"
         tabIndex="-1"
@@ -220,13 +220,13 @@ const Dashboard = () => {
           <div className="p-3 border-top mt-auto d-flex justify-content-end">
             <button
               className="btn btn-secondary me-2"
-              data-bs-dismiss="offcanvas"  // closes offcanvas automatically
+              data-bs-dismiss="offcanvas"  
             >
               Cancel
             </button>
             <button
               className="btn btn-primary"
-              data-bs-dismiss="offcanvas"  // closes offcanvas automatically
+              data-bs-dismiss="offcanvas" 
               onClick={saveFilters}
             >
               Save
@@ -235,7 +235,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Example extra UI */}
+     
       <div className="bg-primary w-80 h-25 p-2 text-white m-1 mx-4">
         <input
           className="p-1 mx-5 bg-transparent border-0 text-white"
