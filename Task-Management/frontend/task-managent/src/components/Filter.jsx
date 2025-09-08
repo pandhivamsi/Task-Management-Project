@@ -47,7 +47,7 @@ const Filter = () => {
       {/* Filter Button */}
       <div>
         <button
-          className="btn border-0 text-dark bg-transparent fs-7 fw-bold me-2 mt-0 py-1"
+          className="btn border-0 text-dark bg-transparent fs-5 fw-bold me-2 mt-3 py-1 d-flex align-items-center"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#mainFilterOffcanvas"
