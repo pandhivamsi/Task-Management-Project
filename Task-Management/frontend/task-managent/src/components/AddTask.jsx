@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import { IoIosAddCircleOutline  } from "react-icons/io";
-import Card from "./Card";
-
 
 const AddTask = () => {
   const navigate = useNavigate();
@@ -16,14 +14,11 @@ const AddTask = () => {
     priority: "",
     dueDate: "",
     estimate: "",
-    classOfService: "",
     size: "",
     rank: "",
     release: "",
+    status:"",
     sprint: "",
-    progress: "",
-    parent: "",
-    intField: "",
   });
 
   const [comments, setComments] = useState([]);
@@ -59,13 +54,11 @@ const AddTask = () => {
 
   return (
     <div className="container">
-      {/* Home Section */}
       <div className="d-flex justify-content-end mt-3">
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>
           <IoIosAddCircleOutline fontSize={17}/> Create Task
         </button>
       </div>
-      {/* Modal */}
       {showModal && (
         <div
           className="modal show d-block"
@@ -74,7 +67,6 @@ const AddTask = () => {
         >
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
-              {/* Modal Header */}
               <div className="modal-header bg-primary text-white">
                 <h5 className="modal-title">
                   EPIC11: Enhance the Card Modal window
@@ -85,8 +77,6 @@ const AddTask = () => {
                   onClick={() => setShowModal(false)}
                 ></button>
               </div>
-
-              {/* Tabs */}
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <button
@@ -109,17 +99,13 @@ const AddTask = () => {
                   </button>
                 </li>
               </ul>
-
-              {/* Modal Body */}
               <div
                 className="modal-body"
                 style={{ maxHeight: "500px", overflowY: "auto" }}
               >
-                {/* Card Details Tab */}
                 {activeTab === "details" && (
                   <form>
-                    {/* Title */}
-                    <div className="mb-3">
+                    <div className="">
                       <label className="form-label fw-bold">Title</label>
                       <input
                         type="text"
@@ -129,9 +115,7 @@ const AddTask = () => {
                         onChange={handleInputChange}
                       />
                     </div>
-
-                    {/* Description */}
-                    <div className="mb-3">
+                    <div className="mb-2">
                       <label className="form-label fw-bold">Description</label>
                       <textarea
                         className="form-control"
@@ -141,10 +125,8 @@ const AddTask = () => {
                         onChange={handleInputChange}
                       ></textarea>
                     </div>
-
-                    {/* Two Column Layout */}
                     <div className="row">
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Priority</label>
                         <select
                           className="form-select"
@@ -158,7 +140,20 @@ const AddTask = () => {
                           <option value="Low">Low</option>
                         </select>
                       </div>
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
+                        <label className="form-label">Status</label>
+                        <select
+                          className="form-select"
+                          name="status"
+                          value={formData.status}
+                          onChange={handleInputChange}
+                        >
+                          <option value="Ready">Ready</option>
+                          <option value="In-Progress">In-Progress</option>
+                          <option value="Done">Done</option>
+                        </select>
+                      </div>
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Due Date</label>
                         <input
                           type="date"
@@ -169,7 +164,7 @@ const AddTask = () => {
                         />
                       </div>
 
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Estimate (Days)</label>
                         <input
                           type="number"
@@ -179,21 +174,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Class of Service</label>
-                        <select
-                          className="form-select"
-                          name="classOfService"
-                          value={formData.classOfService}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Select</option>
-                          <option value="Standard Class">Standard Class</option>
-                          <option value="Expedite">Expedite</option>
-                        </select>
-                      </div>
-
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Size</label>
                         <input
                           type="text"
@@ -203,18 +184,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Rank</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="rank"
-                          value={formData.rank}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Release</label>
                         <input
                           type="text"
@@ -224,7 +194,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Sprint</label>
                         <input
                           type="text"
@@ -234,43 +204,9 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Manual % Progress</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="progress"
-                          value={formData.progress}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Parent</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="parent"
-                          value={formData.parent}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Int</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="intField"
-                          value={formData.intField}
-                          onChange={handleInputChange}
-                        />
-                      </div>
                     </div>
                   </form>
                 )}
-
-                {/* Comments Tab */}
                 {activeTab === "comments" && (
                   <div>
                     {/* Add Comment */}
@@ -353,12 +289,6 @@ const AddTask = () => {
           </div>
         </div>
       )}
-          {/* <div className = "d-flex flex-wrap gap-3"> */}
-      {/* <Card user={users}/>
-      <Card user={users}/>
-      <Card user={users}/>
-      <Card user={users}/> */}
-      {/* </div> */}
     </div>
   );
 };

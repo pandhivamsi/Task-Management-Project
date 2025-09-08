@@ -12,8 +12,6 @@ const Filter = () => {
     Status: [],
     Priority: [],
   });
-  const [selectedOption, setSelectedOption] = useState("");
-
   const openSubFilter = (cat) => {
     setActiveCategory(cat);
     const subOffcanvas = new window.bootstrap.Offcanvas(
@@ -44,7 +42,6 @@ const Filter = () => {
 
   return (
     <>
-      {/* Filter Button */}
       <div>
         <button
           className="btn border-0 text-dark bg-transparent fs-7 fw-bold me-2 mt-0 py-1"
@@ -57,8 +54,6 @@ const Filter = () => {
           Filters
         </button>
       </div>
-
-      {/* Main Filter Offcanvas */}
       <div
         className="offcanvas offcanvas-end"
         tabIndex="-1"
@@ -91,8 +86,6 @@ const Filter = () => {
           </ul>
         </div>
       </div>
-
-      {/* Sub Filter Offcanvas */}
       <div
         className="offcanvas offcanvas-end"
         tabIndex="-1"
