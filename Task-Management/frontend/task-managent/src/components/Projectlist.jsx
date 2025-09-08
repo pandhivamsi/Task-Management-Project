@@ -33,7 +33,7 @@ const Projectlist = () => {
     <>
       <div className="dropdown">
         <button
-          className="btn btn-light dropdown-toggle text-uppercase ms-1 py-2 px-1 fw-bold fs-6"
+          className="btn btn-light dropdown-toggle text-uppercase ms-1 py-2 px-1 fw-bold fs-6 border-0"
           style={{ backgroundColor: "transparent", color: "white" }}
           type="button"
           data-bs-toggle="dropdown"
@@ -42,16 +42,17 @@ const Projectlist = () => {
           {selectedProject || "Select Project"}
         </button>
         <ul className="dropdown-menu">
-          {projects.map((p) => (
-            <li key={p.id}>
-              <button
-                className="dropdown-item text-uppercase"
-                onClick={() => handleSelectProject(p.projectName)}
-              >
-                {p.projectName}
-              </button>
-            </li>
-          ))}
+          {projects.length > 1 && projects
+            .filter((p) => p.projectName !== selectedProject).map((p) => (
+              <li key={p.id}>
+                <button
+                  className="dropdown-item text-uppercase"
+                  onClick={() => handleSelectProject(p.projectName)}
+                >
+                  {p.projectName}
+                </button>
+              </li>
+            ))}
           <li>
             <hr className="dropdown-divider" />
           </li>
@@ -65,7 +66,7 @@ const Projectlist = () => {
           </li>
         </ul>
       </div>
-      {showForm && 
+      {showForm &&
         <ProjectForm
           onProjectSaved={handleProjectSaved}
           onClose={() => setShowForm(false)}
