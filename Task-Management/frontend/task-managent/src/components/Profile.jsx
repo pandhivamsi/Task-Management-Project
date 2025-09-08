@@ -1,7 +1,12 @@
-import React from "react";
-import { CgProfile } from "react-icons/cg"; 
+import React, { useState } from "react";
+import { CgProfile } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
+import ResetPassword from "./ResetPassword";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const [showReset, setShowReset] = useState(false);
+
   return (
     <div className="dropdown">
       <button
@@ -24,24 +29,26 @@ const Profile = () => {
           </div>
         </li>
         <li>
-          <a className="dropdown-item ms-0" href="#">
+          <button className="dropdown-item ms-0" onClick={() => navigate("/edit/1")}>
             Edit Details
-          </a>
+          </button>
         </li>
         <li>
-          <a className="dropdown-item ms-0" href="#">
+          <button className="dropdown-item ms-0" onClick={() => setShowReset(true)}>
             Reset Password
-          </a>
+          </button>
         </li>
         <li>
           <hr className="dropdown-divider border-secondary-subtle" />
         </li>
         <li>
-          <a className="dropdown-item text-danger ms-0" href="#">
+          <a className="dropdown-item text-danger ms-0" href="/">
             Log Out
           </a>
         </li>
       </ul>
+
+      {showReset && <ResetPassword userid={1} onClose={() => setShowReset(false)} />}
     </div>
   );
 };
