@@ -17,7 +17,7 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar px-4" style={{ backgroundColor: "#003366" }}>
+    <nav className="navbar px-4 sticky-top " style={{ backgroundColor: "#003366" }}>
       <div className="container-fluid d-flex align-items-center justify-content-between">
         {/* Left: Logo + Project List */}
         <div className="d-flex align-items-center gap-3">
