@@ -7,7 +7,7 @@ const AddTask = () => {
   const navigate = useNavigate();
   const [savedData, setSavedData] = useState(null);
   const [activeTab, setActiveTab] = useState("details");
-  const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom"}
+  const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom",}
   const [formData, setFormData] = useState({
     title: "",
     description: "",
