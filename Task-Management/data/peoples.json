@@ -5,6 +5,7 @@
       "firstName": "Leader",
       "lastName": "Vamsi",
       "loginId": "Vamsi@example.com",
+      "email": "Vamsi@example.com",
       "status": "Active",
       "primaryRole": "Team Lead",
       "id": "e190"
@@ -14,6 +15,7 @@
       "firstName": "Lenin",
       "lastName": "Kumar",
       "loginId": "Lenin@example.com",
+      "email": "Lenin@example.com",
       "status": "Active",
       "primaryRole": "Project Manager",
       "id": "10af"
@@ -23,6 +25,7 @@
       "firstName": "Yella",
       "lastName": "Naidu",
       "loginId": "Naidu@example.com",
+      "email": "Naidu@example.com",
       "status": "Active",
       "primaryRole": "Tester",
       "id": "bbd6"
@@ -32,9 +35,19 @@
       "firstName": "Naveen",
       "lastName": "Rathod",
       "loginId": "Naveen@example.com",
+      "email": "Naveen@example.com",
       "status": "Inactive",
       "primaryRole": "Support Engineer",
       "id": "7a9e"
+    },
+    {
+      "id": "8a0c",
+      "firstName": "Chandra",
+      "lastName": "Shekar",
+      "loginId": "105",
+      "email": "chandu@example.com",
+      "primaryRole": "Member",
+      "status": "Active"
     }
   ]
 }
