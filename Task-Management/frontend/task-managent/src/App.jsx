@@ -1,15 +1,16 @@
-import React from 'react'
-import Login from './components/Login'
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
 import Register from './components/Register';
-import './App.css'
 import Support from './components/Support';
 import Dashboard from './components/Dashboard';
 import ProjectForm from './components/Projectform';
+import  ThemeProvider  from './components/ThemeContext'; // ✅ import ThemeProvider
+import './App.css';
 
 const App = () => {
   return (
-    <div>
+    <ThemeProvider>  {/* ✅ Wrap everything inside ThemeProvider */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -19,8 +20,8 @@ const App = () => {
           <Route path="/projectform" element={<ProjectForm />} />
         </Routes>
       </BrowserRouter>
-    </div>
-  )
-}
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;

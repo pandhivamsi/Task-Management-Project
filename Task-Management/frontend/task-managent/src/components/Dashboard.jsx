@@ -1,8 +1,9 @@
-import Header from './Header'
-import AddTask from './AddTask'
-import React, { useState } from "react";
+import Header from './Header';
+import AddTask from './AddTask';
+import React, { useState, useContext } from "react";
 import { FaFilter } from "react-icons/fa";
 import Filter from './Filter';
+import { ThemeContext } from "./ThemeContext";   // import theme context
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
@@ -12,6 +13,8 @@ const Dashboard = () => {
     Priority: []
   });
   const [activeCategory, setActiveCategory] = useState(null);
+
+  const { theme } = useContext(ThemeContext); // use theme from context
 
   const categories = [
     { name: "Department", options: ["HR", "Engineering", "Sales"] },
@@ -63,9 +66,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-        <Header/>
-        {/* <AddTask/>   */}
+    <div style={{ backgroundColor: theme.dashboard, minHeight: "100vh" }}>
+      {/* Header */}
+      <Header />
+
       <div className="d-flex justify-content-between align-items-center mt-2 px-2">
         {/* Dropdown for selecting cards */}
         <div className="dropdown">
@@ -96,11 +100,19 @@ const Dashboard = () => {
             </li>
           </ul>
         </div>
-        <AddTask/>
-        <Filter/>  
-    </div>
-    <div className="bg-light m-3 p-3 border" style={{ minHeight: "90vh" }}>
-        <div className="bg-primary p-2 text-white">
+        <AddTask />
+        <Filter />
+      </div>
+
+      {/* Cards Section */}
+      <div
+        className="m-3 p-3 border"
+        style={{ minHeight: "90vh", backgroundColor: theme.card }}
+      >
+        <div
+          className="p-2 text-white"
+          style={{ backgroundColor: theme.header }}
+        >
           <input
             className="p-0 ms-3 bg-transparent border-0 text-white"
             type="text"

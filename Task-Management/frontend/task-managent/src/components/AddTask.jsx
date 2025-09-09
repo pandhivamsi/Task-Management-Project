@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
-import { IoIosAddCircleOutline  } from "react-icons/io";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import Card from "./Card";
-
+import { ThemeContext } from "./ThemeContext"; // ✅ import ThemeContext
 
 const AddTask = () => {
   const navigate = useNavigate();
+
+  // ✅ Safe access to theme (won't crash even if provider isn't mounted)
+  const themeCtx = useContext(ThemeContext);
+  const theme = themeCtx?.theme ?? {
+    header: "#0d6efd",   // Bootstrap primary (fallback)
+    card: "#0d6efd",
+    dashboard: "#f8f9fa",
+  };
+
   const [savedData, setSavedData] = useState(null);
   const [activeTab, setActiveTab] = useState("details");
-  const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom"}
+  const users = { name: "vamsi", email: "sdsfad.com", phone: 868899238, website: "io.vom" };
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -30,27 +40,20 @@ const AddTask = () => {
   const [commentInput, setCommentInput] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // handle input change
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // add comment
   const handleAddComment = () => {
     if (commentInput.trim() !== "") {
       setComments([
         ...comments,
-        {
-          text: commentInput,
-          user: "User",
-          time: new Date().toLocaleString(),
-        },
+        { text: commentInput, user: "User", time: new Date().toLocaleString() },
       ]);
       setCommentInput("");
     }
   };
 
-  // save data
   const handleSave = () => {
     setSavedData({ ...formData });
     setShowModal(false);
@@ -58,10 +61,14 @@ const AddTask = () => {
   };
 
   return (
-    <div className="container">
+     <div className="container">
+   
       {/* Home Section */}
-      <div className="d-flex justify-content-end mt-3">
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+      <div className="d-flex justify-content-end mt-3" >
+          
+        <button className="btn btn-primary" onClick={() => setShowModal(true)}
+           style={{ backgroundColor: theme.header }} 
+          >
           <IoIosAddCircleOutline fontSize={17}/> Create Task
         </button>
       </div>
@@ -75,7 +82,10 @@ const AddTask = () => {
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
               {/* Modal Header */}
-              <div className="modal-header bg-primary text-white">
+              <div
+                className="modal-header text-white"              // keep Bootstrap layout
+                style={{ backgroundColor: theme.header }}        // theme only
+              >
                 <h5 className="modal-title">
                   EPIC11: Enhance the Card Modal window
                 </h5>
@@ -90,9 +100,7 @@ const AddTask = () => {
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <button
-                    className={`nav-link ${
-                      activeTab === "details" ? "active" : ""
-                    }`}
+                    className={`nav-link ${activeTab === "details" ? "active" : ""}`}
                     onClick={() => setActiveTab("details")}
                   >
                     Card Details
@@ -100,9 +108,7 @@ const AddTask = () => {
                 </li>
                 <li className="nav-item">
                   <button
-                    className={`nav-link ${
-                      activeTab === "comments" ? "active" : ""
-                    }`}
+                    className={`nav-link ${activeTab === "comments" ? "active" : ""}`}
                     onClick={() => setActiveTab("comments")}
                   >
                     Comments
@@ -111,11 +117,7 @@ const AddTask = () => {
               </ul>
 
               {/* Modal Body */}
-              <div
-                className="modal-body"
-                style={{ maxHeight: "500px", overflowY: "auto" }}
-              >
-                {/* Card Details Tab */}
+              <div className="modal-body" style={{ maxHeight: "500px", overflowY: "auto" }}>
                 {activeTab === "details" && (
                   <form>
                     {/* Title */}
@@ -273,7 +275,6 @@ const AddTask = () => {
                 {/* Comments Tab */}
                 {activeTab === "comments" && (
                   <div>
-                    {/* Add Comment */}
                     <div className="mb-3">
                       <textarea
                         className="form-control"
@@ -306,13 +307,10 @@ const AddTask = () => {
                       </div>
                     </div>
 
-                    {/* Comment List */}
                     <h6 className="mb-2">Comments</h6>
                     <div className="list-group">
                       {comments.length === 0 ? (
-                        <div className="list-group-item text-muted">
-                          No comments yet.
-                        </div>
+                        <div className="list-group-item text-muted">No comments yet.</div>
                       ) : (
                         comments.map((c, i) => (
                           <div key={i} className="list-group-item">
@@ -321,9 +319,7 @@ const AddTask = () => {
                               <small className="text-muted">{c.time}</small>
                             </div>
                             <p className="mb-1">{c.text}</p>
-                            <button className="btn btn-link btn-sm p-0">
-                              Reply
-                            </button>
+                            <button className="btn btn-link btn-sm p-0">Reply</button>
                           </div>
                         ))
                       )}
@@ -335,16 +331,10 @@ const AddTask = () => {
               {/* Footer only for details tab */}
               {activeTab === "details" && (
                 <div className="modal-footer py-2">
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => setShowModal(false)}
-                  >
+                  <button className="btn btn-secondary btn-sm" onClick={() => setShowModal(false)}>
                     Cancel
                   </button>
-                  <button
-                    className="btn btn-primary btn-sm"
-                    onClick={handleSave}
-                  >
+                  <button className="btn btn-primary btn-sm" onClick={handleSave}>
                     Save
                   </button>
                 </div>
@@ -353,12 +343,6 @@ const AddTask = () => {
           </div>
         </div>
       )}
-          {/* <div className = "d-flex flex-wrap gap-3"> */}
-      {/* <Card user={users}/>
-      <Card user={users}/>
-      <Card user={users}/>
-      <Card user={users}/> */}
-      {/* </div> */}
     </div>
   );
 };

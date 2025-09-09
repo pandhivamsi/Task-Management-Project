@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 import Projectlist from "./Projectlist";
 import logo from "../assets/tasklogo.png";
 import { BsThreeDotsVertical, BsQuestionCircle } from "react-icons/bs";
 import { IoMdSearch } from "react-icons/io";
+import { ThemeContext } from "./ThemeContext";   // ✅ import theme context
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const navigate = useNavigate();
+
+  const { theme } = useContext(ThemeContext);   // ✅ get theme
 
   const openCalendly = () => {
     setShowCalendly(true);
@@ -17,7 +20,10 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar px-4 sticky-top " style={{ backgroundColor: "#003366" }}>
+    <nav
+      className="navbar px-4 sticky-top"
+      style={{ backgroundColor: theme.header }}   // ✅ dynamic header color
+    >
       <div className="container-fluid d-flex align-items-center justify-content-between">
         {/* Left: Logo + Project List */}
         <div className="d-flex align-items-center gap-3">
@@ -74,7 +80,7 @@ const Header = () => {
           <button className="btn bg-transparent border-0 text-light p-0 ms-2">
             <BsThreeDotsVertical size={22} />
           </button>
-          <Profile />
+          <Profile />  {/* ✅ profile dropdown will include theme switcher */}
         </div>
       </div>
     </nav>
