@@ -3,78 +3,22 @@ import AddTask from './AddTask';
 import React, { useState, useContext } from "react";
 import { FaFilter } from "react-icons/fa";
 import Filter from './Filter';
-import { ThemeContext } from "./ThemeContext";   // import theme context
+import KanbanBoard from './KanbanBoard';
+import { ThemeContext } from "./ThemeContext";   
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
-  const [filters, setFilters] = useState({
-    Department: [],
-    Role: [],
-    Priority: []
-  });
-  const [activeCategory, setActiveCategory] = useState(null);
-
-  const { theme } = useContext(ThemeContext); // use theme from context
-
-  const categories = [
-    { name: "Department", options: ["HR", "Engineering", "Sales"] },
-    { name: "Role", options: ["Manager", "Developer", "Intern"] },
-    { name: "Priority", options: ["High", "Medium", "Low"] }
-  ];
-
+  const { theme } = useContext(ThemeContext);   
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
-
-  const handleCheckboxChange = (category, value) => {
-    setFilters((prev) => {
-      const updated = { ...prev };
-      if (updated[category].includes(value)) {
-        updated[category] = updated[category].filter((v) => v !== value);
-      } else {
-        updated[category] = [...updated[category], value];
-      }
-      return updated;
-    });
-  };
-
-  const openMainFilter = () => {
-    const mainCanvas = document.getElementById("mainFilterOffcanvas");
-    const subCanvas = document.getElementById("subFilterOffcanvas");
-    if (subCanvas) {
-      const bsSub = window.bootstrap.Offcanvas.getInstance(subCanvas);
-      if (bsSub) bsSub.hide();
-    }
-    if (mainCanvas) {
-      const bsMain = window.bootstrap.Offcanvas.getOrCreateInstance(mainCanvas);
-      bsMain.show();
-    }
-  };
-
-  const openSubFilter = (category) => {
-    setActiveCategory(category);
-    const mainCanvas = document.getElementById("mainFilterOffcanvas");
-    const subCanvas = document.getElementById("subFilterOffcanvas");
-    if (mainCanvas) {
-      const bsMain = window.bootstrap.Offcanvas.getInstance(mainCanvas);
-      if (bsMain) bsMain.hide();
-    }
-    if (subCanvas) {
-      const bsSub = window.bootstrap.Offcanvas.getOrCreateInstance(subCanvas);
-      bsSub.show();
-    }
-  };
-
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "100vh" }}>
-      {/* Header */}
       <Header />
-
       <div className="d-flex justify-content-between align-items-center mt-2 px-2">
-        {/* Dropdown for selecting cards */}
-        <div className="dropdown">
+        <div className="dropdown ms-1">
           <button
-            className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold py-1"
+            className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold px-4 ms-1"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
@@ -103,8 +47,6 @@ const Dashboard = () => {
         <AddTask />
         <Filter />
       </div>
-
-      {/* Cards Section */}
       <div
         className="m-3 p-3 border"
         style={{ minHeight: "90vh", backgroundColor: theme.card }}
@@ -120,6 +62,7 @@ const Dashboard = () => {
             readOnly
           />
         </div>
+        <KanbanBoard />
       </div>
     </div>
   );

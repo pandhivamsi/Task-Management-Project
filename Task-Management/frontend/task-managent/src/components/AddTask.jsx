@@ -3,16 +3,15 @@ import { useNavigate, Link } from "react-router-dom";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Card from "./Card";
-import { ThemeContext } from "./ThemeContext"; // ✅ import ThemeContext
+import { ThemeContext } from "./ThemeContext";   
 
 const AddTask = () => {
   const navigate = useNavigate();
 
-  // ✅ Safe access to theme (won't crash even if provider isn't mounted)
   const themeCtx = useContext(ThemeContext);
   const theme = themeCtx?.theme ?? {
-    header: "#0d6efd",   // Bootstrap primary (fallback)
-    card: "#0d6efd",
+    header: "#0d6efd",  
+    card: "#ffffff",
     dashboard: "#f8f9fa",
   };
 
@@ -26,14 +25,11 @@ const AddTask = () => {
     priority: "",
     dueDate: "",
     estimate: "",
-    classOfService: "",
     size: "",
     rank: "",
     release: "",
+    status: "",
     sprint: "",
-    progress: "",
-    parent: "",
-    intField: "",
   });
 
   const [comments, setComments] = useState([]);
@@ -61,18 +57,17 @@ const AddTask = () => {
   };
 
   return (
-     <div className="container">
-   
-      {/* Home Section */}
-      <div className="d-flex justify-content-end mt-3" >
-          
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}
-           style={{ backgroundColor: theme.header }} 
-          >
-          <IoIosAddCircleOutline fontSize={17}/> Create Task
+    <div className="container">
+      <div className="d-flex justify-content-end mt-3">
+        <button
+          className="btn btn-primary"
+          style={{ backgroundColor: theme.header }}   
+          onClick={() => setShowModal(true)}
+        >
+          <IoIosAddCircleOutline fontSize={17} /> Create Task
         </button>
       </div>
-      {/* Modal */}
+
       {showModal && (
         <div
           className="modal show d-block"
@@ -81,10 +76,9 @@ const AddTask = () => {
         >
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
-              {/* Modal Header */}
               <div
-                className="modal-header text-white"              // keep Bootstrap layout
-                style={{ backgroundColor: theme.header }}        // theme only
+                className="modal-header text-white"
+                style={{ backgroundColor: theme.header }}   
               >
                 <h5 className="modal-title">
                   EPIC11: Enhance the Card Modal window
@@ -96,7 +90,6 @@ const AddTask = () => {
                 ></button>
               </div>
 
-              {/* Tabs */}
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <button
@@ -116,12 +109,10 @@ const AddTask = () => {
                 </li>
               </ul>
 
-              {/* Modal Body */}
               <div className="modal-body" style={{ maxHeight: "500px", overflowY: "auto" }}>
                 {activeTab === "details" && (
                   <form>
-                    {/* Title */}
-                    <div className="mb-3">
+                    <div className="">
                       <label className="form-label fw-bold">Title</label>
                       <input
                         type="text"
@@ -131,9 +122,7 @@ const AddTask = () => {
                         onChange={handleInputChange}
                       />
                     </div>
-
-                    {/* Description */}
-                    <div className="mb-3">
+                    <div className="mb-2">
                       <label className="form-label fw-bold">Description</label>
                       <textarea
                         className="form-control"
@@ -143,10 +132,8 @@ const AddTask = () => {
                         onChange={handleInputChange}
                       ></textarea>
                     </div>
-
-                    {/* Two Column Layout */}
                     <div className="row">
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Priority</label>
                         <select
                           className="form-select"
@@ -160,7 +147,20 @@ const AddTask = () => {
                           <option value="Low">Low</option>
                         </select>
                       </div>
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
+                        <label className="form-label">Status</label>
+                        <select
+                          className="form-select"
+                          name="status"
+                          value={formData.status}
+                          onChange={handleInputChange}
+                        >
+                          <option value="Ready">Ready</option>
+                          <option value="In-Progress">In-Progress</option>
+                          <option value="Done">Done</option>
+                        </select>
+                      </div>
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Due Date</label>
                         <input
                           type="date"
@@ -171,7 +171,7 @@ const AddTask = () => {
                         />
                       </div>
 
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Estimate (Days)</label>
                         <input
                           type="number"
@@ -181,21 +181,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Class of Service</label>
-                        <select
-                          className="form-select"
-                          name="classOfService"
-                          value={formData.classOfService}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">Select</option>
-                          <option value="Standard Class">Standard Class</option>
-                          <option value="Expedite">Expedite</option>
-                        </select>
-                      </div>
-
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Size</label>
                         <input
                           type="text"
@@ -205,18 +191,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Rank</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="rank"
-                          value={formData.rank}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Release</label>
                         <input
                           type="text"
@@ -226,7 +201,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-                      <div className="col-md-6 mb-3">
+                      <div className="col-md-6 mb-2">
                         <label className="form-label">Sprint</label>
                         <input
                           type="text"
@@ -236,43 +211,10 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
-
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Manual % Progress</label>
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="progress"
-                          value={formData.progress}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Parent</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="parent"
-                          value={formData.parent}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-
-                      <div className="col-md-6 mb-3">
-                        <label className="form-label">Int</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="intField"
-                          value={formData.intField}
-                          onChange={handleInputChange}
-                        />
-                      </div>
                     </div>
                   </form>
                 )}
 
-                {/* Comments Tab */}
                 {activeTab === "comments" && (
                   <div>
                     <div className="mb-3">
@@ -327,11 +269,12 @@ const AddTask = () => {
                   </div>
                 )}
               </div>
-
-              {/* Footer only for details tab */}
               {activeTab === "details" && (
                 <div className="modal-footer py-2">
-                  <button className="btn btn-secondary btn-sm" onClick={() => setShowModal(false)}>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => setShowModal(false)}
+                  >
                     Cancel
                   </button>
                   <button className="btn btn-primary btn-sm" onClick={handleSave}>

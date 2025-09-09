@@ -5,12 +5,13 @@ import Register from './components/Register';
 import Support from './components/Support';
 import Dashboard from './components/Dashboard';
 import ProjectForm from './components/Projectform';
-import  ThemeProvider  from './components/ThemeContext'; // ✅ import ThemeProvider
+import PeopleListing from './components/PeopleListing';
+import ThemeProvider from './components/ThemeContext';   
 import './App.css';
 
 const App = () => {
   return (
-    <ThemeProvider>  {/* ✅ Wrap everything inside ThemeProvider */}
+    <ThemeProvider>   
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/support" element={<Support />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/projectform" element={<ProjectForm />} />
+          <Route path="/peoplelist" element={<PeopleListing />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
