@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CiEdit, CiHeart } from "react-icons/ci";
 import { FcLike } from "react-icons/fc";
 import { MdDelete } from "react-icons/md";
+import { FaRegCommentDots, FaPaperclip, FaFlag } from "react-icons/fa";
 
 const Card = ({ user }) => {
   let img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.name}`;
@@ -12,45 +13,62 @@ const Card = ({ user }) => {
   };
 
   return (
-    <div className="card shadow-sm border-0 ms-0" style={{ width: "160px" }}>
-      {/* Profile Image */}
-      <div className="d-flex justify-content-center mt-3">
+    <div
+      className="card shadow-sm border-0 mb-3"
+      style={{
+        width: "220px",
+        borderRadius: "8px",
+        cursor: "pointer",
+      }}
+    >      <div className="d-flex align-items-center p-2">
         <img
           src={img}
           alt="Avatar"
           className="rounded-circle border border-2"
-          style={{ width: "60px", height: "60px" }}
+          style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
         />
+        <span className="fw-bold small text-secondary">{user.taskId}</span>
       </div>
-
-      {/* Title */}
-      <div className="card-body text-center p-2">
-        <h6 className="card-title mb-0">{user.name}</h6>
+      <div className="card-body p-2">
+        <p className="card-text mb-2 small">{user.title}</p>
       </div>
-
-      {/* Actions */}
-      <div className="card-footer bg-white d-flex justify-content-around p-2">
-        <button
-          type="button"
-          className="border-0 bg-transparent"
-          onClick={isLiked}
-        >
-          {like ? <FcLike /> : <CiHeart />}
-        </button>
-        <button
-          type="button"
-          className="border-0 bg-transparent"
-        //   onClick={() => onEdit(user.id)}
-        >
-          <CiEdit />
-        </button>
-        <button
-          type="button"
-          className="border-0 bg-transparent"
-        //   onClick={() => onDelete(user.id)}
-        >
-          <MdDelete />
-        </button>
+      <div
+        className="d-flex justify-content-between align-items-center px-2 py-2"
+        style={{
+          backgroundColor: "#f1f3f4",
+        }}
+      >
+        <div className="d-flex gap-2">
+          <FaRegCommentDots className="text-muted" size={14} />
+          <FaPaperclip className="text-muted" size={14} />
+          <FaFlag className="text-muted" size={14} />
+        </div>
+        <div className="d-flex gap-2">
+          <button
+            type="button"
+            className="border-0 bg-transparent p-0"
+            onClick={isLiked}
+          >
+            {like ? <FcLike size={16} /> : <CiHeart size={16} />}
+          </button>
+          <button type="button" className="border-0 bg-transparent p-0">
+            <CiEdit size={16} />
+          </button>
+          <button type="button" className="border-0 bg-transparent p-0">
+            <MdDelete size={16} />
+          </button>
+        </div>
+      </div>
+      <div
+        className="text-center text-white fw-bold"
+        style={{
+          backgroundColor: "#2ebd35ff", 
+          borderBottomLeftRadius: "8px",
+          borderBottomRightRadius: "8px",
+          padding: "3px",
+          fontSize: "12px",
+        }}
+      >
       </div>
     </div>
   );

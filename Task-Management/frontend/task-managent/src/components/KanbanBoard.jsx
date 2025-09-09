@@ -3,11 +3,11 @@ import Card from "./Card";
 
 const KanbanBoard = () => {
   const [users] = useState([
-    { id: 1, name: "Alice", status: "Ready" },
-    { id: 2, name: "Bob", status: "In Progress" },
-    { id: 3, name: "Charlie", status: "Done" },
-    { id: 4, name: "David", status: "Done" },
-    { id: 5, name: "Vamsi", status: "In Progress" }
+    { id: 1, name: "Alice", status: "Ready",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
+    { id: 2, name: "Bob", status: "In Progress",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
+    { id: 3, name: "Charlie", status: "Done",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
+    { id: 4, name: "David", status: "Done",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
+    { id: 5, name: "Vamsi", status: "In Progress",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" }
   ]);
 
   const columns = [
