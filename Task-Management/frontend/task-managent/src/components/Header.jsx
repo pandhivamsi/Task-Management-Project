@@ -1,22 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 import Projectlist from "./Projectlist";
-import logo from "../assets/tasklogo.png";
-import {  BsQuestionCircle } from "react-icons/bs";
-import { IoMdSearch } from "react-icons/io";
 import PeopleList from "./PeopleList";
+import logo from "../assets/tasklogo.png";
+import { BsQuestionCircle, BsThreeDotsVertical } from "react-icons/bs";
+import { IoMdSearch } from "react-icons/io";
+import { ThemeContext } from "./ThemeContext";   
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showCalendly, setShowCalendly] = useState(false);
   const navigate = useNavigate();
+
+  const { theme } = useContext(ThemeContext);   
+
   const openCalendly = () => {
     setShowCalendly(true);
     navigate("/support");
   };
+
   return (
-    <nav className="navbar px-4 sticky-top " style={{ backgroundColor: "#003366" }}>
+    <nav
+      className="navbar px-4 sticky-top"
+      style={{ backgroundColor: theme.header }}   
+    >
       <div className="container-fluid d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-3">
           <a className="navbar-brand text-white fw-bold d-flex align-items-center ms-0" href="#">
@@ -25,10 +33,12 @@ const Header = () => {
           </a>
           <Projectlist />
         </div>
+
         <div className="d-flex align-items-center position-relative">
           <button onClick={openCalendly} className="btn btn-link text-white p-2 me-2">
             <BsQuestionCircle size={22} />
           </button>
+
           <div
             className="d-flex align-items-center"
             onMouseEnter={() => setShowSearch(true)}
@@ -50,8 +60,8 @@ const Header = () => {
               <IoMdSearch size={22} className="text-white cursor-pointer" />
             )}
           </div>
-          <PeopleList/>
-          <Profile />
+          <PeopleList />
+          <Profile /> 
         </div>
       </div>
     </nav>

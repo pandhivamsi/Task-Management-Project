@@ -1,15 +1,17 @@
-import Login from './components/Login'
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
 import Register from './components/Register';
-import './App.css'
 import Support from './components/Support';
 import Dashboard from './components/Dashboard';
 import ProjectForm from './components/Projectform';
 import PeopleListing from './components/PeopleListing';
+import ThemeProvider from './components/ThemeContext';   
+import './App.css';
 
 const App = () => {
   return (
-    <div>
+    <ThemeProvider>   
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -20,8 +22,8 @@ const App = () => {
           <Route path="/peoplelist" element={<PeopleListing />} />
         </Routes>
       </BrowserRouter>
-    </div>
-  )
-}
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;
