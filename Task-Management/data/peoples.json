@@ -1,20 +1,13 @@
 {
   "peoples": [
     {
-      "s.no": 1,
-      "firstName": "Chandra",
-      "lastName": "Shekar",
-      "loginId": "chandu@example.com",
-      "status": "Active",
-      "primaryRole": "Developer"
-    },
-    {
       "s.no": 2,
       "firstName": "Leader",
       "lastName": "Vamsi",
       "loginId": "Vamsi@example.com",
       "status": "Active",
-      "primaryRole": "Team Lead"
+      "primaryRole": "Team Lead",
+      "id": "e190"
     },
     {
       "s.no": 3,
@@ -22,7 +15,8 @@
       "lastName": "Kumar",
       "loginId": "Lenin@example.com",
       "status": "Active",
-      "primaryRole": "Project Manager"
+      "primaryRole": "Project Manager",
+      "id": "10af"
     },
     {
       "s.no": 4,
@@ -30,7 +24,8 @@
       "lastName": "Naidu",
       "loginId": "Naidu@example.com",
       "status": "Active",
-      "primaryRole": "Tester"
+      "primaryRole": "Tester",
+      "id": "bbd6"
     },
     {
       "s.no": 5,
@@ -38,7 +33,8 @@
       "lastName": "Rathod",
       "loginId": "Naveen@example.com",
       "status": "Inactive",
-      "primaryRole": "Support Engineer"
+      "primaryRole": "Support Engineer",
+      "id": "7a9e"
     }
   ]
 }
