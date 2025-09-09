@@ -94,7 +94,7 @@ const Filter = () => {
       >
         <div className="offcanvas-header">
           <button
-            className="btn btn-link text-decoration-none ms-0 "
+            className="btn btn-link text-decoration-none ms-0"
             onClick={openMainFilter}
           >
             ◀ Back
