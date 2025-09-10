@@ -1,13 +1,18 @@
-import Header from './Header'
-import AddTask from './AddTask'
 import React, { useContext, useState } from "react";
-import { FaFilter } from "react-icons/fa";
+import Header from './Header';
+import AddTask from './AddTask';
 import Filter from './Filter';
 import KanbanBoard from './KanbanBoard';
+import StandupWizard from './StandupWizard';
+import ProfileRow from './ProfileRow';
 import { ThemeContext } from './ThemeContext';
+import { FaFilter } from "react-icons/fa";  
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
+  const [filters, setFilters] = useState(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showUsers, setShowUsers] = useState(false);
   const { theme } = useContext(ThemeContext);
 
   const handleSelect = (option) => {
@@ -16,7 +21,19 @@ const Dashboard = () => {
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "100vh" }}>
-      <Header />
+      {!isFullscreen ? (
+        <Header />
+      ) : (
+        <div className="d-flex justify-content-start align-items-center bg-light p-2">
+          <button
+            className="btn btn-success rounded-pill px-4 ms-5"
+            onClick={() => setShowUsers(true)}
+          >
+            Start
+          </button>
+          {showUsers && <ProfileRow />}
+        </div>
+      )}
       <div className="d-flex justify-content-between align-items-center mt-2 px-2">
         <div className="dropdown ms-1">
           <button
@@ -47,7 +64,8 @@ const Dashboard = () => {
           </ul>
         </div>
         <AddTask />
-        <Filter />
+        <StandupWizard setIsFullscreen={setIsFullscreen} />
+        <Filter onFiltersChange={(f) => setFilters(f)} />
       </div>
       <div
         className="m-3 p-3 border"
@@ -64,6 +82,7 @@ const Dashboard = () => {
             readOnly
           />
         </div>
+
         <KanbanBoard />
       </div>
     </div>

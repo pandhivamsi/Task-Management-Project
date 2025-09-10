@@ -30,12 +30,12 @@ const AddTask = () => {
   const [commentInput, setCommentInput] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // handle input change
+ 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // add comment
+ 
   const handleAddComment = () => {
     if (commentInput.trim() !== "") {
       setComments([
@@ -49,18 +49,16 @@ const AddTask = () => {
       setCommentInput("");
     }
   };
-
-  // save data
   const handleSave = () => {
     setSavedData({ ...formData });
     setShowModal(false);
     navigate("/");
   };
-
   return (
     <div className="container">
       <div className="d-flex justify-content-end mt-3">
         <button className="btn btn-primary" style={{ backgroundColor: theme.header}} onClick={() => setShowModal(true)}>
+
           <IoIosAddCircleOutline fontSize={17}/> Create Task
         </button>
       </div>
