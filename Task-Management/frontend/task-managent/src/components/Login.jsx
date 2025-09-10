@@ -73,7 +73,7 @@ const Login = () => {
               />
             </div>
 
-            {/* Buttons centered inside the card */}
+            
             <div className="d-grid gap-2">
   <button
     type="submit"

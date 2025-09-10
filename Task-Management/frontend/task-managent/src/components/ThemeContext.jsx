@@ -9,8 +9,8 @@ const ThemeProvider = ({ children }) => {
       ? JSON.parse(savedTheme)
       : {
           header: "#002B5B",     // default header color
-          dashboard: "#002B5B",  // default dashboard bg
-          card: "#002B5B"        // default card bg
+          // dashboard: "#002B5B",  // default dashboard bg
+          // card: "#002B5B"        // default card bg
         };
   });
 
