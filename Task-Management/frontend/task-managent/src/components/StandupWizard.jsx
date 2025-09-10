@@ -27,7 +27,7 @@ const StandupWizard = ({ setIsFullscreen }) => {
   return (
     <div className="d-flex align-items-center">
       <button
-        className="btn border rounded-pill d-flex shadow-sm text-dark bg-white w-100 fs-6 align-items-center px-0 ps-2 pe-2 me-2"
+        className="btn border rounded-pill d-flex shadow-sm text-dark bg-white w-100 fs-6 mt-3 align-items-center px-0 ps-2 pe-2 me-2"
         onClick={toggleFullScreen}
       >
         <FaPeopleLine className="me-2" /> Standup_Wizard

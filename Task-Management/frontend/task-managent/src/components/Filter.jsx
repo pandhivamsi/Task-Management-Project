@@ -48,7 +48,7 @@ const Filter = ({ onFiltersChange }) => {
   const saveFilters = () => {
     setFilters({ ...draftFilters });
     if (onFiltersChange) {
-      onFiltersChange(draftFilters); // send to parent if needed
+      onFiltersChange(draftFilters); 
     }
   };
 
@@ -57,13 +57,13 @@ const Filter = ({ onFiltersChange }) => {
 
   return (
     <>
-      {/* Applied filter badges (if needed in same component) */}
+     
        <AppliedFilters
         appliedFiltersList={appliedFiltersList}
         onClear={clearFilters}
       />
     <button
-  className="btn border rounded-pill shadow-sm text-dark bg-white fs-7 fw-bold d-flex align-items-center px-3 py-1"
+  className="btn border rounded-pill shadow-sm text-dark bg-white fs-7 fw-bold d-flex align-items-center mt-3 px-3 py-1"
   type="button"
   data-bs-toggle="offcanvas"
   data-bs-target="#mainFilterOffcanvas"
