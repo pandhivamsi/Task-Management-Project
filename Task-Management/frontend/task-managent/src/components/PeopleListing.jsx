@@ -82,11 +82,21 @@ const PeopleListing = () => {
 
   const handleSave = () => {
     if (editingPersonId) {
-      // Edit existing person
-      const updatedPeoples = peoples.map((person) =>
-        person.id === editingPersonId ? { ...person, ...newPerson } : person
-      );
-      setPeoples(updatedPeoples);
+      // Update existing person on backend
+      fetch(`http://localhost:8081/peoples/${editingPersonId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPerson),
+      })
+        .then((res) => res.json())
+        .then((updatedPerson) => {
+          const updatedPeoples = peoples.map((person) =>
+            person.id === editingPersonId ? updatedPerson : person
+          );
+          setPeoples(updatedPeoples);
+          handleClose();
+        })
+        .catch((err) => console.error(err));
     } else {
       // Add new person
       fetch("http://localhost:8081/peoples", {
@@ -97,10 +107,10 @@ const PeopleListing = () => {
         .then((res) => res.json())
         .then((data) => {
           setPeoples([...peoples, data]);
+          handleClose();
         })
         .catch((err) => console.error(err));
     }
-    handleClose();
   };
 
   return (

@@ -1,53 +1,49 @@
 {
   "peoples": [
     {
-      "s.no": 2,
       "firstName": "Leader",
       "lastName": "Vamsi",
-      "loginId": "Vamsi@example.com",
+      "loginId": "01",
       "email": "Vamsi@example.com",
-      "status": "Active",
       "primaryRole": "Team Lead",
+      "status": "Active",
       "id": "e190"
     },
     {
-      "s.no": 3,
       "firstName": "Lenin",
       "lastName": "Kumar",
-      "loginId": "Lenin@example.com",
+      "loginId": "02",
       "email": "Lenin@example.com",
-      "status": "Active",
       "primaryRole": "Project Manager",
+      "status": "Active",
       "id": "10af"
     },
     {
-      "s.no": 4,
       "firstName": "Yella",
       "lastName": "Naidu",
-      "loginId": "Naidu@example.com",
+      "loginId": "03",
       "email": "Naidu@example.com",
-      "status": "Active",
       "primaryRole": "Tester",
+      "status": "Active",
       "id": "bbd6"
     },
     {
-      "s.no": 5,
       "firstName": "Naveen",
       "lastName": "Rathod",
-      "loginId": "Naveen@example.com",
+      "loginId": "04",
       "email": "Naveen@example.com",
-      "status": "Inactive",
       "primaryRole": "Support Engineer",
+      "status": "Inactive",
       "id": "7a9e"
     },
     {
-      "id": "8a0c",
       "firstName": "Chandra",
       "lastName": "Shekar",
-      "loginId": "105",
+      "loginId": "05",
       "email": "chandu@example.com",
       "primaryRole": "Member",
-      "status": "Active"
+      "status": "Active",
+      "id": "8a0c"
     },
     {
       "id": "07b7",

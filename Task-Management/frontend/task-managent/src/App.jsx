@@ -10,6 +10,7 @@ import PeopleListing from "./components/PeopleListing";
 import ThemeProvider from "./components/ThemeContext";
 import "./App.css";
 
+
 const App = () => {
   return (
     <div>

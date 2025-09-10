@@ -20,7 +20,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ backgroundColor: theme.dashboard, minHeight: "100vh" }}>
+    <div >
       {!isFullscreen ? (
         <Header />
       ) : (
@@ -69,7 +69,7 @@ const Dashboard = () => {
       </div>
       <div
         className="m-3 p-3 border"
-        style={{ minHeight: "90vh", backgroundColor: theme.card }}
+        //style={{ minHeight: "90vh", backgroundColor: theme.card }}
       >
         <div
           className="p-2 text-white"
