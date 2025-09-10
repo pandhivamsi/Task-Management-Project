@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ThemeContext } from "./ThemeContext";
 
 const CardEdit = ({ user, onClose }) => {
+    const { theme } = useContext(ThemeContext);
   return (
     <div
       className="modal show d-block"
@@ -10,7 +12,7 @@ const CardEdit = ({ user, onClose }) => {
       <div className="modal-dialog modal-xl">
         <div className="modal-content">
           {/* HEADER */}
-          <div className="modal-header bg-primary text-white">
+          <div className="modal-header text-white" style={{backgroundColor: theme.header}}>
             <h5 className="modal-title">
               {user.taskId}: {user.title}
             </h5>
@@ -20,10 +22,7 @@ const CardEdit = ({ user, onClose }) => {
               onClick={onClose}
             ></button>
           </div>
-
-          {/* BODY */}
           <div className="modal-body">
-            {/* Tabs */}
             <ul className="nav nav-tabs mb-3">
               <li className="nav-item">
                 <button className="nav-link active">Card Details</button>
@@ -32,8 +31,6 @@ const CardEdit = ({ user, onClose }) => {
                 <button className="nav-link">Comments</button>
               </li>
             </ul>
-
-            {/* FORM */}
             <form className="row g-3">
               <div className="col-12">
                 <label className="form-label">Title</label>
@@ -43,8 +40,7 @@ const CardEdit = ({ user, onClose }) => {
                   defaultValue={user.title}
                 />
               </div>
-
-              <div className="col-12">
+        <div className="col-12">
                 <label className="form-label">Description</label>
                 <textarea
                   className="form-control"
@@ -52,7 +48,6 @@ const CardEdit = ({ user, onClose }) => {
                   defaultValue={user.description}
                 ></textarea>
               </div>
-
               <div className="col-md-6">
                 <label className="form-label">Priority</label>
                 <select className="form-select" defaultValue={user.priority}>
@@ -62,7 +57,6 @@ const CardEdit = ({ user, onClose }) => {
                   <option>High</option>
                 </select>
               </div>
-
               <div className="col-md-6">
                 <label className="form-label">Status</label>
                 <select className="form-select" defaultValue={user.status}>
@@ -71,7 +65,6 @@ const CardEdit = ({ user, onClose }) => {
                   <option>Done</option>
                 </select>
               </div>
-
               <div className="col-md-6">
                 <label className="form-label">Due Date</label>
                 <input
