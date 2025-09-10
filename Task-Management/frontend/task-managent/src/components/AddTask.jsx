@@ -54,7 +54,7 @@ const AddTask = () => {
 
   return (
     <div className="container">
-      <div className="d-flex justify-content-end mt-3">
+      <div className="d-flex justify-content-end mt-0">
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>
           <IoIosAddCircleOutline fontSize={17}/> Create Task
         </button>

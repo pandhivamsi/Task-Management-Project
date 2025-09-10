@@ -1,12 +1,17 @@
 import Header from './Header'
 import AddTask from './AddTask'
 import React, { useState } from "react";
-import { FaFilter } from "react-icons/fa";
-import Filter from './Filter';
+import Filter from './Filter';   
 import KanbanBoard from './KanbanBoard';
+import StandupWizard from './StandupWizard';   
+import ProfileRow from './ProfileRow';
+
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
+  const [filters, setFilters] = useState(null); 
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showUsers, setShowUsers]=useState(false);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
@@ -14,7 +19,17 @@ const Dashboard = () => {
 
   return (
     <div>
-        <Header/>
+      {!isFullscreen ? (
+        <Header />
+      ) : (
+        <div className="d-flex justify-content-start align-items-center bg-light p-2">
+          <button className="btn btn-success rounded-pill px-4 ms-5 " onClick={()=>setShowUsers(true)}>Start</button>
+                {
+                  showUsers && <ProfileRow/>
+                }
+        </div>
+      )}
+
       <div className="d-flex justify-content-between align-items-center mt-2 px-2">
         <div className="dropdown ms-1">
           <button
@@ -44,10 +59,13 @@ const Dashboard = () => {
             </li>
           </ul>
         </div>
-        <AddTask/>
-        <Filter/>  
-    </div>
-    <div className="bg-light m-3 p-3 border" style={{ minHeight: "90vh" }}>
+        
+        <AddTask />
+        <StandupWizard setIsFullscreen={setIsFullscreen} /> 
+        <Filter onFiltersChange={(f) => setFilters(f)} />  
+      </div>
+
+      <div className="bg-light m-1 p-3 border" style={{ minHeight: "90vh" }}>
         <div className="bg-primary p-2 text-white">
           <input
             className="p-0 ms-3 bg-transparent border-0 text-white"
@@ -56,7 +74,9 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-        <KanbanBoard/>
+
+        <KanbanBoard  />  
+        
       </div>
     </div>
   );
