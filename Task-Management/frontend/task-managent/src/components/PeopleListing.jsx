@@ -5,6 +5,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 const PeopleListing = () => {
   const [peoples, setPeoples] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [editingPersonId, setEditingPersonId] = useState(null);
   const [newPerson, setNewPerson] = useState({
     firstName: "",
     lastName: "",
@@ -33,20 +34,36 @@ const PeopleListing = () => {
     }
   };
 
-  const handleEdit = (id) => {
-    alert("Edit person with ID: " + id);
+  const handleEdit = (person) => {
+    setEditingPersonId(person.id);
+    setNewPerson({
+      firstName: person.firstName,
+      lastName: person.lastName,
+      loginId: person.loginId,
+      email: person.email,
+      primaryRole: person.primaryRole,
+      status: person.status,
+    });
+    setShowModal(true);
   };
 
   const handleView = (id) => {
     alert("View details of person with ID: " + id);
   };
 
-  // open modal
   const handleAdd = () => {
+    setEditingPersonId(null);
+    setNewPerson({
+      firstName: "",
+      lastName: "",
+      loginId: "",
+      email: "",
+      primaryRole: "Member",
+      status: "Active",
+    });
     setShowModal(true);
   };
 
-  // close modal
   const handleClose = () => {
     setShowModal(false);
     setNewPerson({
@@ -64,24 +81,32 @@ const PeopleListing = () => {
   };
 
   const handleSave = () => {
-    fetch("http://localhost:8081/peoples", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newPerson),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPeoples([...peoples, data]);
-        handleClose();
+    if (editingPersonId) {
+      // Edit existing person
+      const updatedPeoples = peoples.map((person) =>
+        person.id === editingPersonId ? { ...person, ...newPerson } : person
+      );
+      setPeoples(updatedPeoples);
+    } else {
+      // Add new person
+      fetch("http://localhost:8081/peoples", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPerson),
       })
-      .catch((err) => console.error(err));
+        .then((res) => res.json())
+        .then((data) => {
+          setPeoples([...peoples, data]);
+        })
+        .catch((err) => console.error(err));
+    }
+    handleClose();
   };
 
   return (
     <div>
       <Header />
       <div className="container show shadow mt-4 pb-4">
-        {/* Header + Add Button */}
         <div className="d-flex justify-content-between align-items-center mb-2">
           <h6 className="dropdown-header">Peoples List</h6>
           <button
@@ -92,7 +117,6 @@ const PeopleListing = () => {
           </button>
         </div>
 
-        {/* Table */}
         <table className="table table-large table-bordered m-0">
           <thead>
             <tr>
@@ -100,6 +124,7 @@ const PeopleListing = () => {
               <th>First Name</th>
               <th>Last Name</th>
               <th>Login ID</th>
+              <th>Email</th>
               <th>Status</th>
               <th>Primary Role</th>
               <th>Actions</th>
@@ -112,12 +137,13 @@ const PeopleListing = () => {
                 <td>{person.firstName}</td>
                 <td>{person.lastName}</td>
                 <td>{person.loginId}</td>
+                <td>{person.email}</td>
                 <td>{person.status}</td>
                 <td>{person.primaryRole}</td>
                 <td>
                   <button
                     className="btn btn-sm btn-warning me-1"
-                    onClick={() => handleEdit(person.id)}
+                    onClick={() => handleEdit(person)}
                   >
                     ✏️
                   </button>
@@ -134,7 +160,6 @@ const PeopleListing = () => {
         </table>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div
           className="modal fade show d-block"
@@ -143,9 +168,10 @@ const PeopleListing = () => {
         >
           <div className="modal-dialog modal-lg">
             <div className="modal-content">
-              {/* Modal Header */}
               <div className="modal-header">
-                <h5 className="modal-title">Create and Invite Member</h5>
+                <h5 className="modal-title">
+                  {editingPersonId ? "Edit Member" : "Create and Invite Member"}
+                </h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -153,7 +179,6 @@ const PeopleListing = () => {
                 ></button>
               </div>
 
-              {/* Modal Body with Form */}
               <div className="modal-body">
                 <table className="table table-bordered">
                   <thead>
@@ -233,10 +258,9 @@ const PeopleListing = () => {
                 </table>
               </div>
 
-              {/* Modal Footer */}
               <div className="modal-footer">
                 <button className="btn btn-primary" onClick={handleSave}>
-                  Add
+                  {editingPersonId ? "Save" : "Add"}
                 </button>
                 <button className="btn btn-secondary" onClick={handleClose}>
                   Cancel
