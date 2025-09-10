@@ -1,14 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ThemeContext } from "./ThemeContext";
 
 const Login = () => {
   const uname = useRef();
   const upwd = useRef();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-
+  const {theme} = useContext(ThemeContext);
   const login = (e) => {
     e.preventDefault();
     if (!uname.current.value || !upwd.current.value) {
@@ -77,14 +78,14 @@ const Login = () => {
   <button
     type="submit"
     className="btn text-white w-75 mx-auto"
-    style={{ backgroundColor: "#002B5B" }}
+    style={{ backgroundColor: theme.header}}
   >
     Login
   </button>
   <button
     type="button"
     className="btn text-white w-75 mx-auto"
-    style={{ backgroundColor: "#002B5B" }}
+    style={{ backgroundColor: theme.header}}
     onClick={register}
   >
     New? Register
