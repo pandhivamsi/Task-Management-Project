@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import { IoIosAddCircleOutline  } from "react-icons/io";
+import { ThemeContext } from "./ThemeContext";
 
 const AddTask = () => {
   const navigate = useNavigate();
   const [savedData, setSavedData] = useState(null);
+   const themeCtx = useContext(ThemeContext);
+  const theme = themeCtx?.theme ?? {
+    header: "#0d6efd",  
+  };
   const [activeTab, setActiveTab] = useState("details");
   const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom",}
   const [formData, setFormData] = useState({
@@ -55,7 +60,7 @@ const AddTask = () => {
   return (
     <div className="container">
       <div className="d-flex justify-content-end mt-3">
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+        <button className="btn btn-primary" style={{ backgroundColor: theme.header}} onClick={() => setShowModal(true)}>
           <IoIosAddCircleOutline fontSize={17}/> Create Task
         </button>
       </div>
@@ -67,7 +72,7 @@ const AddTask = () => {
         >
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
-              <div className="modal-header bg-primary text-white">
+              <div className="modal-header text-white" style={{ backgroundColor: theme.header}}>
                 <h5 className="modal-title">
                   EPIC11: Enhance the Card Modal window
                 </h5>
@@ -209,7 +214,6 @@ const AddTask = () => {
                 )}
                 {activeTab === "comments" && (
                   <div>
-                    {/* Add Comment */}
                     <div className="mb-3">
                       <textarea
                         className="form-control"
@@ -234,6 +238,7 @@ const AddTask = () => {
                           </button>
                           <button
                             className="btn btn-success btn-sm"
+                            style={{ backgroundColor: theme.header}}
                             onClick={handleAddComment}
                           >
                             Save
@@ -241,8 +246,6 @@ const AddTask = () => {
                         </div>
                       </div>
                     </div>
-
-                    {/* Comment List */}
                     <h6 className="mb-2">Comments</h6>
                     <div className="list-group">
                       {comments.length === 0 ? (
@@ -267,8 +270,6 @@ const AddTask = () => {
                   </div>
                 )}
               </div>
-
-              {/* Footer only for details tab */}
               {activeTab === "details" && (
                 <div className="modal-footer py-2">
                   <button
@@ -279,6 +280,7 @@ const AddTask = () => {
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
+                    style={{ backgroundColor: theme.header}}
                     onClick={handleSave}
                   >
                     Save

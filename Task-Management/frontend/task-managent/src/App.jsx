@@ -6,10 +6,12 @@ import Support from './components/Support';
 import Dashboard from './components/Dashboard';
 import ProjectForm from './components/Projectform';
 import PeopleListing from './components/PeopleListing';
+import ThemeProvider from './components/ThemeContext';
 
 const App = () => {
   return (
     <div>
+      <ThemeProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -20,6 +22,7 @@ const App = () => {
           <Route path="/peoplelist" element={<PeopleListing />} />
         </Routes>
       </BrowserRouter>
+      </ThemeProvider>
     </div>
   )
 }
