@@ -36,7 +36,7 @@ const Profile = () => {
         <CgProfile size={28} />
       </button>
 
-      <ul className="dropdown-menu dropdown-menu-end dropdown-menu-dark shadow">
+      <ul className="dropdown-menu dropdown-menu-end dropdown-menu shadow">
         <li className="px-3 py-2 border-bottom">
           <div className="d-flex align-items-center">
             <CgProfile size={32} className="me-2 text-primary" />
