@@ -8,7 +8,7 @@ const Register = () => {
     const [role, setRole] = useState("");
     const [password, setPassword] = useState("");
     const [cpassword, setCPassword] = useState("");
-      const {theme} = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
