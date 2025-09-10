@@ -1,0 +1,25 @@
+{
+    "cards": [
+        {
+            "id":1,
+            "title":"Fix the css issue",
+            "size":"L",
+            "priority":"high",
+            "dueDate":"23-12-2025",
+            "release":1.2,
+            "sprint":2,
+            "status":"Ready"
+        },
+        {
+            "id":2,
+            "title":"Fix the css issue in pr",
+            "size":"L",
+            "priority":"medium",
+            "dueDate":"23-02-2025",
+            "release":1.2,
+            "sprint":2,
+            "status":"In-progress"
+        }
+    ]
+
+}

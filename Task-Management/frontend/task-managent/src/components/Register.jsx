@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './Header';
+import { ThemeContext } from './ThemeContext';
 
 const Register = () => {
     const [uname, setUName] = useState("");
     const [role, setRole] = useState("");
     const [password, setPassword] = useState("");
     const [cpassword, setCPassword] = useState("");
+    const {theme} = useContext(ThemeContext);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
@@ -60,7 +62,7 @@ const Register = () => {
             <div className="card shadow" style={{ width: '350px' }}>
                 <div 
                     className="card-header text-white text-center"
-                    style={{ backgroundColor: "#002B5B" }}  // 🔵 Custom dark blue color
+                    style={{ backgroundColor: theme.header}}  // 🔵 Custom dark blue color
                 >
                     <h5 className="mb-0">Register</h5>
                 </div>
@@ -122,13 +124,13 @@ const Register = () => {
                             <button 
                                 type="submit" 
                                 className="btn w-50 text-white" 
-                                style={{ backgroundColor: "#002B5B" }} // 🔵 same dark blue button
+                                style={{ backgroundColor: theme.header}} // 🔵 same dark blue button
                             >
                                 Register
                             </button>
                         </div>
                         <div className="text-center mt-2">
-                            <a href="/" style={{ color: "#002B5B" }}>
+                            <a href="/" style={{ backgroundColor: theme.header}}>
                                 Have account? Sign in
                             </a>
                         </div>
