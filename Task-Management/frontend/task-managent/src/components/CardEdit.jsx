@@ -1,124 +1,132 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ThemeContext } from "./ThemeContext";
+import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 
-const CardEdit = ({ user, onClose }) => {
-    const { theme } = useContext(ThemeContext);
+const CardEdit = ({ user, onClose, fromComment = false }) => {
+  const { theme } = useContext(ThemeContext);
+  const [activeTab, setActiveTab] = useState(fromComment ? "comments" : "details");
+  const [comments, setComments] = useState([]);
+  const [commentInput, setCommentInput] = useState("");
+
+  const handleAddComment = () => {
+    if (commentInput.trim()) {
+      setComments([...comments, { text: commentInput, user: "User", time: new Date().toLocaleString() }]);
+      setCommentInput("");
+    }
+  };
+
   return (
-    <div
-      className="modal show d-block"
-      tabIndex="-1"
-      style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-    >
+    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-xl">
         <div className="modal-content">
-          {/* HEADER */}
-          <div className="modal-header text-white" style={{backgroundColor: theme.header}}>
-            <h5 className="modal-title">
-              {user.taskId}: {user.title}
-            </h5>
-            <button
-              type="button"
-              className="btn-close btn-close-white"
-              onClick={onClose}
-            ></button>
+          <div className="modal-header text-white" style={{ backgroundColor: theme.header }}>
+            <h5 className="modal-title">{user.taskId}: {user.title}</h5>
+            <button type="button" className="btn-close btn-close-white" onClick={onClose}></button>
           </div>
+
           <div className="modal-body">
             <ul className="nav nav-tabs mb-3">
               <li className="nav-item">
-                <button className="nav-link active">Card Details</button>
+                <button className={`nav-link ${activeTab === "details" ? "active" : ""}`} onClick={() => setActiveTab("details")}>Card Details</button>
               </li>
               <li className="nav-item">
-                <button className="nav-link">Comments</button>
+                <button className={`nav-link ${activeTab === "comments" ? "active" : ""}`} onClick={() => setActiveTab("comments")}>Comments</button>
               </li>
             </ul>
-            <form className="row g-3">
-              <div className="col-12">
-                <label className="form-label">Title</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={user.title}
-                />
-              </div>
-        <div className="col-12">
-                <label className="form-label">Description</label>
-                <textarea
-                  className="form-control"
-                  rows="3"
-                  defaultValue={user.description}
-                ></textarea>
-              </div>
-              <div className="col-md-6">
-                <label className="form-label">Priority</label>
-                <select className="form-select" defaultValue={user.priority}>
-                  <option>Select</option>
-                  <option>Low</option>
-                  <option>Medium</option>
-                  <option>High</option>
-                </select>
-              </div>
-              <div className="col-md-6">
-                <label className="form-label">Status</label>
-                <select className="form-select" defaultValue={user.status}>
-                  <option>Ready</option>
-                  <option>In Progress</option>
-                  <option>Done</option>
-                </select>
-              </div>
-              <div className="col-md-6">
-                <label className="form-label">Due Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  defaultValue={user.dueDate}
-                />
-              </div>
 
-              <div className="col-md-6">
-                <label className="form-label">Estimate (Days)</label>
-                <input
-                  type="number"
-                  className="form-control"
-                  defaultValue={user.estimate}
-                />
-              </div>
+            {activeTab === "details" && (
+              <form className="row g-3">
+                <div className="col-12">
+                  <label className="form-label">Title</label>
+                  <input type="text" className="form-control" defaultValue={user.title} />
+                </div>
+                <div className="col-12">
+                  <label className="form-label">Description</label>
+                  <textarea className="form-control" rows="3" defaultValue={user.description}></textarea>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Priority</label>
+                  <select className="form-select" defaultValue={user.priority}>
+                    <option>Select</option>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Status</label>
+                  <select className="form-select" defaultValue={user.status}>
+                    <option>Ready</option>
+                    <option>In Progress</option>
+                    <option>Done</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Due Date</label>
+                  <input type="date" className="form-control" defaultValue={user.dueDate} />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Estimate (Days)</label>
+                  <input type="number" className="form-control" defaultValue={user.estimate} />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Size</label>
+                  <input type="text" className="form-control" defaultValue={user.size} />
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label">Release</label>
+                  <input type="text" className="form-control" defaultValue={user.release} />
+                </div>
+                <div className="col-12">
+                  <label className="form-label">Sprint</label>
+                  <input type="text" className="form-control" defaultValue={user.sprint} />
+                </div>
+              </form>
+            )}
 
-              <div className="col-md-6">
-                <label className="form-label">Size</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={user.size}
-                />
+            {activeTab === "comments" && (
+              <div>
+                <div className="mb-3">
+                  <textarea className="form-control" rows="2" placeholder="Add a comment..." value={commentInput} onChange={(e) => setCommentInput(e.target.value)}></textarea>
+                  <div className="d-flex justify-content-between align-items-center mt-2">
+                    <div className="d-flex gap-3 text-muted fs-5">
+                      <BsEmojiSmile />
+                      <BsPaperclip />
+                      <BsAt />
+                    </div>
+                    <div>
+                      <button className="btn btn-light btn-sm me-2" onClick={() => setCommentInput("")}>Cancel</button>
+                      <button className="btn btn-primary btn-sm" onClick={handleAddComment}>Save</button>
+                    </div>
+                  </div>
+                </div>
+                <h6 className="mb-2">Comments</h6>
+                <div className="list-group">
+                  {comments.length === 0 ? (
+                    <div className="list-group-item text-muted">No comments yet.</div>
+                  ) : (
+                    comments.map((c, i) => (
+                      <div key={i} className="list-group-item">
+                        <div className="d-flex justify-content-between">
+                          <strong>{c.user}</strong>
+                          <small className="text-muted">{c.time}</small>
+                        </div>
+                        <p className="mb-1">{c.text}</p>
+                        <button className="btn btn-link btn-sm p-0">Reply</button>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
-
-              <div className="col-md-6">
-                <label className="form-label">Release</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={user.release}
-                />
-              </div>
-
-              <div className="col-12">
-                <label className="form-label">Sprint</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  defaultValue={user.sprint}
-                />
-              </div>
-            </form>
+            )}
           </div>
 
-          {/* FOOTER */}
-          <div className="modal-footer">
-            <button className="btn btn-secondary btn-sm" onClick={onClose}>
-              Cancel
-            </button>
-            <button className="btn btn-primary btn-sm">Save</button>
-          </div>
+          {activeTab === "details" && (
+            <div className="modal-footer">
+              <button className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
+              <button className="btn btn-primary btn-sm">Save</button>
+            </div>
+          )}
         </div>
       </div>
     </div>
