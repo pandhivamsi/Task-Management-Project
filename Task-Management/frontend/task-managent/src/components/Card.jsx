@@ -68,9 +68,9 @@ const Card = ({ user }) => {
       </div>
 
       {/* EDIT MODAL SEPARATE COMPONENT */}
-      {showModal && (
+      {showModal && (                    
         <CardEdit user={user} onClose={() => setShowModal(false)} />
-      )}
+      )}       
     </>
   );
 };
