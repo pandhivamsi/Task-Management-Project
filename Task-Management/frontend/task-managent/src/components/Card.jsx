@@ -1,76 +1,56 @@
 import React, { useState } from "react";
-import { CiHeart } from "react-icons/ci";
-import { FcLike } from "react-icons/fc";
-import { MdDelete } from "react-icons/md";
-import { FaRegCommentDots, FaPaperclip, FaFlag } from "react-icons/fa";
+import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 const Card = ({ user }) => {
-  let img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.name}`;
-  let [like, setLike] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [openCommentsTab, setOpenCommentsTab] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  const isLiked = () => setLike(!like);
+  const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.name}`;
+
+  const handleOpenModal = (fromComment = false) => {
+    setOpenCommentsTab(fromComment);
+    setShowModal(true);
+  };
 
   return (
     <>
-      {/* CARD UI */}
       <div
-        className="card shadow-sm border-0 mb-3"
-        style={{ width: "220px", borderRadius: "8px", cursor: "pointer" }}
-        onClick={() => setShowModal(true)}
+        className="card shadow-sm border-0 mb-3 position-relative"
+        style={{ width: 220, borderRadius: 8, cursor: "pointer" }}
+        onClick={() => handleOpenModal(false)}
       >
         <div className="d-flex align-items-center p-2">
           <img
             src={img}
             alt="Avatar"
             className="rounded-circle border border-2"
-            style={{ width: "30px", height: "30px", marginRight: "0.5rem" }}
+            style={{ width: 30, height: 30, marginRight: 8 }}
           />
           <span className="fw-bold small text-secondary">{user.taskId}</span>
         </div>
-
         <div className="card-body p-2">
           <p className="card-text mb-2 small">{user.title}</p>
         </div>
-
-        <div
-          className="d-flex justify-content-between align-items-center px-2 py-2"
-          style={{ backgroundColor: "#f1f3f4" }}
-        >
-          <div className="d-flex gap-2">
-            <FaRegCommentDots className="text-muted" size={14} />
-            <FaPaperclip className="text-muted" size={14} />
-            <FaFlag className="text-muted" size={14} />
-          </div>
-
-          <div className="d-flex gap-2">
-            <button
-              type="button"
-              className="border-0 bg-transparent p-0"
-              onClick={(e) => {
-                e.stopPropagation();
-                isLiked();
-              }}
-            >
-              {like ? <FcLike size={16} /> : <CiHeart size={16} />}
-            </button>
-
-            <button
-              type="button"
-              className="border-0 bg-transparent p-0"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <MdDelete size={16} />
-            </button>
-          </div>
-        </div>
+        <CardIcons
+          onCommentClick={() => handleOpenModal(true)}
+          onDeleteClick={() => setShowDeleteConfirm(true)}
+        />
       </div>
 
-      {/* EDIT MODAL SEPARATE COMPONENT */}
-      {showModal && (                    
-        <CardEdit user={user} onClose={() => setShowModal(false)} />
-      )}       
+      {/* EDIT MODAL */}
+      {showModal && (
+        <CardEdit
+          user={user}
+          onClose={() => setShowModal(false)}
+          fromComment={openCommentsTab}
+        />
+      )}
+
+      {/* DELETE CONFIRMATION */}
+      {showDeleteConfirm && <DeleteConfirmation />}
     </>
   );
 };
