@@ -45,6 +45,7 @@ useEffect(() => {
 
  
   return (
+
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
 
       {isFullscreen && (
@@ -59,8 +60,6 @@ useEffect(() => {
             </button> 
             {showUsers && <ProfileRow />}
           </div>
-
-         
           <button
             className="btn btn-outline-dark shadow-lg btn-lg rounded-pill me-2 px-2 py-1"
             onClick={handleExitFullscreen}
@@ -128,7 +127,7 @@ useEffect(() => {
     
       <div
         className="m-3 p-3 border"
-        style={{ minHeight: "90vh", backgroundColor: theme.card }}
+        //style={{ minHeight: "90vh", backgroundColor: theme.card }}
       >
         <div
           className="p-2 text-white"
