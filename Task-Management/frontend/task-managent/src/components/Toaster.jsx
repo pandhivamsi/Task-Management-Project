@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { ToastHeader } from "react-bootstrap";
 
 const Toaster = () => {
   const [showToast, setShowToast] = useState(true);

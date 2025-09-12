@@ -12,7 +12,6 @@ const StandupWizard = ({ setIsFullscreen }) => {
     }
   };
 
-
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -25,7 +24,7 @@ const StandupWizard = ({ setIsFullscreen }) => {
   }, [setIsFullscreen]);
 
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center ">
       <button
         className="btn border rounded-pill d-flex shadow-sm text-dark bg-white w-100 fs-6 mt-3 align-items-center px-0 ps-2 pe-2 me-2"
         onClick={toggleFullScreen}
