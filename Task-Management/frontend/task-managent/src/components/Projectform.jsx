@@ -1,4 +1,3 @@
-// ProjectForm.jsx
 import axios from "axios";
 import React, { useState } from "react";
 
@@ -48,7 +47,7 @@ const ProjectForm = ({ onClose, onProjectSaved }) => {
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
               />
-              <button type="submit" className="btn btn-primary" style={{ marginLeft: "21rem" }}>
+              <button type="submit" className="btn btn-primary submit" style={{ marginLeft: "21rem" }}>
                 Save Project
               </button>
             </form>
