@@ -23,25 +23,41 @@ const [appliedFiltersList, setAppliedFiltersList] = useState([]);
     setSelectedOption(option);
   };
 
-  const handleExitFullscreen = () => {
-  setIsFullscreen(false);
-  setShowUsers(false);
+//    const exitFullScreen = () => { 
+//   setIsFullscreen(false);
+//   setShowUsers(false);
+// };
+
+  const handleExitFullscreen = (fromEsc=false) => {
+    setIsFullscreen(false);
+    setShowUsers(false);
+  if (!fromEsc && document.fullscreenElement) {
+    document.exitFullscreen(); 
+  }
+ 
 };
 
 useEffect(() => {
   const handleEsc = (event) => {
     if (event.key === "Escape") {
-      handleExitFullscreen();6
+      handleExitFullscreen(true);
+    }
+  };
+
+  const handleFullscreenChange = () => {
+    if (!document.fullscreenElement) {
+      handleExitFullscreen(true); 
     }
   };
 
   window.addEventListener("keydown", handleEsc);
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
 
   return () => {
     window.removeEventListener("keydown", handleEsc);
+    document.removeEventListener("fullscreenchange", handleFullscreenChange);
   };
 }, []);
-
 
  
   return (
@@ -62,7 +78,7 @@ useEffect(() => {
           </div>
           <button
             className="btn btn-outline-dark shadow-lg btn-lg rounded-pill me-2 px-2 py-1"
-            onClick={handleExitFullscreen}
+            onClick={()=>{handleExitFullscreen(false)}}
           >
             <FaTimes />
           </button>
