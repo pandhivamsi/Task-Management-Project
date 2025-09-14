@@ -2,8 +2,8 @@
   "peoples": [
     {
       "s.no": 2,
-      "firstName": "Leader",
-      "lastName": "Vamsi",
+      "firstName": "vamsi",
+      "lastName": "Leader",
       "loginId": "Vamsi@example.com",
       "email": "Vamsi@example.com",
       "status": "Active",
@@ -55,6 +55,15 @@
       "lastName": "t",
       "loginId": "siva@gmail.com",
       "email": "vamsip094@gmail.com",
+      "primaryRole": "Member",
+      "status": "Active"
+    },
+    {
+      "id": "07b6",
+      "firstName": "gowri",
+      "lastName": "t",
+      "loginId": "gowri@gmail.com",
+      "email": "gowri123@gmail.com",
       "primaryRole": "Member",
       "status": "Active"
     }

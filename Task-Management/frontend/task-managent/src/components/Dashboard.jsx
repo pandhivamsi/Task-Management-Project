@@ -1,18 +1,38 @@
 import Header from './Header'
 import AddTask from './AddTask'
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaFilter } from "react-icons/fa";
 import Filter from './Filter';
 import KanbanBoard from './KanbanBoard';
 import { ThemeContext } from './ThemeContext';
+import axios from 'axios';
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
+  const[projects,setProjects]=useState("");
+  const[peoples,setPeoples]=useState("");
   const { theme } = useContext(ThemeContext);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
+  useEffect(()=>{
+    axios.get("http://localhost:8080/projects")
+    .then((res)=>{
+      setProjects(res.data)
+      
+    })
+    .catch((err)=>console.error(err));
+  },[]);
+
+    useEffect(()=>{
+    axios.get("http://localhost:8081/peoples")
+    .then((res)=>{
+      setPeoples(res.data)
+      
+    })
+    .catch((err)=>console.error(err));
+  },[]);
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "100vh" }}>
@@ -46,7 +66,7 @@ const Dashboard = () => {
             </li>
           </ul>
         </div>
-        <AddTask />
+        <AddTask  projects={projects} peoples={peoples}/>
         <Filter />
       </div>
       <div
