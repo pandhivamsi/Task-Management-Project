@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import Header from './Header';
-import AddTask from './AddTask';
-import Filter from './Filter';
-import KanbanBoard from './KanbanBoard';
-import StandupWizard from './StandupWizard';
-import ProfileRow from './ProfileRow';
-import { ThemeContext } from './ThemeContext';
+import Header from "./Header";
+import AddTask from "./AddTask";
+import Filter from "./Filter";
+import KanbanBoard from "./KanbanBoard";
+import StandupWizard from "./StandupWizard";
+import ProfileRow from "./ProfileRow";
+import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
 
@@ -22,22 +22,33 @@ const Dashboard = () => {
     setSelectedOption(option);
   };
 
-  const handleExitFullscreen = () => {
+  const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
     setShowUsers(false);
+    if (!fromEsc && document.fullscreenElement) {
+      document.exitFullscreen();
+    }
   };
 
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
-        handleExitFullscreen();
+        handleExitFullscreen(true);
+      }
+    };
+
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement) {
+        handleExitFullscreen(true);
       }
     };
 
     window.addEventListener("keydown", handleEsc);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
 
     return () => {
       window.removeEventListener("keydown", handleEsc);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
   }, []);
 
@@ -56,7 +67,9 @@ const Dashboard = () => {
           </div>
           <button
             className="btn btn-outline-dark shadow-lg btn-lg rounded-pill me-2 px-2 py-1"
-            onClick={handleExitFullscreen}
+            onClick={() => {
+              handleExitFullscreen(false);
+            }}
           >
             <FaTimes />
           </button>
@@ -119,10 +132,7 @@ const Dashboard = () => {
       )}
 
       <div className="m-3 p-3 border">
-        <div
-          className="p-2 text-white"
-          style={{ backgroundColor: theme.header }}
-        >
+        <div className="p-2 text-white" style={{ backgroundColor: theme.header }}>
           <input
             className="p-0 ms-3 bg-transparent border-0 text-white"
             type="text"
@@ -130,7 +140,7 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-        <KanbanBoard />    
+        <KanbanBoard />
       </div>
     </div>
   );

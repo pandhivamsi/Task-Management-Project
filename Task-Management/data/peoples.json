@@ -20,10 +20,6 @@
     },
     {
       "firstName": "Yella",
-      "lastName": "Naidu",
-      "loginId": "03",
-      "email": "Naidu@example.com",
-      "primaryRole": "Tester",
       "status": "Active",
       "id": "bbd6"
     },
