@@ -21,8 +21,8 @@ const Profile = () => {
   const applyTheme = (color) => {
     setTheme({
       header: color,
-      dashboard: "#f8f9fa",
-      card: "#ffffff",
+      // dashboard: "#f8f9fa",
+      // card: "#ffffff",
     });
   };
 
@@ -40,10 +40,10 @@ const Profile = () => {
       <ul className="dropdown-menu dropdown-menu-end dropdown-menu shadow">
         <li className="px-3 py-2 border-bottom">
           <div className="d-flex align-items-center">
-            <CgProfile size={32} className="me-2 text-primary" />
+            <CgProfile size={32} className="me-2 text-primary " />
             <div>
-              <h6 className="mb-0">John Doe</h6>
-              <small className="text-white-50">Admin</small>
+              <h6 className="mb-0 m-3">John Doe</h6>
+              <small className="text-dark-50 m-3">Admin</small>
             </div>
           </div>
         </li>
@@ -93,7 +93,7 @@ const Profile = () => {
           <hr className="dropdown-divider border-secondary-subtle" />
         </li>
         <li>
-          <a className="dropdown-item text-danger ms-0" href="/">
+          <a className="dropdown-item text-danger ms-0 text-center" href="/">
             Log Out
           </a>
         </li>
