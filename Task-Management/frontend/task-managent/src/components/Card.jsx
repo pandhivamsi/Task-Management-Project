@@ -38,6 +38,14 @@ const Card = ({ user }) => {
           onCommentClick={() => handleOpenModal(true)}
           onDeleteClick={() => setShowDeleteConfirm(true)}
         />
+        <div
+        style={{
+          height: "5 .px",
+          backgroundColor: "#11BE11",
+          borderBottomLeftRadius: "4px",
+          borderBottomRightRadius: "4px",
+        }}
+      ></div>
       </div>
 
       {/* EDIT MODAL */}
@@ -48,7 +56,6 @@ const Card = ({ user }) => {
           fromComment={openCommentsTab}
         />
       )}
-
       {/* DELETE CONFIRMATION */}
       {showDeleteConfirm && <DeleteConfirmation />}
     </>
