@@ -129,8 +129,8 @@ const Register = () => {
                                 Register
                             </button>
                         </div>
-                        <div className="text-center mt-2">
-                            <a href="/" style={{ backgroundColor: theme.header}}>
+                        <div className=" text-center  ">
+                            <a href="/"  className="btn mt-2 text-white" style={{ backgroundColor: theme.header}}>
                                 Have account? Sign in
                             </a>
                         </div>

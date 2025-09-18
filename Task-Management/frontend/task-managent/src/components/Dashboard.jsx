@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import Header from './Header';
-import AddTask from './AddTask';
-import Filter from './Filter';
-import KanbanBoard from './KanbanBoard';
-import StandupWizard from './StandupWizard';
-import ProfileRow from './ProfileRow';
-import { ThemeContext } from './ThemeContext';
+import Header from "./Header";
+import AddTask from "./AddTask";
+import Filter from "./Filter";
+import KanbanBoard from "./KanbanBoard";
+import StandupWizard from "./StandupWizard";
+import ProfileRow from "./ProfileRow";
+import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
 import axios from 'axios';
@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState(null);
+
   const [projects, setProjects] = useState("");
   const [peoples, setPeoples] = useState("");
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
@@ -72,7 +73,9 @@ const Dashboard = () => {
   }, []);
 
   return (
+
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
+
       {isFullscreen && (
         <div className="d-flex justify-content-between align-items-center bg-light p-2">
           <div className="d-flex align-items-center ms-5">
@@ -86,7 +89,9 @@ const Dashboard = () => {
           </div>
           <button
             className="btn btn-outline-dark shadow-lg btn-lg rounded-pill me-2 px-2 py-1"
-            onClick={() => handleExitFullscreen(false)}
+
+            onClick={() => {handleExitFullscreen(false)}}
+
           >
             <FaTimes />
           </button>
@@ -96,8 +101,7 @@ const Dashboard = () => {
       {!isFullscreen && (
         <div>
           <Header />
-
-          <div className="d-flex justify-content-between align-items-center mt-2 px-2">
+          <div className="d-flex justify-content-between align-items-center mt-5 px-2 pt-4">
             <div className="d-flex align-items-center ms-1">
               <div className="dropdown ms-1">
                 <button
@@ -134,9 +138,10 @@ const Dashboard = () => {
                   setFilters({ Department: [], Role: [], Priority: [] });
                   setAppliedFiltersList([]);
                 }}
-              />
-            </div>
-          </div>
+                />
+         
+              </div>
+              
 
           <AddTask projects={projects} peoples={peoples} />
 
@@ -148,6 +153,7 @@ const Dashboard = () => {
               setAppliedFiltersList(applied);
             }}
           />
+        </div>
         </div>
       )}
 
@@ -163,7 +169,6 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-
         <KanbanBoard />
       </div>
     </div>
@@ -171,3 +176,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
