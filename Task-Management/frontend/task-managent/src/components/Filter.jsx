@@ -37,19 +37,21 @@ const Filter = ({ onFiltersChange }) => {
     });
   };
 
-  const clearFilters = () => {
-    let emptyFilters={
-      Department: [],
-      Role: [],
-      Priority: [],
-    };
-    setFilters(emptyFilters);     
-  setDraftFilters(emptyFilters);  
-  if (onFiltersChange) {
-    onFiltersChange(emptyFilters); 
-  }
-
+ const clearFilters = () => {
+  let emptyFilters = {
+    Department: [],
+    Role: [],
+    Priority: [],
   };
+
+  setFilters(emptyFilters);     
+  setDraftFilters(emptyFilters);  
+
+  if (onFiltersChange) {
+    
+    onFiltersChange(emptyFilters, []);
+  }
+};
 
    const saveFilters = () => {
   setFilters({ ...draftFilters });
