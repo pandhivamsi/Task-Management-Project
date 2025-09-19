@@ -18,7 +18,8 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar px-4 sticky-top" style={{ backgroundColor: theme.header }}>
+    
+    <nav className="navbar px-4 fixed-top" style={{ backgroundColor: theme.header }}>
       <div className="container-fluid d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-3">
           <a
@@ -72,6 +73,7 @@ const Header = () => {
         </div>
       </div>
     </nav>
+   
   );
 };
 

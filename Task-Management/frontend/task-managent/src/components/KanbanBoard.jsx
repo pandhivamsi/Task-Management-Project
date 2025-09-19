@@ -7,7 +7,9 @@ const KanbanBoard = () => {
     { id: 2, name: "Bob", status: "In Progress",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
     { id: 3, name: "Charlie", status: "Done",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
     { id: 4, name: "David", status: "Done",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
-    { id: 5, name: "Vamsi", status: "In Progress",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" }
+    { id: 5, name: "Vamsi", status: "In Progress",title:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, repellendus" },
+
+    
   ]);
 
   const columns = [
@@ -17,7 +19,7 @@ const KanbanBoard = () => {
   ];
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4  ">
       <div className="row g-3">
         {columns.map((col) => (
           <div className="col-md-4" key={col.name}>

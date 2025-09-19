@@ -55,7 +55,8 @@ const AddTask = () => {
     navigate("/");
   };
   return (
-    <div className="container">
+    
+    <div className="container padding-top: 70px ">
       <div className="d-flex justify-content-end mt-3">
         <button className="btn btn-primary" style={{ backgroundColor: theme.header}} onClick={() => setShowModal(true)}>
 
@@ -290,7 +291,9 @@ const AddTask = () => {
         </div>
       )}
     </div>
+  
   );
+   
 };
 
 export default AddTask;
