@@ -1,14 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
 import { ThemeContext } from "./ThemeContext";
 import { FaPaintBrush } from "react-icons/fa";
+import axios from "axios";
 
 const Profile = () => {
   const navigate = useNavigate();
   const [showReset, setShowReset] = useState(false);
   const { setTheme } = useContext(ThemeContext);
+  const [user, setUser] = useState({ name: "", role: "" });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/api/user/1")
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching user:", err);
+      });
+  }, []);
 
   const colorOptions = [
     { name: "Blue", value: "#0952bfff" },
@@ -42,8 +55,8 @@ const Profile = () => {
           <div className="d-flex align-items-center">
             <CgProfile size={32} className="me-2 text-primary" />
             <div>
-              <h6 className="mb-0">John Doe</h6>
-              <small className="text-white-50">Admin</small>
+              <h6 className="mb-0">{user.name || "Loading..."}</h6>
+              <small className="text-white-50">{user.role || "Fetching..."}</small>
             </div>
           </div>
         </li>

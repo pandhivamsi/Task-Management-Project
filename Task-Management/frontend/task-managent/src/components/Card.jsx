@@ -3,15 +3,13 @@ import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
 import DeleteConfirmation from "./DeleteConfirmation";
 
-
 const Card = ({ user }) => {
   const [showModal, setShowModal] = useState(false);
   const [openCommentsTab, setOpenCommentsTab] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  
-  
-  const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.name}`;
 
+  const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.name}`;
+  
   const handleOpenModal = (fromComment = false) => {
     setOpenCommentsTab(fromComment);
     setShowModal(true);
