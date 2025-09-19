@@ -1,26 +1,6 @@
 {
   "projects": [
     {
-      "id": "1feb",
-      "projectName": "test"
-    },
-    {
-      "id": "1b41",
-      "projectName": "hai"
-    },
-    {
-      "id": "1f48",
-      "projectName": "hai"
-    },
-    {
-      "id": "bd7b",
-      "projectName": "myprject"
-    },
-    {
-      "id": "f5af",
-      "projectName": "newproject"
-    },
-    {
       "id": "1",
       "projectName": "task manager"
     },
