@@ -4,12 +4,13 @@ import ProjectForm from "./Projectform";
 
 const Projectlist = () => {
   const [projects, setProjects] = useState([]);
+  const [selectedProject, setSelectedProject] = useState("");
   const [showForm, setShowForm] = useState(false);
-   const [selectedProject, setSelectedProject] = useState("");
 
 
   useEffect(() => {
-    axios.get("http://localhost:8080/projects")
+    axios
+      .get("http://localhost:8080/projects")
       .then((res) => {
         setProjects(res.data);
         if (res.data.length > 0) {
@@ -38,10 +39,10 @@ const Projectlist = () => {
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
-          {selectedProject || "select project"}
+          {selectedProject || "Select Project"}
         </button>
         <ul className="dropdown-menu">
-          { projects.length > 1 && projects
+          {projects.length > 1 && projects
             .filter((p) => p.projectName !== selectedProject).map((p) => (
               <li key={p.id}>
                 <button
