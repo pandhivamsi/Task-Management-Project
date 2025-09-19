@@ -4,7 +4,7 @@ import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import { IoIosAddCircleOutline  } from "react-icons/io";
 import { ThemeContext } from "./ThemeContext";
 
-const AddTask = () => {
+const AddTask = ({ projects, peoples }) => {
   const navigate = useNavigate();
   const [savedData, setSavedData] = useState(null);
    const themeCtx = useContext(ThemeContext);
@@ -24,6 +24,8 @@ const AddTask = () => {
     release: "",
     status:"",
     sprint: "",
+    projectList:"",
+    peopleList:"",
   });
 
   const [comments, setComments] = useState([]);
@@ -168,6 +170,27 @@ const AddTask = () => {
                         />
                       </div>
 
+                        <div className="col-md-6 mb-2">
+                          <label className="form-label">ProjectList</label>
+                          <select
+                          className="form-select"
+                          name="projectList"
+                          value={formData.projectList}
+                          onChange={handleInputChange}
+                      >
+                        <option value="">Select Project</option>
+                        {projects && projects.length > 0 ? (
+                        projects.map((p) => (
+                        <option key={p.id} value={p.projectName}>
+                        {p.projectName}
+                      </option>
+                           ))
+                              ) : (
+                    <option disabled>No Projects Available</option>
+                  )}
+                  </select>
+                  </div>
+
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Estimate (Days)</label>
                         <input
@@ -178,6 +201,29 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
+
+                      <div className="col-md-6 mb-2">
+                          <label className="form-label">PeopleList</label>
+                          <select
+                          className="form-select"
+                          name="peopleList"
+                          value={formData.peopleList}
+                          onChange={handleInputChange}
+                         
+                      >
+                        <option value="">Select People</option>
+                        {peoples && peoples.length > 0 ? (
+                        peoples.map((x) => (
+                        <option key={x.id} value={x.firstName}>
+                        {x.firstName}
+                      </option>
+                    ))
+              ) : (
+                    <option disabled>No People Available</option>
+                  )}
+                  </select>
+                  </div>
+
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Size</label>
                         <input
