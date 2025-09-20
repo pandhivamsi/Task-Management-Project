@@ -65,10 +65,54 @@ const CardEdit = ({ user, onClose, fromComment = false }) => {
                   <label className="form-label">Due Date</label>
                   <input type="date" className="form-control" defaultValue={user.dueDate} />
                 </div>
+
+                <div className="col-md-6 mb-2">
+                          <label className="form-label">ProjectList</label>
+                          <select
+                          className="form-select"
+                          name="projectList"
+                          defaultvalue={user.projectList}
+                      >
+                        <option value="">Select Project</option>
+                        {/* {projects && projects.length > 0 ? (
+                        projects.map((p) => (
+                        <option key={p.id} value={p.projectName}>
+                        {p.projectName}
+                      </option>
+                           ))
+                              ) : (
+                    <option disabled>No Projects Available</option>
+                  )} */}
+                  </select>
+                  </div>
+
                 <div className="col-md-6">
                   <label className="form-label">Estimate (Days)</label>
                   <input type="number" className="form-control" defaultValue={user.estimate} />
                 </div>
+
+                <div className="col-md-6 mb-2">
+                          <label className="form-label">PeopleList</label>
+                          <select
+                          className="form-select"
+                          name="peopleList"
+                          defaultvalue={user.peopleList}
+                         
+                      >
+                        <option value="">Select People</option>
+                        {/* {peoples && peoples.length > 0 ? (
+                        peoples.map((x) => (
+                        <option key={x.id} value={x.firstName}>
+                        {x.firstName}
+                      </option>
+                    ))
+              ) : (
+                    <option disabled>No People Available</option>
+                  )} */}
+                  </select>
+                  </div>
+
+
                 <div className="col-md-6">
                   <label className="form-label">Size</label>
                   <input type="text" className="form-control" defaultValue={user.size} />
