@@ -9,6 +9,7 @@ import Edit from "./components/Edit";
 import PeopleListing from "./components/PeopleListing";
 import ThemeProvider from "./components/ThemeContext";
 import "./App.css";
+import ProjectsDetails from "./components/ProjectsDetails";
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
             <Route path="/projectform" element={<ProjectForm />} />
             <Route path="/edit/:userid" element={<Edit />} />
             <Route path="/peoplelist" element={<PeopleListing />} />
+             <Route path="/projectlist" element={<ProjectsDetails />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
