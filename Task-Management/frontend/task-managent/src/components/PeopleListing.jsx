@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import axios from "axios";
 
 const PeopleListing = () => {
   const [peoples, setPeoples] = useState([]);
@@ -17,16 +16,17 @@ const PeopleListing = () => {
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8081/peoples")
-      .then((res) => setPeoples(res.data))
+    fetch("http://localhost:8081/peoples")
+      .then((res) => res.json())
+      .then((data) => setPeoples(data))
       .catch((err) => console.error(err));
   }, []);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this person?")) {
-      axios
-        .delete(`http://localhost:8081/peoples/${id}`)
+      fetch(`http://localhost:8081/peoples/${id}`, {
+        method: "DELETE",
+      })
         .then(() => {
           setPeoples(peoples.filter((person) => person.id !== id));
         })
@@ -82,23 +82,31 @@ const PeopleListing = () => {
 
   const handleSave = () => {
     if (editingPersonId) {
-    
-      axios
-        .put(`http://localhost:8081/peoples/${editingPersonId}`, newPerson)
-        .then((res) => {
+      // Update existing person on backend
+      fetch(`http://localhost:8081/peoples/${editingPersonId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPerson),
+      })
+        .then((res) => res.json())
+        .then((updatedPerson) => {
           const updatedPeoples = peoples.map((person) =>
-            person.id === editingPersonId ? res.data : person
+            person.id === editingPersonId ? updatedPerson : person
           );
           setPeoples(updatedPeoples);
           handleClose();
         })
         .catch((err) => console.error(err));
     } else {
-    
-      axios
-        .post("http://localhost:8081/peoples", newPerson)
-        .then((res) => {
-          setPeoples([...peoples, res.data]);
+      // Add new person
+      fetch("http://localhost:8081/peoples", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newPerson),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPeoples([...peoples, data]);
           handleClose();
         })
         .catch((err) => console.error(err));

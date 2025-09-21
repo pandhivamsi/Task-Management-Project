@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
 import DeleteConfirmation from "./DeleteConfirmation";
@@ -17,30 +17,29 @@ const Card = ({ user }) => {
 
   return (
     <>
-      { 
-        <div
-          className="card shadow-sm border-0 mb-3 position-relative"
-          style={{ width: 220, borderRadius: 8, cursor: "pointer" }}
-          onClick={() => handleOpenModal(false)}
-        >
-          <div className="d-flex align-items-center p-2">
-            <img
-              src={img}
-              alt="Avatar"
-              className="rounded-circle border border-2"
-              style={{ width: 30, height: 30, marginRight: 8 }}
-            />
-            <span className="fw-bold small text-secondary">{user.taskId}</span>
-          </div>
-          <div className="card-body p-2">
-            <p className="card-text mb-2 small">{user.title}</p>
-          </div>
-          <CardIcons
-            onCommentClick={() => handleOpenModal(true)}
-            onDeleteClick={() => setShowDeleteConfirm(true)}
+      <div
+        className="card shadow-sm border-0 mb-3 position-relative"
+        style={{ width: 220, borderRadius: 8, cursor: "pointer" }}
+        onClick={() => handleOpenModal(false)}
+      >
+        <div className="d-flex align-items-center p-2">
+          <img
+            src={img}
+            alt="Avatar"
+            className="rounded-circle border border-2"
+            style={{ width: 30, height: 30, marginRight: 8 }}
           />
+          <span className="fw-bold small text-secondary">{user.taskId}</span>
         </div>
-      }
+        <div className="card-body p-2">
+          <p className="card-text mb-2 small">{user.title}</p>
+        </div>
+        <CardIcons
+          onCommentClick={() => handleOpenModal(true)}
+          onDeleteClick={() => setShowDeleteConfirm(true)}
+        />
+      </div>
+
       {showModal && (
         <CardEdit
           user={user}
@@ -48,8 +47,15 @@ const Card = ({ user }) => {
           fromComment={openCommentsTab}
         />
       )}
+
       {showDeleteConfirm && (
-        <DeleteConfirmation/>
+        <DeleteConfirmation 
+          onClose={() => setShowDeleteConfirm(false)}
+          onConfirm={() => {
+            // 🔹 Place delete logic here
+            setShowDeleteConfirm(false);
+          }}
+        />
       )}
     </>
   );
