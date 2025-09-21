@@ -33,7 +33,12 @@ const PeopleList = () => {
           <button className="dropdown-item" onClick={()=>setShowTable(true)}>
             Peoples
           </button>
+          <hr />
+          <button className="dropdown-item" onClick={()=>setShowTable(true)}>
+            Projects
+          </button>
         </div>
+        
       )}
       {showTable && navigate("/peoplelist")}
     </div>

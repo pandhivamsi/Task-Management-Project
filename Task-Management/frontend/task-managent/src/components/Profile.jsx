@@ -5,7 +5,7 @@ import ResetPassword from "./ResetPassword";
 import { ThemeContext } from "./ThemeContext";
 import { FaPaintBrush } from "react-icons/fa";
 
-const Profile = () => {
+const Profile = ({ user = {} }) => {
   const navigate = useNavigate();
   const [showReset, setShowReset] = useState(false);
   const { setTheme } = useContext(ThemeContext);
@@ -43,8 +43,8 @@ const Profile = () => {
           <div className="d-flex align-items-center">
             <CgProfile size={32} className="me-2 text-primary" />
             <div>
-              <h6 className="mb-0">John Doe</h6>
-              <small className="text-white-50">Admin</small>
+              <h6 className="mb-0">{user.name || "John Doe"}</h6>
+              <small className="text-white-50">{user.role || "Admin"}</small>
             </div>
           </div>
         </li>
@@ -53,7 +53,7 @@ const Profile = () => {
         <li>
           <button
             className="dropdown-item ms-0"
-            onClick={() => navigate("/edit/1")}
+            onClick={() => navigate(`/edit/${user.id || 1}`)}
           >
             Edit Details
           </button>
@@ -119,7 +119,7 @@ const Profile = () => {
       </ul>
 
       {showReset && (
-        <ResetPassword userid={1} onClose={() => setShowReset(false)} />
+        <ResetPassword userid={user.id || 1} onClose={() => setShowReset(false)} />
       )}
     </div>
   );
