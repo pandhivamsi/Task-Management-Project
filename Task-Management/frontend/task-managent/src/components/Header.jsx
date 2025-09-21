@@ -24,13 +24,14 @@ const Header = () => {
         <div className="d-flex align-items-center gap-3">
           <a
             className="navbar-brand text-white fw-bold d-flex align-items-center ms-0"
-            href="#"
+            href=""
           >
             <img
               src={logo}
               alt="Logo"
               width="40"
               height="40"
+              // onClick={()=> navigate("dashboard")}
               className="rounded-circle"
             />
             Tasker
