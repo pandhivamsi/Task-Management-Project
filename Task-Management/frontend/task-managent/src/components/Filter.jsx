@@ -22,7 +22,7 @@ const Filter = ({ onFiltersChange }) => {
   ];
 
   // const openOffcanvas = () => {
-  //   setDraftFilters({ ...filters }); // load current filters into draft
+  //   setDraftFilters({ ...filters }); 
   // };
 
   const handleCheckboxChange = (category, value) => {
@@ -37,20 +37,32 @@ const Filter = ({ onFiltersChange }) => {
     });
   };
 
-  const clearFilters = () => {
-    setDraftFilters({
-      Department: [],
-      Role: [],
-      Priority: [],
-    });
+ const clearFilters = () => {
+  let emptyFilters = {
+    Department: [],
+    Role: [],
+    Priority: [],
   };
 
-  const saveFilters = () => {
-    setFilters({ ...draftFilters });
-    if (onFiltersChange) {
-      onFiltersChange(draftFilters); 
-    }
-  };
+  setFilters(emptyFilters);     
+  setDraftFilters(emptyFilters);  
+
+  if (onFiltersChange) {
+    
+    onFiltersChange(emptyFilters, []);
+  }
+};
+
+   const saveFilters = () => {
+  setFilters({ ...draftFilters });
+  if (onFiltersChange) {
+    const applied = Object.entries(draftFilters)
+      .flatMap(([category, values]) =>
+        values.map((val) => `${category}: ${val}`)
+      );
+    onFiltersChange(draftFilters, applied); 
+  }
+};
 
   const appliedFiltersList = Object.entries(filters)
     .flatMap(([category, values]) => values.map((val) => `${category}: ${val}`));
@@ -58,10 +70,10 @@ const Filter = ({ onFiltersChange }) => {
   return (
     <>
      
-       <AppliedFilters
+       {/* <AppliedFilters
         appliedFiltersList={appliedFiltersList}
         onClear={clearFilters}
-      />
+      /> */}
     <button
   className="btn border rounded-pill shadow-sm text-dark bg-white fs-7 fw-bold d-flex align-items-center mt-3 px-3 py-1"
   type="button"

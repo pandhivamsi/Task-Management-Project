@@ -48,7 +48,8 @@ const Edit = () => {
   return (
     <div>
       <Header />
-      <div className="container modal-dialog  mt-3 h-100"  >
+      <div className="pt-5">
+      <div className="container modal-dialog  mt-4 h-100 "  >
         <div className="modal-content h-100">
         <div className="card shadow-fullscreen border-0 rounded-0  ">
           <div className="card-header bg-primary  text-white" >
@@ -170,6 +171,8 @@ const Edit = () => {
         </div>
         </div>
       </div>
+    </div>
+
     </div>
   );
 };

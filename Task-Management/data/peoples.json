@@ -1,8 +1,8 @@
 {
   "peoples": [
     {
-      "firstName": "Leader",
-      "lastName": "Vamsi",
+      "firstName": "vamsi",
+      "lastName": "Leader",
       "loginId": "01",
       "email": "Vamsi@example.com",
       "primaryRole": "Team Lead",
@@ -20,10 +20,6 @@
     },
     {
       "firstName": "Yella",
-      "lastName": "Naidu",
-      "loginId": "03",
-      "email": "Naidu@example.com",
-      "primaryRole": "Tester",
       "status": "Active",
       "id": "bbd6"
     },
@@ -44,6 +40,16 @@
       "primaryRole": "Member",
       "status": "Active",
       "id": "8a0c"
+    },
+    {
+      "firstName": "gowri",
+      "lastName": "tegala",
+      "loginId": "06",
+      "email": "gowri@example.com",
+      "primaryRole": "Member",
+      "status": "Active",
+      "id": "9a0c"
     }
+
   ]
 }

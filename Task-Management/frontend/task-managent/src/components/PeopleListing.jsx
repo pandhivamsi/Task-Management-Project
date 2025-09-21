@@ -108,7 +108,7 @@ const PeopleListing = () => {
   return (
     <div>
       <Header />
-      <div className="container show shadow mt-4 pb-4">
+      <div style={{ marginTop: "5.5rem"}}className="container show shadow pb-4">
         <div className="d-flex justify-content-between align-items-center mb-2">
           <h6 className="dropdown-header">Peoples List</h6>
           <button

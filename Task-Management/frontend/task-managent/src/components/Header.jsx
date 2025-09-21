@@ -18,18 +18,20 @@ const Header = () => {
   };
 
   return (
-    <nav className="navbar px-4 sticky-top" style={{ backgroundColor: theme.header }}>
+    
+    <nav className="navbar px-4 fixed-top" style={{ backgroundColor: theme.header }}>
       <div className="container-fluid d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-3">
           <a
             className="navbar-brand text-white fw-bold d-flex align-items-center ms-0"
-            href="#"
+            href=""
           >
             <img
               src={logo}
               alt="Logo"
               width="40"
               height="40"
+              // onClick={()=> navigate("dashboard")}
               className="rounded-circle"
             />
             Tasker
@@ -72,6 +74,7 @@ const Header = () => {
         </div>
       </div>
     </nav>
+   
   );
 };
 

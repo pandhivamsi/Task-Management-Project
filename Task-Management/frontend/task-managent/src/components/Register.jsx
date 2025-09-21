@@ -58,7 +58,7 @@ const Register = () => {
     return (
         <div>
         <Header/>
-        <div className="d-flex justify-content-center mt-5">
+        <div className="d-flex justify-content-center mt-5 pt-5">
             <div className="card shadow" style={{ width: '350px' }}>
                 <div 
                     className="card-header text-white text-center"
@@ -129,8 +129,8 @@ const Register = () => {
                                 Register
                             </button>
                         </div>
-                        <div className="text-center mt-2">
-                            <a href="/" style={{ backgroundColor: theme.header}}>
+                        <div className=" text-center  ">
+                            <a href="/"  className="btn mt-2 text-white" style={{ backgroundColor: theme.header}}>
                                 Have account? Sign in
                             </a>
                         </div>

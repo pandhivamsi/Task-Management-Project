@@ -34,8 +34,8 @@ const Profile = () => {
   const applyTheme = (color) => {
     setTheme({
       header: color,
-      dashboard: "#f8f9fa",
-      card: "#ffffff",
+      // dashboard: "#f8f9fa",
+      // card: "#ffffff",
     });
   };
 
@@ -53,7 +53,7 @@ const Profile = () => {
       <ul className="dropdown-menu dropdown-menu-end dropdown-menu shadow">
         <li className="px-3 py-2 border-bottom">
           <div className="d-flex align-items-center">
-            <CgProfile size={32} className="me-2 text-primary" />
+            <CgProfile size={32} className="me-2 text-primary " />
             <div>
               <h6 className="mb-0">{user.name || "Loading..."}</h6>
               <small className="text-white-50">{user.role || "Fetching..."}</small>
@@ -106,7 +106,7 @@ const Profile = () => {
           <hr className="dropdown-divider border-secondary-subtle" />
         </li>
         <li>
-          <a className="dropdown-item text-danger ms-0" href="/">
+          <a className="dropdown-item text-danger ms-0 text-center" href="/">
             Log Out
           </a>
         </li>
