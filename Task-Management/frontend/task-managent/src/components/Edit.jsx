@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import img from "../assets/image2.jpg";
+// import img from "../assets/image2.jpg";
 import Header from "./Header";
 
 const Edit = () => {
   const { userid } = useParams();
   const navigate = useNavigate();
-  const fileInputRef = useRef(null); 
+  const fileInputRef = useRef(null);
 
   const [user, setUser] = useState({
     id: "",
@@ -17,13 +17,12 @@ const Edit = () => {
     workPhone: "",
     mobilePhone: "",
     email: "",
-    photo: img,
+    photo: "",
   });
 
   useEffect(() => {
     if (userid) {
-      axios
-        .get(`http://localhost:8081/users/${userid}`)
+      axios.get(`http://localhost:8081/users/${userid}`)
         .then((res) => setUser(res.data))
         .catch((err) => console.error("Error fetching user:", err));
     }
@@ -45,22 +44,25 @@ const Edit = () => {
     }
   };
 
-  const handleSave = async (e) => {
+ const handleSave = async (e) => {
   e.preventDefault();
   const formData = new FormData();
   formData.append("name", user.name);
   formData.append("title", user.title);
-  formData.append("photo", fileInputRef.current.files[0]); 
+
+  // ✅ Correct way to append the selected file
+  if (fileInputRef.current && fileInputRef.current.files[0]) {
+    formData.append("photo", fileInputRef.current.files[0]);
+  }
 
   try {
-    await axios.put(`http://localhost:8081/users/${userid}`, formData, {
+    await axios.put(`http://localhost:8080/users/${userid}`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     alert("Profile updated successfully!");
-    navigate(-1);
+    navigate("/dashboard");
   } catch (err) {
     console.error("Error updating user:", err);
-    // alert("Failed to update profile!");
   }
 };
 
@@ -68,10 +70,10 @@ const Edit = () => {
   return (
     <div>
       <Header />
-      <div className="container modal-dialog  mt-5 pt-4 h-100">
+      <div className="container modal-dialog mt-5 pt-4 h-100">
         <div className="modal-content h-100">
           <div className="card shadow-fullscreen border-0 rounded-0 ">
-            <div className="card-header bg-primary  text-white ">
+            <div className="card-header bg-primary text-white ">
               <h3 className="mb-1">Edit Profile</h3>
             </div>
 
@@ -79,8 +81,10 @@ const Edit = () => {
               <div className="card-body bg-light ">
                 <div className="row ">
                   <div className="col-md-4 text-center mb-3">
- 
-                    <div className="mx-auto mt-4" style={{ width: "190px", height: "190px" }}>
+                    <div
+                      className="mx-auto mt-4"
+                      style={{ width: "190px", height: "190px" }}
+                    >
                       <div className="rounded-circle overflow-hidden border border-3 border-primary w-100 h-100">
                         <img
                           src={user.photo}
@@ -90,17 +94,16 @@ const Edit = () => {
                         />
                       </div>
                     </div>
-                    
 
                     <br />
                     <button
                       type="button"
                       className="btn btn-sm btn-outline-primary fs-5 overflow-hidden"
-                      onClick={() => fileInputRef.current.click()} 
+                      onClick={() => fileInputRef.current.click()}
                     >
                       Change Photo
                     </button>
-                   
+
                     <input
                       type="file"
                       accept="image/*"
@@ -201,7 +204,11 @@ const Edit = () => {
                 >
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary px-4"  onClick={handleSave} >
+                <button
+                  type="submit"
+                  className="btn btn-primary px-4"
+                  onClick={handleSave}
+                >
                   Save Changes
                 </button>
               </div>
