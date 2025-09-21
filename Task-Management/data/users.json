@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "title": "Software Engineer",
+      "organization": "Tech Corp",
+      "workPhone": "123-456-7890",
+      "mobilePhone": "987-654-3210",
+      "email": "john.doe@example.com",
+      "photo": "https://via.placeholder.com/150"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "title": "Product Manager",
+      "organization": "Innovate Ltd",
+      "workPhone": "555-123-4567",
+      "mobilePhone": "555-987-6543",
+      "email": "jane.smith@example.com",
+      "photo": "https://via.placeholder.com/150"
+    },
+    {
+      "id": "3",
+      "name": "Alice Johnson",
+      "title": "UI/UX Designer",
+      "organization": "Design Studio",
+      "workPhone": "111-222-3333",
+      "mobilePhone": "444-555-6666",
+      "email": "alice.johnson@example.com",
+      "photo": "https://via.placeholder.com/150"
+    }
+  ]
+}
