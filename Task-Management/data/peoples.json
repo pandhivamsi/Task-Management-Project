@@ -1,0 +1,55 @@
+{
+  "peoples": [
+    {
+      "firstName": "vamsi",
+      "lastName": "Leader",
+      "loginId": "01",
+      "email": "Vamsi@example.com",
+      "primaryRole": "Team Lead",
+      "status": "Active",
+      "id": "e190"
+    },
+    {
+      "firstName": "Lenin",
+      "lastName": "Kumar",
+      "loginId": "02",
+      "email": "Lenin@example.com",
+      "primaryRole": "Project Manager",
+      "status": "Active",
+      "id": "10af"
+    },
+    {
+      "firstName": "Yella",
+      "status": "Active",
+      "id": "bbd6"
+    },
+    {
+      "firstName": "Naveen",
+      "lastName": "Rathod",
+      "loginId": "04",
+      "email": "Naveen@example.com",
+      "primaryRole": "Support Engineer",
+      "status": "Inactive",
+      "id": "7a9e"
+    },
+    {
+      "firstName": "Chandra",
+      "lastName": "Shekar",
+      "loginId": "05",
+      "email": "chandu@example.com",
+      "primaryRole": "Member",
+      "status": "Active",
+      "id": "8a0c"
+    },
+    {
+      "firstName": "gowri",
+      "lastName": "tegala",
+      "loginId": "06",
+      "email": "gowri@example.com",
+      "primaryRole": "Member",
+      "status": "Active",
+      "id": "9a0c"
+    }
+
+  ]
+}
