@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const PeopleList = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [showTable, setShowTable] = useState(false);
+  const [showProjTable,setProjTable] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -34,13 +35,14 @@ const PeopleList = () => {
             Peoples
           </button>
           <hr />
-          <button className="dropdown-item" onClick={()=>setShowTable(true)}>
+          <button className="dropdown-item" onClick={()=>setProjTable(true)}>
             Projects
           </button>
         </div>
         
       )}
       {showTable && navigate("/peoplelist")}
+      {showProjTable && navigate("/projectlist")}
     </div>
   );
 };

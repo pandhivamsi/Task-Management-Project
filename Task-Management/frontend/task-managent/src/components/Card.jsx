@@ -39,7 +39,7 @@ const Card = ({ user }) => {
         />
         <div
         style={{
-          height: "5 .px",
+          height: "5px",
           backgroundColor: "#11BE11",
           borderBottomLeftRadius: "4px",
           borderBottomRightRadius: "4px",
