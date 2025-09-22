@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +37,24 @@ public class TaskerController {
 
 	}
 	
+	@PutMapping("/projects/{id}")
+	public ResponseEntity<Project> updateProject(
+	        @PathVariable("id") Integer id,
+	        @RequestBody Project newProjectData) {
+	    Project updatedProject = service.updateProject(id, newProjectData);
+	    return ResponseEntity.ok(updatedProject);
+	}
+	
+	@DeleteMapping("/projects/{id}")
+	public ResponseEntity<Void> deleteProject(@PathVariable Integer id) {
+        try {
+            service.deleteProject(id);
+            return ResponseEntity.noContent().build(); 
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+	
 	@GetMapping("/cards")
 	public List<Card> getCards() {
 		return service.getAllCards();
@@ -45,4 +66,22 @@ public class TaskerController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(req);
 
 	}
+	
+	@PutMapping("/cards/{id}")
+	public ResponseEntity<Card> updateCard(
+	        @PathVariable("id") Integer id,
+	        @RequestBody Card c1) {
+	    Card c = service.updateCard(id, c1);
+	    return ResponseEntity.ok(c);
+	}
+	
+	@DeleteMapping("/cards/{id}")
+	public ResponseEntity<Void> deleteCard(@PathVariable Integer id) {
+        try {
+            service.deleteCard(id);
+            return ResponseEntity.noContent().build(); 
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

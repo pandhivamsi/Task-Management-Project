@@ -167,7 +167,7 @@ const ProjectsDetails = () => {
                       <td>
                         <input
                           type="text"
-                          name="firstName"
+                          name="projName"
                           value={newProject.projName}
                           onChange={handleChange}
                           className="form-control"
@@ -176,7 +176,7 @@ const ProjectsDetails = () => {
                       <td>
                         <input
                           type="text"
-                          name="lastName"
+                          name="createdBy"
                           disabled
                           value={newProject.createdBy}
                           onChange={handleChange}
