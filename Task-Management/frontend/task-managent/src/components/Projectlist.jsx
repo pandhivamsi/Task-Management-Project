@@ -8,17 +8,18 @@ const Projectlist = () => {
   const [showForm, setShowForm] = useState(false);
 
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/projects")
-      .then((res) => {
-        setProjects(res.data);
-        if (res.data.length > 0) {
-          setSelectedProject(res.data[0].projectName);
-        }
-      })
-      .catch((err) => console.error("Error fetching projects:", err));
-  }, []);
+ useEffect(() => {
+  axios.get("http://localhost:8080/projects")
+    .then((res) => {
+      console.log(res);
+      setProjects(res.data);
+      if (res.data.length > 0) {
+        setSelectedProject(res.data[0].projName); // Use projName here
+      }
+    })
+    .catch((err) => console.error("Error fetching projects:", err));
+}, []);
+
 
   const handleSelectProject = (projectName) => {
     setSelectedProject(projectName);
@@ -43,13 +44,13 @@ const Projectlist = () => {
         </button>
         <ul className="dropdown-menu">
           {projects.length > 1 && projects
-            .filter((p) => p.projectName !== selectedProject).map((p) => (
+            .filter((p) => p.projName !== selectedProject).map((p) => (
               <li key={p.id}>
                 <button
                   className="dropdown-item text-uppercase"
-                  onClick={() => handleSelectProject(p.projectName)}
+                  onClick={() => handleSelectProject(p.projName)}
                 >
-                  {p.projectName}
+                  {p.projName}
                 </button>
               </li>
             ))}

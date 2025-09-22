@@ -9,7 +9,7 @@ import lombok.Data;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name = "projects")
+@Table(name = "projects",schema = "tasker")
 @Data
 public class Project {
 	
