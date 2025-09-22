@@ -14,7 +14,7 @@ const ProjectsDetails = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/projects")
+      .get("http://localhost:8080/projects")
       .then((res) => setProjects(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -22,7 +22,7 @@ const ProjectsDetails = () => {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this person?")) {
       axios
-        .delete(`http://localhost:8081/projects/${id}`)
+        .delete(`http://localhost:8080/projects/${id}`)
         .then(() => {
           setProjects(projects.filter((project) => project.id !== id));
         })
@@ -64,7 +64,7 @@ const ProjectsDetails = () => {
     if (editingPersonId) {
     
       axios
-        .put(`http://localhost:8081/projects/${editingPersonId}`, newProject)
+        .put(`http://localhost:8080/projects/${editingPersonId}`, newProject)
         .then((res) => {
           const updatedPeoples = projects.map((project) =>
             project.id === editingPersonId ? res.data : project
@@ -76,7 +76,7 @@ const ProjectsDetails = () => {
     } else {
     
       axios
-        .post("http://localhost:8081/projects", newProject)
+        .post("http://localhost:8080/projects", newProject)
         .then((res) => {
           setProjects([...projects, res.data]);
           handleClose();
@@ -112,7 +112,7 @@ const ProjectsDetails = () => {
               <tr key={project.id}>
                 <td>{index + 1}</td>
                 <td>{project.projName}</td>
-                <td>{project.lastName}</td>
+                <td>{project.createdBy}</td>
                 <td>
                   <button
                     className="btn btn-sm btn-warning me-1"
@@ -168,7 +168,7 @@ const ProjectsDetails = () => {
                         <input
                           type="text"
                           name="firstName"
-                          value={newProject.firstName}
+                          value={newProject.projName}
                           onChange={handleChange}
                           className="form-control"
                         />
@@ -178,7 +178,7 @@ const ProjectsDetails = () => {
                           type="text"
                           name="lastName"
                           disabled
-                          value={newProject.lastName}
+                          value={newProject.createdBy}
                           onChange={handleChange}
                           className="form-control"
                         />
