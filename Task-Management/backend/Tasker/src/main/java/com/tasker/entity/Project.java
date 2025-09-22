@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 
 @Entity
 @Table(name = "projects",schema = "tasker")
+@Data
 public class Project {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
