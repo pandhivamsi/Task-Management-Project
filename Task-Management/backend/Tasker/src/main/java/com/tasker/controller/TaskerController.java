@@ -16,7 +16,7 @@ import com.tasker.service.TaskerService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/projects")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TaskerController {
 	
 	@Autowired
