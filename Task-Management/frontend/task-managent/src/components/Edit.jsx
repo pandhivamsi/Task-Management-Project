@@ -23,7 +23,7 @@ const Edit = () => {
     if (userid) {
       axios
         .get(`http://localhost:8081/users/${userid}`)
-        .then((res) => setUser(res.data))
+        .then((res) => setUser(res.data)) 
         .catch((err) => console.error("Error fetching user:", err));
     }
   }, [userid]);
@@ -48,7 +48,7 @@ const Edit = () => {
   return (
     <div>
       <Header />
-      <div className="container modal-dialog  mt-3 h-100"  >
+      <div className="container modal-dialog  mt-5 pt-4 h-100"  >
         <div className="modal-content h-100">
         <div className="card shadow-fullscreen border-0 rounded-0  ">
           <div className="card-header bg-primary  text-white" >

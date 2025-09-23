@@ -1,24 +1,6 @@
 {
   "peoples": [
     {
-      "firstName": "vamsi",
-      "lastName": "Leader",
-      "loginId": "01",
-      "email": "Vamsi@example.com",
-      "primaryRole": "Team Lead",
-      "status": "Active",
-      "id": "e190"
-    },
-    {
-      "firstName": "Lenin",
-      "lastName": "Kumar",
-      "loginId": "02",
-      "email": "Lenin@example.com",
-      "primaryRole": "Project Manager",
-      "status": "Active",
-      "id": "10af"
-    },
-    {
       "firstName": "Yella",
       "status": "Active",
       "id": "bbd6"
@@ -50,6 +32,5 @@
       "status": "Active",
       "id": "9a0c"
     }
-
   ]
 }
