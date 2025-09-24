@@ -10,12 +10,14 @@ import PeopleListing from "./components/PeopleListing";
 import ThemeProvider from "./components/ThemeContext";
 import "./App.css";
 import ProjectsDetails from "./components/ProjectsDetails";
+import { DataProvider } from "./components/DataContext";
 
 
 const App = () => {
   return (
     <div>
       <ThemeProvider>
+        <DataProvider>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
@@ -28,6 +30,7 @@ const App = () => {
              <Route path="/projectlist" element={<ProjectsDetails />} />
           </Routes>
         </BrowserRouter>
+        </DataProvider>
       </ThemeProvider>
     </div>
   );

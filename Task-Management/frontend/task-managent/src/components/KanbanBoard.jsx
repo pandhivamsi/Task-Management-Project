@@ -18,6 +18,11 @@ const [cards,setCards]=useState([])
     { name: "In Progress", color: "#fff3cd" },  
     { name: "Done", color: "#d4edda" },         
   ];
+   const handleUpdateCard = (updatedCard) => {
+    setCards((prev) =>
+      prev.map((card) => (card.id === updatedCard.id ? updatedCard : card))
+    );
+  };
   return (
     <div className="container mt-4  ">
       <div className="row g-3">
@@ -33,7 +38,7 @@ const [cards,setCards]=useState([])
                 {cards
                   .filter((user) => user.status === col.name)
                   .map((card) => (
-                    <Card key={card.id} card={card} />
+                    <Card key={card.id} card={card} handleUpdateCard={handleUpdateCard}/>
                   ))}
               </div>
               

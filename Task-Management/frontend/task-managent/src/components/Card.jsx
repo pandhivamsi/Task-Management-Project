@@ -2,16 +2,25 @@ import React, { useState } from "react";
 import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
 import DeleteConfirmation from "./DeleteConfirmation";
+// import axios from "axios";
 
-const Card = ({card}) => {
+const Card = ({card, handleUpdateCard}) => {
   const [showModal, setShowModal] = useState(false);
   const [openCommentsTab, setOpenCommentsTab] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  // const [cardData, setCardData] = useState(card);
   const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${card.person_name}`;
   
   const handleOpenModal = (fromComment = false) => {
     setOpenCommentsTab(fromComment);
     setShowModal(true);
+  };
+    const handleSave = (updatedCard) => {
+    // Update parent state
+    if (handleUpdateCard) {
+      handleUpdateCard(updatedCard);
+    }
+    setShowModal(false);
   };
 
   return (
@@ -52,6 +61,7 @@ const Card = ({card}) => {
         <CardEdit
           card={card}
           onClose={() => setShowModal(false)}
+          onSave={handleSave}
           fromComment={openCommentsTab}
         />
       )}
