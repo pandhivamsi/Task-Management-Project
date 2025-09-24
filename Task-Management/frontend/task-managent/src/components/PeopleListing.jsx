@@ -47,9 +47,9 @@ const PeopleListing = () => {
     setShowModal(true);
   };
 
-  const handleView = (id) => {
-    alert("View details of person with ID: " + id);
-  };
+  // const handleView = (id) => {
+  //   alert("View details of person with ID: " + id);
+  // };
 
   const handleAdd = () => {
     setEditingPersonId(null);
