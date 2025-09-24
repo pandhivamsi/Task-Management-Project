@@ -2,10 +2,11 @@ import React, {  useEffect, useState } from "react";
 import Header from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import axios from "axios";
+import { useAppData } from "./DataContext";
 // import { DataContext } from "./DataContext";
 
 const ProjectsDetails = () => {
-  const [projects, setProjects] = useState([]);
+  const {projects, setProjects}= useAppData();
   const [showModal, setShowModal] = useState(false);
   const [editingPersonId, setEditingPersonId] = useState(null);
 
@@ -27,7 +28,7 @@ const ProjectsDetails = () => {
         .delete(`http://localhost:8080/projects/${id}`)
         .then(() => {
           setProjects(projects.filter((project) => project.id !== id));
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((err) => console.error(err));
     }
@@ -83,7 +84,7 @@ const ProjectsDetails = () => {
         .then((res) => {
           setProjects([...projects, res.data]);
           handleClose();
-          window.location.reload();
+          // window.location.reload();
         })
         .catch((err) => console.error(err));
     }

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { ThemeContext } from "./ThemeContext";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import axios from "axios";
-import { DataContext } from "./DataContext";
+import { useAppData } from "./DataContext";
 // import axios from "axios";
 
 const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
@@ -10,7 +10,7 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
   const [activeTab, setActiveTab] = useState(fromComment ? "comments" : "details");
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
-  const { projects, peoples, loading } = useContext(DataContext);
+  const { projects, peoples, loading } = useAppData()
   const [formData, setFormData] = useState({
     title: card.title || "",
     description: card.description || "",

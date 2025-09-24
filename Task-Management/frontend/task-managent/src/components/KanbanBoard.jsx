@@ -2,17 +2,8 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 
-const KanbanBoard = () => {
-const [cards,setCards]=useState([])
-
-   useEffect(() => {
-    axios
-      .get("http://localhost:8080/cards")
-      .then((res) => {
-        setCards(res.data)
-        console.log(res.data)})
-      .catch((err) => console.error(err));
-  }, []);
+const KanbanBoard = ({fetchCards ,setCards,cards}) => {
+  
   const columns = [
     { name: "Ready", color: "#e3f2fd" },       
     { name: "In Progress", color: "#fff3cd" },  

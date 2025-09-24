@@ -8,16 +8,15 @@ import ProfileRow from "./ProfileRow";
 import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
-// import axios from "axios";
-import { DataContext } from "./DataContext";
+import { useAppData } from "./DataContext";
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
+const { cards, setCards, fetchCards } = useAppData();
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState(null);
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
-  const { projects, peoples, loading } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
 
@@ -143,7 +142,7 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-        <KanbanBoard />
+        <KanbanBoard fetchCards = {fetchCards} setCards={setCards} cards={cards}/>
       </div>
     </div>
   );

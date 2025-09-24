@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import axios from "axios";
+import { useAppData } from "./DataContext";
 
 const PeopleListing = () => {
-  const [peoples, setPeoples] = useState([]);
+  const {peoples, setPeoples}= useAppData;
   const [showModal, setShowModal] = useState(false);
   const [editingPersonId, setEditingPersonId] = useState(null);
   const [newPerson, setNewPerson] = useState({

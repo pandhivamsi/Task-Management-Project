@@ -44,8 +44,8 @@ public class TaskerService {
 	}
 
 	public Project saveProject(Project req) {
-		Person p=getCurrentPerson();
-		req.setCreatedBy(p.getName());
+//		Person p=getCurrentPerson();
+//		req.setCreatedBy(p.getName());
         return repo.save(req);
     }
 	
