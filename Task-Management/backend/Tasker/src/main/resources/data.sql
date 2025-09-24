@@ -17,7 +17,7 @@ VALUES
 INSERT INTO peoples
 (name, title, organization, work_phone, mobile, email, password, user_id, profile_img)
 VALUES
-('Alice Johnson', 'Manager', 'TechCorp', 1234567890, 9876543210, 'alice@example.com', 'alice123', 'alice01', LOAD_FILE('C:\Users\91832\Downloads\ramcharan.jpg')),
+('Alice Johnson', 'Manager', 'TechCorp', 1234567890, 9876543210, 'alice@example.com', 'alice123', 'alice01', LOAD_FILE('C:\ProgramData\MySQL\MySQL Server 5.5\uploads\image1.jpg')),
 ('Bob Smith', 'Developer', 'DevSolutions', 2345678901, 8765432109, 'bob@example.com', 'bob123', 'bob01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image2.jpeg')),
 ('Carol White', 'Designer', 'DesignHub', 3456789012, 7654321098, 'carol@example.com', 'carol123', 'carol01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image3.jpeg')),
 ('David Lee', 'QA Engineer', 'TestWorks', 4567890123, 6543210987, 'david@example.com', 'david123', 'david01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image4.jpeg')),
