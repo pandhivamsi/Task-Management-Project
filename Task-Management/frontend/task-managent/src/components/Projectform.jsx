@@ -1,8 +1,10 @@
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
+import { DataContext } from "./DataContext";
 
 const ProjectForm = ({ onClose, onProjectSaved }) => {
   const [projectName, setProjectName] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ const ProjectForm = ({ onClose, onProjectSaved }) => {
         onProjectSaved(res.data);
         setProjectName(""); 
         onClose(); 
+        window.location.reload();
       } catch (err) {
         console.error("Error saving project:", err);
       }

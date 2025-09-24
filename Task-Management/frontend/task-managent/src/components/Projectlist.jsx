@@ -23,13 +23,14 @@ const Projectlist = () => {
 }, []);
 
 
-  const handleSelectProject = (projectName) => {
-    setSelectedProject(projectName);
+  const handleSelectProject = (projName) => {
+    setSelectedProject(projName);
     setShowForm(false);
   };
 
   const handleProjectSaved = (newProject) => {
     setProjects((prev) => [...prev, newProject]);
+    setShowForm(false)
   };
 
   return (
