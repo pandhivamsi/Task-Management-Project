@@ -51,8 +51,9 @@ export const AppDataProvider = ({ children }) => {
         setCards,
         fetchCards,
         projects,
-        setProjects, // ✅ Add this
+        setProjects,
         peoples,
+        setPeoples,
         loading,
       }}
     >

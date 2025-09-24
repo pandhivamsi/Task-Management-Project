@@ -29,7 +29,7 @@ const App = () => {
             <Route path="/projectform" element={<ProjectForm/>} />
             <Route path="/edit/:userid" element={<Edit />} />
             <Route path="/peoplelist" element={<PeopleListing />} />
-             <Route path="/projectlist" element={<ProjectsDetails />} />
+            <Route path="/projectlist" element={<ProjectsDetails />} />
           </Routes>
         </BrowserRouter>
         </AppDataProvider>

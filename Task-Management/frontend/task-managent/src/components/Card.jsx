@@ -8,6 +8,7 @@ const Card = ({card, handleUpdateCard}) => {
   const [showModal, setShowModal] = useState(false);
   const [openCommentsTab, setOpenCommentsTab] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  
   // const [cardData, setCardData] = useState(card);
   const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${card.person_name}`;
   
@@ -66,7 +67,7 @@ const Card = ({card, handleUpdateCard}) => {
         />
       )}
       {/* DELETE CONFIRMATION */}
-      {showDeleteConfirm && <DeleteConfirmation />}
+      {showDeleteConfirm && <DeleteConfirmation  id={card.id} />}
     </>
   );
 };

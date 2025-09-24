@@ -102,22 +102,22 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
                   <input type="date" name="dueDate" className="form-control" value={formData.dueDate} onChange={handleChange} />
                 </div>
 
-               <div className="col-md-6 mb-2">
-  <label className="form-label">Project List</label>
-  <select
-    className="form-select "
-    name="projectList"
-    value={formData.projectList}
-    onChange={handleChange}
-  >
-    <option value="">-- Select Project --</option>
-    {projects.map((project) => (  
-      <option key={project.id} value={project.id}>
-        {project.projName}
-      </option>
-    ))}
-  </select>
-</div>
+                <div className="col-md-6 mb-2">
+                  <label className="form-label">Project List</label>
+                  <select
+                    className="form-select "
+                    name="projectList"
+                    value={formData.projectList}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Select Project --</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.id}>
+                        {project.projName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
 
                 <div className="col-md-6">
@@ -125,22 +125,22 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
                   <input type="number" name="estimate" className="form-control" value={formData.estimate} onChange={handleChange} />
                 </div>
 
-             <div className="col-md-6 mb-2">
-  <label className="form-label">People List</label>
-  <select
-    className="form-select"
-    name="peopleList"
-    value={formData.peopleList}
-    onChange={handleChange}
-  >
-    <option value="">-- Select Person --</option>
-    {peoples.map((person) => (
-      <option key={person.id} value={person.id}>
-        {person.name}
-      </option>
-    ))}
-  </select>
-</div>
+                <div className="col-md-6 mb-2">
+                  <label className="form-label">People List</label>
+                  <select
+                    className="form-select"
+                    name="peopleList"
+                    value={formData.peopleList}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Select Person --</option>
+                    {peoples.map((person) => (
+                      <option key={person.id} value={person.id}>
+                        {person.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
 
                 <div className="col-md-6">

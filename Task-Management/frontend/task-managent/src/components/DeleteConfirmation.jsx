@@ -1,18 +1,33 @@
 
 import React, { useState, useEffect } from "react";
 import Toaster from "./Toaster";
+import { useAppData } from "./DataContext";
+import axios from "axios";
 
-const DeleteConfirmation = () => {
+const DeleteConfirmation = ({id}) => {
 
     const [isDeleted, setIsDeleted] = useState(false);
+    const {fetchCards} = useAppData()
     const [showToast, setShowToast] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(true);
 
+    // const handleConfirmDelete = () => {
+    //     setIsDeleted(true);
+    //     setShowDeleteConfirm(false);
+    //     setShowToast(true);
+    // };
+
     const handleConfirmDelete = () => {
-        setIsDeleted(true);
-        setShowDeleteConfirm(false);
+    if (!id) return;
+    axios
+      .delete(`http://localhost:8080/cards/${id}`)
+      .then(() => {
         setShowToast(true);
-    };
+        setShowDeleteConfirm(false);
+        fetchCards()
+      })
+      .catch((err) => console.error(err));
+  };
     if (isDeleted && !showToast) return null;
     return (
         <div>
