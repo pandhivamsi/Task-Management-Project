@@ -6,7 +6,7 @@ const Toaster = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowToast(false);
-    }, 3000); // 3 seconds
+    }, 3000); 
 
     return () => clearTimeout(timer);
   }, []);

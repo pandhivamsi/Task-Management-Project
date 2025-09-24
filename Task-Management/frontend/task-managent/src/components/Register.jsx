@@ -58,7 +58,7 @@ const Register = () => {
     return (
         <div>
         <Header/>
-        <div className="d-flex justify-content-center mt-5">
+        <div className="d-flex justify-content-center mt-5 pt-5">
             <div className="card shadow" style={{ width: '350px' }}>
                 <div 
                     className="card-header text-white text-center"

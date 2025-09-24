@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import axios from "axios";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 const PeopleListing = () => {
   const [peoples, setPeoples] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingPersonId, setEditingPersonId] = useState(null);
+  const [personToDelete, setPersonToDelete] = useState(null); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false); 
+
   const [newPerson, setNewPerson] = useState({
     firstName: "",
     lastName: "",
@@ -16,22 +21,28 @@ const PeopleListing = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8081/peoples")
-      .then((res) => res.json())
-      .then((data) => setPeoples(data))
+    axios
+      .get("http://localhost:8081/peoples")
+      .then((res) => setPeoples(res.data))
       .catch((err) => console.error(err));
   }, []);
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this person?")) {
-      fetch(`http://localhost:8081/peoples/${id}`, {
-        method: "DELETE",
+ 
+  const confirmDelete = () => {
+    if (!personToDelete) return;
+    axios
+      .delete(`http://localhost:8081/peoples/${personToDelete}`)
+      .then(() => {
+        setPeoples(peoples.filter((person) => person.id !== personToDelete));
+        setPersonToDelete(null);
+        setShowDeleteModal(false);
       })
-        .then(() => {
-          setPeoples(peoples.filter((person) => person.id !== id));
-        })
-        .catch((err) => console.error(err));
-    }
+      .catch((err) => console.error(err));
+  };
+
+  const handleDelete = (id) => {
+    setPersonToDelete(id);   
+    setShowDeleteModal(true); 
   };
 
   const handleEdit = (person) => {
@@ -45,10 +56,6 @@ const PeopleListing = () => {
       status: person.status,
     });
     setShowModal(true);
-  };
-
-  const handleView = (id) => {
-    alert("View details of person with ID: " + id);
   };
 
   const handleAdd = () => {
@@ -82,31 +89,21 @@ const PeopleListing = () => {
 
   const handleSave = () => {
     if (editingPersonId) {
-      // Update existing person on backend
-      fetch(`http://localhost:8081/peoples/${editingPersonId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPerson),
-      })
-        .then((res) => res.json())
-        .then((updatedPerson) => {
+      axios
+        .put(`http://localhost:8081/peoples/${editingPersonId}`, newPerson)
+        .then((res) => {
           const updatedPeoples = peoples.map((person) =>
-            person.id === editingPersonId ? updatedPerson : person
+            person.id === editingPersonId ? res.data : person
           );
           setPeoples(updatedPeoples);
           handleClose();
         })
         .catch((err) => console.error(err));
     } else {
-      // Add new person
-      fetch("http://localhost:8081/peoples", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPerson),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPeoples([...peoples, data]);
+      axios
+        .post("http://localhost:8081/peoples", newPerson)
+        .then((res) => {
+          setPeoples([...peoples, res.data]);
           handleClose();
         })
         .catch((err) => console.error(err));
@@ -170,6 +167,15 @@ const PeopleListing = () => {
         </table>
       </div>
 
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <DeleteConfirmation
+          handleDelete={confirmDelete}
+          onClose={() => setShowDeleteModal(false)}
+        />
+      )}
+
+      {/* Add/Edit Modal */}
       {showModal && (
         <div
           className="modal fade show d-block"
