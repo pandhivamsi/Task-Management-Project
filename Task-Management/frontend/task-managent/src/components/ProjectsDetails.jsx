@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import Header from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import axios from "axios";
+// import { DataContext } from "./DataContext";
 
 const ProjectsDetails = () => {
   const [projects, setProjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editingPersonId, setEditingPersonId] = useState(null);
+
   const [newProject, setNewProject] = useState({
     projName: "",
     createdBy: "",
@@ -25,6 +27,7 @@ const ProjectsDetails = () => {
         .delete(`http://localhost:8080/projects/${id}`)
         .then(() => {
           setProjects(projects.filter((project) => project.id !== id));
+          window.location.reload();
         })
         .catch((err) => console.error(err));
     }
@@ -80,6 +83,7 @@ const ProjectsDetails = () => {
         .then((res) => {
           setProjects([...projects, res.data]);
           handleClose();
+          window.location.reload();
         })
         .catch((err) => console.error(err));
     }

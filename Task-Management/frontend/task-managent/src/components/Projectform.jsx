@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { DataContext } from "./DataContext";
 
 const ProjectForm = ({ onClose, onProjectSaved }) => {
   const [projectName, setProjectName] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (projectName.trim()) {
       try {
-        const res = await axios.post("http://localhost:8080/projects", {
-          projectName: projectName,
-        });
-        onProjectSaved(res.data);
+        const newProject = { projName: projectName };
 
-        setProjectName("");
-        onClose();
+        const res = await axios.post(`http://localhost:8080/projects`, newProject);
+
+        onProjectSaved(res.data);
+        setProjectName(""); 
+        onClose(); 
+        window.location.reload();
       } catch (err) {
         console.error("Error saving project:", err);
       }
@@ -31,11 +34,7 @@ const ProjectForm = ({ onClose, onProjectSaved }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Create Project</h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={onClose}
-            ></button>
+            <button type="button" className="btn-close" onClick={onClose}></button>
           </div>
 
           <div className="modal-body">
@@ -47,7 +46,11 @@ const ProjectForm = ({ onClose, onProjectSaved }) => {
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
               />
-              <button type="submit" className="btn btn-primary submit" style={{ marginLeft: "21rem" }}>
+              <button
+                type="submit"
+                className="btn btn-primary submit"
+                style={{ marginLeft: "21rem" }}
+              >
                 Save Project
               </button>
             </form>
