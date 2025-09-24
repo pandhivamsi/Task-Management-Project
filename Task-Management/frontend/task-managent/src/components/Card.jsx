@@ -3,11 +3,11 @@ import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
 import DeleteConfirmation from "./DeleteConfirmation";
 
-const Card = ({ user }) => {
+const Card = ({card}) => {
   const [showModal, setShowModal] = useState(false);
   const [openCommentsTab, setOpenCommentsTab] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${user.name}`;
+  const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${card.person_name}`;
   
   const handleOpenModal = (fromComment = false) => {
     setOpenCommentsTab(fromComment);
@@ -28,10 +28,10 @@ const Card = ({ user }) => {
             className="rounded-circle border border-2"
             style={{ width: 30, height: 30, marginRight: 8 }}
           />
-          <span className="fw-bold small text-secondary">{user.taskId}</span>
+          <span className="fw-bold small text-secondary">{card.card_id}</span>
         </div>
         <div className="card-body p-2">
-          <p className="card-text mb-2 small">{user.title}</p>
+          <p className="card-text mb-2 small">{card.title}</p>
         </div>
         <CardIcons
           onCommentClick={() => handleOpenModal(true)}
@@ -48,9 +48,9 @@ const Card = ({ user }) => {
       </div>
 
       {/* EDIT MODAL */}
-      {showModal && (
+      {showModal && ( 
         <CardEdit
-          user={user}
+          card={card}
           onClose={() => setShowModal(false)}
           fromComment={openCommentsTab}
         />
