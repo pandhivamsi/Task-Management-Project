@@ -1,21 +1,21 @@
 import React, { useContext, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
-import { IoIosAddCircleOutline  } from "react-icons/io";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { ThemeContext } from "./ThemeContext";
-import { DataContext } from "./DataContext";
+import { useAppData } from "./DataContext";
 import axios from "axios";
 
 const AddTask = () => {
   const navigate = useNavigate();
-  const [savedData, setSavedData] = useState(null);
-   const themeCtx = useContext(ThemeContext);
-   const { projects, peoples, loading } = useContext(DataContext);
-  const theme = themeCtx?.theme ?? {
-    header: "#0d6efd",  
-  };
+  const themeCtx = useContext(ThemeContext);
+  const { projects, peoples } = useAppData();
+
+  const theme = themeCtx?.theme ?? { header: "#0d6efd" };
   const [activeTab, setActiveTab] = useState("details");
-  // const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom",}
+  const [showModal, setShowModal] = useState(false);
+  const { fetchCards } = useAppData();
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -25,54 +25,53 @@ const AddTask = () => {
     size: "",
     rank: "",
     release: "",
-    status:"",
+    status: "Ready",
     sprint: "",
-    projectList:"",
-    peopleList:"",
+    projectList: "",
+    peopleList: "",
   });
 
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
- 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
- 
   const handleAddComment = () => {
     if (commentInput.trim() !== "") {
       setComments([
         ...comments,
-        {
-          text: commentInput,
-          user: "User",
-          time: new Date().toLocaleString(),
-        },
+        { text: commentInput, user: "User", time: new Date().toLocaleString() },
       ]);
       setCommentInput("");
     }
   };
-  const handleSave = () => {
-    setSavedData({ ...formData });
-    console.log(savedData)
-    axios.post(`http://localhost:8080/cards`,formData)
-    .then((res)=>{
-      set
-    })
-    setShowModal(false);
-    navigate("/dashboard");
-  };
-  return (
-    
-    <div className="container padding-top: 70px ">
-      <div className="d-flex justify-content-end mt-3">
-        <button className="btn btn-primary" style={{ backgroundColor: theme.header}} onClick={() => setShowModal(true)}>
 
-          <IoIosAddCircleOutline fontSize={17}/> Create Task
+  const handleSave = async () => {
+    try {
+      const res = await axios.post("http://localhost:8080/cards", formData);
+      console.log("Task saved:", res.data);
+      fetchCards();
+      setShowModal(false);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Error saving task:", err);
+    }
+  };
+
+  return (
+    <div className="container padding-top: 70px">
+      <div className="d-flex justify-content-end mt-3">
+        <button
+          className="btn btn-primary"
+          style={{ backgroundColor: theme.header }}
+          onClick={() => setShowModal(true)}
+        >
+          <IoIosAddCircleOutline fontSize={17} /> Create Task
         </button>
       </div>
+
       {showModal && (
         <div
           className="modal show d-block"
@@ -81,16 +80,20 @@ const AddTask = () => {
         >
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
-              <div className="modal-header text-white" style={{ backgroundColor: theme.header}}>
-                <h5 className="modal-title">
-                  EPIC11: Enhance the Card Modal window
-                </h5>
+              {/* HEADER */}
+              <div
+                className="modal-header text-white"
+                style={{ backgroundColor: theme.header }}
+              >
+                <h5 className="modal-title">Create Task</h5>
                 <button
                   type="button"
                   className="btn-close btn-close-white"
                   onClick={() => setShowModal(false)}
                 ></button>
               </div>
+
+              {/* TABS */}
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <button
@@ -113,13 +116,15 @@ const AddTask = () => {
                   </button>
                 </li>
               </ul>
+
+              {/* BODY */}
               <div
                 className="modal-body"
                 style={{ maxHeight: "500px", overflowY: "auto" }}
               >
                 {activeTab === "details" && (
                   <form>
-                    <div className="">
+                    <div className="mb-2">
                       <label className="form-label fw-bold">Title</label>
                       <input
                         type="text"
@@ -129,6 +134,7 @@ const AddTask = () => {
                         onChange={handleInputChange}
                       />
                     </div>
+
                     <div className="mb-2">
                       <label className="form-label fw-bold">Description</label>
                       <textarea
@@ -139,6 +145,7 @@ const AddTask = () => {
                         onChange={handleInputChange}
                       ></textarea>
                     </div>
+
                     <div className="row">
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Priority</label>
@@ -154,6 +161,7 @@ const AddTask = () => {
                           <option value="Low">Low</option>
                         </select>
                       </div>
+
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Status</label>
                         <select
@@ -163,10 +171,11 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         >
                           <option value="Ready">Ready</option>
-                          <option value="In-Progress">In-Progress</option>
+                          <option value="In Progress">In Progress</option>
                           <option value="Done">Done</option>
                         </select>
                       </div>
+
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Due Date</label>
                         <input
@@ -178,23 +187,22 @@ const AddTask = () => {
                         />
                       </div>
 
-                        
-               <div className="col-md-6 mb-2">
-  <label className="form-label">Project List</label>
-  <select
-    className="form-select "
-    name="projectList"
-    value={formData.projectList}
-    onChange={ handleInputChange}
-  >
-    <option value="">-- Select Project --</option>
-    {projects.map((project) => (  
-      <option key={project.id} value={project.id}>
-        {project.projName}
-      </option>
-    ))}
-  </select>
-</div>
+                      <div className="col-md-6 mb-2">
+                        <label className="form-label">Project List</label>
+                        <select
+                          className="form-select"
+                          name="projectList"
+                          value={formData.projectList}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">-- Select Project --</option>
+                          {projects.map((project) => (
+                            <option key={project.id} value={project.id}>
+                              {project.projName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Estimate (Days)</label>
@@ -208,21 +216,21 @@ const AddTask = () => {
                       </div>
 
                       <div className="col-md-6 mb-2">
-  <label className="form-label">People List</label>
-  <select
-    className="form-select"
-    name="peopleList"
-    value={formData.peopleList}
-    onChange={ handleInputChange}
-  >
-    <option value="">-- Select Person --</option>
-    {peoples.map((person) => (
-      <option key={person.id} value={person.id}>
-        {person.name}
-      </option>
-    ))}
-  </select>
-</div>
+                        <label className="form-label">People List</label>
+                        <select
+                          className="form-select"
+                          name="peopleList"
+                          value={formData.peopleList}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">-- Select Person --</option>
+                          {peoples.map((person) => (
+                            <option key={person.id} value={person.id}>
+                              {person.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
 
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Size</label>
@@ -234,6 +242,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
+
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Release</label>
                         <input
@@ -244,6 +253,7 @@ const AddTask = () => {
                           onChange={handleInputChange}
                         />
                       </div>
+
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Sprint</label>
                         <input
@@ -257,6 +267,7 @@ const AddTask = () => {
                     </div>
                   </form>
                 )}
+
                 {activeTab === "comments" && (
                   <div>
                     <div className="mb-3">
@@ -283,7 +294,7 @@ const AddTask = () => {
                           </button>
                           <button
                             className="btn btn-success btn-sm"
-                            style={{ backgroundColor: theme.header}}
+                            style={{ backgroundColor: theme.header }}
                             onClick={handleAddComment}
                           >
                             Save
@@ -291,6 +302,7 @@ const AddTask = () => {
                         </div>
                       </div>
                     </div>
+
                     <h6 className="mb-2">Comments</h6>
                     <div className="list-group">
                       {comments.length === 0 ? (
@@ -315,6 +327,8 @@ const AddTask = () => {
                   </div>
                 )}
               </div>
+
+              {/* FOOTER */}
               {activeTab === "details" && (
                 <div className="modal-footer py-2">
                   <button
@@ -325,7 +339,7 @@ const AddTask = () => {
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
-                    style={{ backgroundColor: theme.header}}
+                    style={{ backgroundColor: theme.header }}
                     onClick={handleSave}
                   >
                     Save
@@ -337,9 +351,7 @@ const AddTask = () => {
         </div>
       )}
     </div>
-  
   );
-   
 };
 
 export default AddTask;
