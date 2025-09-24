@@ -54,7 +54,7 @@ const AddTask = ({ projects, peoples }) => {
   const handleSave = () => {
     setSavedData({ ...formData });
     setShowModal(false);
-    navigate("/");
+    navigate("/dashboard");
   };
   return (
     
