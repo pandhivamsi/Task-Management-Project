@@ -3,16 +3,19 @@ import { useNavigate, Link } from "react-router-dom";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import { IoIosAddCircleOutline  } from "react-icons/io";
 import { ThemeContext } from "./ThemeContext";
+import { DataContext } from "./DataContext";
+import axios from "axios";
 
-const AddTask = ({ projects, peoples }) => {
+const AddTask = () => {
   const navigate = useNavigate();
   const [savedData, setSavedData] = useState(null);
    const themeCtx = useContext(ThemeContext);
+   const { projects, peoples, loading } = useContext(DataContext);
   const theme = themeCtx?.theme ?? {
     header: "#0d6efd",  
   };
   const [activeTab, setActiveTab] = useState("details");
-  const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom",}
+  // const users = {name:"vamsi",email:"sdsfad.com",phone:868899238,website:"io.vom",}
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -53,6 +56,11 @@ const AddTask = ({ projects, peoples }) => {
   };
   const handleSave = () => {
     setSavedData({ ...formData });
+    console.log(savedData)
+    axios.post(`http://localhost:8080/cards`,formData)
+    .then((res)=>{
+      set
+    })
     setShowModal(false);
     navigate("/dashboard");
   };
@@ -170,26 +178,23 @@ const AddTask = ({ projects, peoples }) => {
                         />
                       </div>
 
-                        <div className="col-md-6 mb-2">
-                          <label className="form-label">ProjectList</label>
-                          <select
-                          className="form-select"
-                          name="projectList"
-                          value={formData.projectList}
-                          onChange={handleInputChange}
-                      >
-                        <option value="">Select Project</option>
-                        {projects && projects.length > 0 ? (
-                        projects.map((p) => (
-                        <option key={p.id} value={p.projectName}>
-                        {p.projectName}
-                      </option>
-                           ))
-                              ) : (
-                    <option disabled>No Projects Available</option>
-                  )}
-                  </select>
-                  </div>
+                        
+               <div className="col-md-6 mb-2">
+  <label className="form-label">Project List</label>
+  <select
+    className="form-select "
+    name="projectList"
+    value={formData.projectList}
+    onChange={ handleInputChange}
+  >
+    <option value="">-- Select Project --</option>
+    {projects.map((project) => (  
+      <option key={project.id} value={project.id}>
+        {project.projName}
+      </option>
+    ))}
+  </select>
+</div>
 
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Estimate (Days)</label>
@@ -203,26 +208,21 @@ const AddTask = ({ projects, peoples }) => {
                       </div>
 
                       <div className="col-md-6 mb-2">
-                          <label className="form-label">PeopleList</label>
-                          <select
-                          className="form-select"
-                          name="peopleList"
-                          value={formData.peopleList}
-                          onChange={handleInputChange}
-                         
-                      >
-                        <option value="">Select People</option>
-                        {peoples && peoples.length > 0 ? (
-                        peoples.map((x) => (
-                        <option key={x.id} value={x.firstName}>
-                        {x.firstName}
-                      </option>
-                    ))
-              ) : (
-                    <option disabled>No People Available</option>
-                  )}
-                  </select>
-                  </div>
+  <label className="form-label">People List</label>
+  <select
+    className="form-select"
+    name="peopleList"
+    value={formData.peopleList}
+    onChange={ handleInputChange}
+  >
+    <option value="">-- Select Person --</option>
+    {peoples.map((person) => (
+      <option key={person.id} value={person.id}>
+        {person.name}
+      </option>
+    ))}
+  </select>
+</div>
 
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Size</label>
