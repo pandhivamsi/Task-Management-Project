@@ -21,9 +21,11 @@ public class Person {
     private String organization;
 
     @Column(name = "work_phone")
-    private Integer workPhone;
+    private Long workPhone;
 
-    private Integer mobile;
+    private Long mobile;
+    
+    private String role;
 
     @Column(unique = true) 
     private String email;

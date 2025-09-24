@@ -121,4 +121,9 @@ public class TaskerController {
 	    return ResponseEntity.ok().build();
 	}
 	
+	@GetMapping("/peoples")
+	public List<Person> getUsers(){
+		return service.getAllPersons();
+	}
+	
 }

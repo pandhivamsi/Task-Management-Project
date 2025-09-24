@@ -150,7 +150,7 @@ public class TaskerService {
 	        throw new UsernameNotFoundException("No authenticated user");
 	    }
 	    String principalName = auth.getName();
-	    return prepo.findByUserid(principalName)
+	    return prepo.findByUserId(principalName)
 	            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + principalName));
 	}
 	
