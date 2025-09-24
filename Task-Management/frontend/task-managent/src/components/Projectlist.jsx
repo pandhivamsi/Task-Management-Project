@@ -14,7 +14,7 @@ const Projectlist = () => {
       console.log(res);
       setProjects(res.data);
       if (res.data.length > 0) {
-        setSelectedProject(res.data[0].projName); // Use projName here
+        setSelectedProject(res.data[0].projName); 
       }
     })
     .catch((err) => console.error("Error fetching projects:", err));
