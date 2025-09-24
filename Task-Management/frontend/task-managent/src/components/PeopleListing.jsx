@@ -18,15 +18,17 @@ const PeopleListing = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/peoples")
-      .then((res) => setPeoples(res.data))
+      .get("http://localhost:8080/peoples")
+      .then((res) => {setPeoples(res.data)
+      console.log(res.data)
+  })
       .catch((err) => console.error(err));
   }, []);
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this person?")) {
       axios
-        .delete(`http://localhost:8081/peoples/${id}`)
+        .delete(`http://localhost:8080/peoples/${id}`)
         .then(() => {
           setPeoples(peoples.filter((person) => person.id !== id));
         })
@@ -47,9 +49,9 @@ const PeopleListing = () => {
     setShowModal(true);
   };
 
-  const handleView = (id) => {
-    alert("View details of person with ID: " + id);
-  };
+  // const handleView = (id) => {
+  //   alert("View details of person with ID: " + id);
+  // };
 
   const handleAdd = () => {
     setEditingPersonId(null);
@@ -84,7 +86,7 @@ const PeopleListing = () => {
     if (editingPersonId) {
     
       axios
-        .put(`http://localhost:8081/peoples/${editingPersonId}`, newPerson)
+        .put(`http://localhost:8080/peoples/${editingPersonId}`, newPerson)
         .then((res) => {
           const updatedPeoples = peoples.map((person) =>
             person.id === editingPersonId ? res.data : person
@@ -96,7 +98,7 @@ const PeopleListing = () => {
     } else {
     
       axios
-        .post("http://localhost:8081/peoples", newPerson)
+        .post("http://localhost:8080/peoples", newPerson)
         .then((res) => {
           setPeoples([...peoples, res.data]);
           handleClose();

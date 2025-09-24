@@ -8,16 +8,16 @@ import ProfileRow from "./ProfileRow";
 import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
-import axios from "axios";
+// import axios from "axios";
+import { DataContext } from "./DataContext";
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState(null);
-  const [projects, setProjects] = useState("");
-  const [peoples, setPeoples] = useState("");
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
+  const { projects, peoples, loading } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
 
@@ -25,24 +25,7 @@ const Dashboard = () => {
     setSelectedOption(option);
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/projects")
-      .then((res) => {
-        setProjects(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8081/peoples")
-      .then((res) => {
-        setPeoples(res.data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
+   
   const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
     setShowUsers(false);
@@ -139,7 +122,7 @@ const Dashboard = () => {
               />
             </div>
 
-            <AddTask projects={projects} peoples={peoples} />
+            <AddTask  />
             <StandupWizard setIsFullscreen={setIsFullscreen} />
             <Filter
               onFiltersChange={(raw, applied) => {

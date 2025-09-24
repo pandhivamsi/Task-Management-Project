@@ -1,14 +1,15 @@
 # Task-Management-Project
 
-Steps to run the app locally:-
- 1.clone the repository git clone https://github.com/pandhivamsi/Task-Management-Project.git
- 2.npm install
- 3.npm run dev
+Steps to run the app locally:- <br>
+ 1.clone the repository git clone https://github.com/pandhivamsi/Task-Management-Project.git <br>
+ 2.npm install <br>
+ 3.npm run dev <br>
  4.npm start
 
 UseCase Diagram:-
+<br>
 ![alt text](<WhatsApp Image 2025-09-24 at 11.37.46_2bb870f1.jpg>)
-
+<br>
 Models:-
 ![alt text](<WhatsApp Image 2025-09-24 at 15.52.20_9c884d5f.jpg>)
  1.User Model

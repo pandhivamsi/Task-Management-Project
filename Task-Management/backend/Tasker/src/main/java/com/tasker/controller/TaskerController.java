@@ -1,19 +1,24 @@
 package com.tasker.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tasker.entity.Card;
+import com.tasker.entity.Comment;
+import com.tasker.entity.Person;
 import com.tasker.entity.Project;
 import com.tasker.service.TaskerService;
 
@@ -84,4 +89,41 @@ public class TaskerController {
             return ResponseEntity.notFound().build();
         }
     }
+	
+	@GetMapping("/comments")
+	public List<Comment> getComments() {
+		return service.getAllComments();
+	}
+	
+	@PostMapping("/comments")
+	public ResponseEntity<Comment> addComment(@RequestBody Comment req) {
+		req = service.saveComment(req);
+		return ResponseEntity.status(HttpStatus.CREATED).body(req);
+
+	}
+	
+	@PostMapping("/")
+	public Boolean loginUser(@RequestParam String userName ,@RequestParam String password) {
+		return service.loginUser(userName,password);
+
+	}
+	
+	@PostMapping("/register")
+	public ResponseEntity<Person> addUser(@RequestBody Person p) {
+		p = service.addPerson(p);
+		return ResponseEntity.status(HttpStatus.CREATED).body(p);
+	}
+	
+	@PatchMapping("/resetPassword")
+	public ResponseEntity<Void> resetPassword(@RequestBody String newPass) {
+	    Person p = service.getCurrentPerson();
+	    service.updatePassword(p, newPass);  
+	    return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/peoples")
+	public List<Person> getUsers(){
+		return service.getAllPersons();
+	}
+	
 }
