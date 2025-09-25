@@ -155,7 +155,8 @@ Dashboard page:<br><br>
 <br>
 Create Task:-<br>
   1. Card Details Tab:-<br>
-  ![alt text](carddtls.jpg)<br>
+  
+  ![alt text](carddtls.jpg) <br>
 	-This is where you enter all the task information.<br>
     ->Fields include:-<br>
 	-Title & Description → Name and details of the task.<br>
@@ -166,6 +167,7 @@ Create Task:-<br>
       Basically, this tab is used to create or edit the task details.<br>
 <br>
 2. Comments Tab:-<br>
+
    ![alt text](cmntd.jpg) <br>
     -This tab is for communication and collaboration.<br>
    ->You (or team members) can:<br>
@@ -176,6 +178,7 @@ Create Task:-<br>
      A list of all saved comments appears below for tracking discussions.<br>
      <br>
 3.Standup_Wizard<br>
+
    ![alt text](swd.jpg) <br>
     - When you click the Standup_Wizard, the dashboard expands into full screen.<br>
     - In the Standup_Wizard, the "Start" button at the top left is a timer. It turns on when we click on the user profile.<br>
@@ -185,10 +188,12 @@ Create Task:-<br>
     - This view helps track tasks easily in a clean, organized layout.<br>
 <br>
 4.Fiter<br>
+
   ![alt text](filter.png)<br>
   <img src="filter.png" alt="My Image" height="100" width="200"><br>
    -In the filter<br>
-   ![alt text](filt-1.jpg)<br>
+
+   ![alt text](filt.jpg)<br>
    <img src="filt.png" alt="My Image" height="300" width="200"><br>
     - This is a filter panel to refine or organize the displayed data.<br>
     - Clear Filters lets you remove all applied filters.<br>
