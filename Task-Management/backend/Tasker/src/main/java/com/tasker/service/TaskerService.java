@@ -172,5 +172,9 @@ public class TaskerService {
 		Person user1 = user.get();
 		return passwordEncoder.matches(password, user1.getPassword());		
 	}
+	
+	public Person findByEmail(String email) {
+	    return prepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+	} 
 
 }

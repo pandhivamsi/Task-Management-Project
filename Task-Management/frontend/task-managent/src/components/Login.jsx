@@ -3,42 +3,48 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ThemeContext } from "./ThemeContext";
+import axios from "axios";
 
 const Login = () => {
   const uname = useRef();
   const upwd = useRef();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const {theme} = useContext(ThemeContext);
-  const login = (e) => {
+  const { theme } = useContext(ThemeContext);
+
+  const login = async (e) => {
     e.preventDefault();
+
     if (!uname.current.value || !upwd.current.value) {
       setError("Username and Password are required");
       return;
     }
 
-    fetch("http://localhost:9000/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    try {
+      const res = await axios.post("http://localhost:8080/auth", {
         username: uname.current.value,
         password: upwd.current.value,
-      }),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error("Invalid username or password");
-        return res.json();
-      })
-      .then((data) => {
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("role", data.role);
-        sessionStorage.setItem("id", data.id);
+      });
 
-        if (data.role === "ROLE_USER") navigate("/dashboard");
-        else if (data.role === "ROLE_ADMIN") navigate("/admin-dashboard");
-        else setError("Unknown user role");
-      })
-      .catch((err) => setError(err.message));
+      // store user info in sessionStorage
+      sessionStorage.setItem("role", res.data.role);
+      sessionStorage.setItem("id", res.data.id);
+      sessionStorage.setItem("username", res.data.username);
+
+
+     navigate("/dashboard")
+
+    } catch (err) {
+      // Axios error handling
+      if (err.response) {
+        // server responded with status != 2xx
+        setError(err.response.data || "Invalid username or password");
+      } else if (err.request) {
+        setError("Server did not respond");
+      } else {
+        setError(err.message);
+      }
+    }
   };
 
   const register = () => navigate("/register");
@@ -63,7 +69,6 @@ const Login = () => {
                 autoFocus
               />
             </div>
-
             <div className="mb-3">
               <input
                 ref={upwd}
@@ -72,27 +77,23 @@ const Login = () => {
                 placeholder="Enter password"
               />
             </div>
-
-            
             <div className="d-grid gap-2">
-  <button
-    type="submit"
-    className="btn text-white w-75 mx-auto"
-    style={{ backgroundColor: theme.header}}
-  >
-    Login
-  </button>
-  <button
-    type="button"
-    className="btn text-white w-75 mx-auto"
-    style={{ backgroundColor: theme.header}}
-    onClick={register}
-  >
-    New? Register
-  </button>
-</div>
-
-
+              <button
+                type="submit"
+                className="btn text-white w-75 mx-auto"
+                style={{ backgroundColor: theme.header }}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                className="btn text-white w-75 mx-auto"
+                style={{ backgroundColor: theme.header }}
+                onClick={register}
+              >
+                New? Register
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -100,4 +101,4 @@ const Login = () => {
   );
 };
 
-export default Login
+export default Login;
