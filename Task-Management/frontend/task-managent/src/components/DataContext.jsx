@@ -15,6 +15,7 @@ export const AppDataProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [peoples, setPeoples] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState("");
 
   // Fetch all data
   const fetchCards = () => {
@@ -44,6 +45,12 @@ export const AppDataProvider = ({ children }) => {
     fetchProjectsAndPeoples();
   }, []);
 
+  useEffect(() => {
+    if (projects.length > 0 && !selectedProject) {
+      setSelectedProject(projects[0].projName); 
+    }
+  }, [projects, selectedProject]);
+
   return (
     <AppDataContext.Provider
       value={{
@@ -55,6 +62,8 @@ export const AppDataProvider = ({ children }) => {
         peoples,
         setPeoples,
         loading,
+        setSelectedProject,
+        selectedProject
       }}
     >
       {children}
