@@ -9,10 +9,10 @@ Steps to run the app locally:- <br>
 <br>
 UseCase Diagram:-
 <br>
-![alt text](document-assets/<WhatsApp Image 2025-09-24 at 11.37.46_2bb870f1.jpg>)
+![alt text](<WhatsApp Image 2025-09-24 at 11.37.46_2bb870f1.jpg>)
 <br>
 Models:-<br>
-![alt text](document-assets/<WhatsApp Image 2025-09-24 at 16.24.38_718d3aa0.jpg>)
+![alt text](<WhatsApp Image 2025-09-24 at 16.24.38_718d3aa0.jpg>)
 <br>
 <br>
  1.User Model <br>
@@ -72,7 +72,7 @@ User Details(GET)<br><br>
 Login Page:-<br>
   ---
 <br>
-![alt text](document-assets/<log n.jpg>)<br>
+![alt text](<log n.jpg>)<br>
 	This is a user login form.its lets users sign in to an app or website using their username and password.  <br>
   ->How It Works <br>
 	  -At the top, "User Login" tells users what to do.<br>
@@ -89,7 +89,7 @@ Registration Page:-<br>
 
   ---
 
-![alt text](document-assets/reg.jpg) <br>
+![alt text](reg.jpg) <br>
 	-This is a registration form for creating a new account in an app or website.<br>
   ->What Each Field Means:- <br>
 	  -The title "Register" lets users know they are signing up.<br>
@@ -106,36 +106,36 @@ Header :-<br>
   ---
 
   1.Select Project:-<br>
-    ![alt text](document-assets/<Screenshot 2025-09-25 193458.png>)<br>
+    ![alt text](<Screenshot 2025-09-25 193458.png>)<br>
    -When you click the Select Project button, a dropdown appears with an option to Add Project.<br>
    -Clicking on it opens a form where you can enter the Project Name.<br>
    -Finally, you can save it by clicking the Save Project button.<br>
   2.Profile icon:-<br>
-   ![alt text](document-assets/<Screenshot 2025-09-25 185506.png>)<br>
+   ![alt text](<Screenshot 2025-09-25 185506.png>)<br>
    -When you click the profile icon, a dropdown menu opens.<br>
    -It shows options like Edit Details, Reset Password, choose a theme color (using the color dots), and Log Out.<br>
    -This menu is simply for quickly accessing profile-related actions.<br> 
   3.ThreeDots icon:-<br>
-    ![alt text](document-assets/<Screenshot 2025-09-25 190038.png>)<br>
+    ![alt text](<Screenshot 2025-09-25 190038.png>)<br>
    -When you click the three dots icon, a menu panel opens.<br>
    -It shows options like Peoples and Projects.<br>
    -This lets you quickly switch between managing people and managing projects.<br>
      ->Peoples :-<br>
-      ![alt text](document-assets/ppl1.jpg)<br>
+      ![alt text](ppl1.jpg)<br>
        -When you click the Peoples button, a popup form appears.<br>
        -Here you can enter details like First Name, Last Name, Login ID, Email, Role, and Status.<br>
        -Finally, you can add the member or cancel the action.<br>
      ->Projects :-<br>
-      ![alt text](document-assets/prt.jpg)<br>
+      ![alt text](prt.jpg)<br>
       -When you click the Projects button, a popup form appears.<br>
       -It allows you to enter the Project Name, while fields like Project Id and Created By are shown automatically.<br>
       -You can then choose to add the project or cancel the action.<br>
   4.Search icon:-<br>
-   ![alt text](document-assets/<Screenshot 2025-09-25 192601.png>)<br>
+   ![alt text](<Screenshot 2025-09-25 192601.png>)<br>
    -When you click the search icon, a text box appears.<br>
    -Here you can type keywords to search for items quickly.<br>
   5.Support icon:-<br>
-    ![alt text](document-assets/<Screenshot 2025-09-25 192921.png>)<br>
+    ![alt text](<Screenshot 2025-09-25 192921.png>)<br>
     -When you click the Support icon, a scheduling window opens.<br>
     -It shows an option to book a 30-minute meeting.<br>
     -You can select a date and time from the calendar.<br>
@@ -143,7 +143,7 @@ Header :-<br>
     -This helps you easily schedule a support call online.<br>
 <br>
 Select Cards:-<br>
- ![alt text](document-assets/sltcards.jpg)<br>
+ ![alt text](sltcards.jpg)<br>
  All cards :-<br>
 	-Everyone’s tasks<br>
  My cards :-<br>
@@ -152,7 +152,7 @@ Select Cards:-<br>
 
 Dashboard:- <br>
  ---
-![alt text](document-assets/db.jpg) <br>
+![alt text](db.jpg) <br>
 Dashboard page:<br><br>
   -Top Bar – Options like Select cards, Create Task, Standup_Wizard, and  Filters  are available.<br>
   -Task Board – It is divided into three columns: Ready, In Progress, and Done.<br>
@@ -165,7 +165,7 @@ Dashboard page:<br><br>
 Create Task:-<br>
   1. Card Details Tab:-<br>
   
-  ![alt text](document-assets/carddtls.jpg) <br>
+  ![alt text](carddtls.jpg) <br>
 	-This is where you enter all the task information.<br>
     ->Fields include:-<br>
 	-Title & Description → Name and details of the task.<br>
@@ -177,7 +177,7 @@ Create Task:-<br>
 <br>
 2. Comments Tab:-<br>
 
-   ![alt text](document-assets/cmntd.jpg) <br>
+   ![alt text](cmntd.jpg) <br>
     -This tab is for communication and collaboration.<br>
    ->You (or team members) can:<br>
       -Add comments about the task.<br>
@@ -188,7 +188,7 @@ Create Task:-<br>
      <br>
 3.Standup_Wizard<br>
 
-   ![alt text](document-assets/swd.jpg) <br>
+   ![alt text](swd.jpg) <br>
     - When you click the Standup_Wizard, the dashboard expands into full screen.<br>
     - In the Standup_Wizard, the "Start" button at the top left is a timer. It turns on when we click on the user profile.<br>
     - It displays three columns: Ready, In Progress, and Done.<br>
@@ -197,9 +197,9 @@ Create Task:-<br>
     - This view helps track tasks easily in a clean, organized layout.<br>
 <br>
 4.Fiter<br>
-  <img src="document-assets/filter.png" alt="My Image" height="100" width="200"><br>
+  <img src="filter.png" alt="My Image" height="100" width="200"><br>
    -In the filter<br>
-   <img src="document-assets/filt.jpg" alt="My Image" height="300" width="200"><br>
+   <img src="filt.jpg" alt="My Image" height="300" width="200"><br>
     - This is a filter panel to refine or organize the displayed data.<br>
     - Clear Filters lets you remove all applied filters.<br>
     - Categories available are Department, Role, and Priority.<br>
