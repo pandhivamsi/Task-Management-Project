@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
 import DeleteConfirmation from "./DeleteConfirmation";
+import Toaster from "./Toaster";
 // import axios from "axios";
 
 const Card = ({card, handleUpdateCard}) => {
   const [showModal, setShowModal] = useState(false);
   const [openCommentsTab, setOpenCommentsTab] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [openToast,setToaster] = useState(false)
   
   // const [cardData, setCardData] = useState(card);
   const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${card.person_name}`;
@@ -67,7 +69,8 @@ const Card = ({card, handleUpdateCard}) => {
         />
       )}
       {/* DELETE CONFIRMATION */}
-      {showDeleteConfirm && <DeleteConfirmation  id={card.id} />}
+      {showDeleteConfirm && <DeleteConfirmation  id={card.id} openToaster = {()=>setToaster(true)}/>}
+      {openToast && <Toaster/>}
     </>
   );
 };

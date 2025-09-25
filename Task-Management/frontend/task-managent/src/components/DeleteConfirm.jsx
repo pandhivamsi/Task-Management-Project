@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import Toaster from "./Toaster";
 
-const DeleteConfirm = ({ handleDelete, onClose }) => {
-  const [showToast, setShowToast] = useState(false);
+const DeleteConfirm = ({ handleDelete, onClose,showToast }) => {
 
   const handleConfirmDelete = () => {
     handleDelete(); 
-    setShowToast(true);
     onClose();
   };
 
@@ -47,8 +44,6 @@ const DeleteConfirm = ({ handleDelete, onClose }) => {
           </div>
         </div>
       </div>
-
-      {showToast && <Toaster />}
     </div>
   );
 };

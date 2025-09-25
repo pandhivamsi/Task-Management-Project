@@ -142,7 +142,7 @@ const { cards, setCards, fetchCards } = useAppData();
             readOnly
           />
         </div>
-        <KanbanBoard fetchCards = {fetchCards} setCards={setCards} cards={cards}/>
+        <KanbanBoard  setCards={setCards} cards={cards}/>
       </div>
     </div>
   );

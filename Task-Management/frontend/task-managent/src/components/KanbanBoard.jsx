@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 
-const KanbanBoard = ({fetchCards ,setCards,cards}) => {
+const KanbanBoard = ({setCards,cards}) => {
   
   const columns = [
     { name: "Ready", color: "#e3f2fd" },       

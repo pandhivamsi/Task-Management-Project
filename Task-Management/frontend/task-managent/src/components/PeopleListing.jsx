@@ -4,7 +4,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import axios from "axios";
 import { useAppData } from "./DataContext";
 import DeleteConfirm from "./DeleteConfirm";
-import { Toast } from "bootstrap";
+import Toaster from "./Toaster";
 
 const PeopleListing = () => {
   const {peoples, setPeoples}= useAppData();
@@ -12,6 +12,7 @@ const PeopleListing = () => {
   const [editingPersonId, setEditingPersonId] = useState(null);
   const [personToDelete, setPersonToDelete] = useState(null); 
   const [showDeleteModal, setShowDeleteModal] = useState(false); 
+  const [showToast,setShowToast] = useState(false)
   const [newPerson, setNewPerson] = useState({
     firstName: "",
     lastName: "",
@@ -29,6 +30,7 @@ const PeopleListing = () => {
         setPeoples(peoples.filter((person) => person.id !== personToDelete));
         setPersonToDelete(null);
         setShowDeleteModal(false);
+        setShowToast(true)
       })
       .catch((err) => console.error(err));
   };
@@ -263,6 +265,9 @@ const PeopleListing = () => {
           </div>
         </div>
       )}
+      {
+        showToast && <Toaster/>
+      }
     </div>
   );
 };
