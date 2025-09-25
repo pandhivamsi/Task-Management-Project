@@ -56,6 +56,7 @@ const Register = () => {
       // Redirect to login after 2 seconds
       setTimeout(() => {
         navigate("/");
+        sessionStorage.clear();
       }, 2000);
 
     } catch (err) {

@@ -16,9 +16,8 @@ const Header = () => {
   const openCalendly = () => {
     navigate("/support");
   };
-  const location = useLocation();
-  const currentPath = location.pathname;
-  const isAuthPage = currentPath === "/" || currentPath === "/register";
+  
+  const token = sessionStorage.getItem("token");
 
   return (
     <nav className="navbar px-4 fixed-top" style={{ backgroundColor: theme.header }}>
@@ -37,10 +36,10 @@ const Header = () => {
             />
             Tasker
           </a>
-          {!isAuthPage && <Projectlist />}
+          {token && <Projectlist />}
         </div>
 
-        {!isAuthPage && (
+        {token && (
           <div className="d-flex align-items-center position-relative">
             <button
               onClick={openCalendly}

@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/api/user/1")
+      .get("http://localhost:8080/auth/1")
       .then((res) => {
         setUser(res.data);
       })
@@ -106,9 +106,9 @@ const Profile = () => {
           <hr className="dropdown-divider border-secondary-subtle" />
         </li>
         <li>
-          <a className="dropdown-item text-danger ms-0 text-center" href="/">
+          <button onClick={()=>{navigate("/");sessionStorage.clear()}} className="dropdown-item text-danger ms-0 text-center">
             Log Out
-          </a>
+          </button>
         </li>
       </ul>
 
