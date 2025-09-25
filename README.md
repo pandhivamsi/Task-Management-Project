@@ -47,51 +47,55 @@ Models:-<br>
        id: Proejct id <br>
        projectName: Project Name <br>
 <br>
-#APIs
+APIs
  ---
-##Auth Endpoints <br><br>
+Auth Endpoints <br><br>
 
-###Signup User(POST)<br><br>
+Signup User(POST)<br><br>
 
-- /api/v1/auth/signup<br>
-- User can signup by adding firstName lastName, user Role and password,confoirm password.<br><br>
+  -/api/v1/auth/signup<br>
+  -User can signup by adding firstName lastName, user Role and password,confoirm password.<br><br>
 
-###Signin User(POST)<br><br>
+Signin User(POST)<br><br>
 
-- /api/v1/auth/signup<br>
-- User can signin with userNmae and password.<br><br>
+ -/api/v1/auth/signup<br>
+ -User can signin with userNmae and password.<br><br>
 
-##User Endpoints<br><br>
+User Endpoints<br><br>
 
-###User Details(GET)<br><br>
+User Details(GET)<br><br>
 
-- /api/v1/users/getDetails/:userId (where userId is the path variable)<br>
-- To fetch the details of the user.<br><br>
+ -/api/v1/users/getDetails/:userId (where userId is the path variable)<br>
+ -To fetch the details of the user.<br><br>
+
 Login Page:-<br>
+<br>
 ![alt text](<log n.jpg>)<br>
-	This is a user login form.its lets users sign in to an app or website using their username and password. 
-      ->How It Works
-	- At the top, "User Login" tells users what to do.
-    ->There are two input boxes:
-	-The first one is for entering a username.
-	-The second one is for entering a password.
-    ->There are two buttons:
-	-The "Login" button is for users to sign in if they already have an account.
-	-The "New? Register" button is for new users who want to create an account. 
+	This is a user login form.its lets users sign in to an app or website using their username and password.  <br>
+  ->How It Works <br>
+	  -At the top, "User Login" tells users what to do.<br>
+  ->There are two input boxes:<br>
+	  -The first one is for entering a username.<br>
+	  -The second one is for entering a password.<br>
+  ->There are two buttons:<br>
+	 -The "Login" button is for users to sign in if they already have an account.<br>
+	 -The "New? Register" button is for new users who want to create an account.<br> 
+<br>
 <br>
 Registration Page:-<br>
 ![alt text](reg.jpg) <br>
 	-This is a registration form for creating a new account in an app or website.<br>
-   ->What Each Field Means:- <br>
-	-The title "Register" lets users know they are signing up.<br>
-	-Username: Type a username for the new account.<br>
-	-Role: Enter a role, like "ROLE_USER," which decides user access level.<br>
-	-Password: Type a password for security.<br>
-	-Confirm Password: Type the same password again to make sure there are no mistakes.<br>
-   ->Buttons:-<br>
-	-"Register" submits the form to create an account.<br>
-	-"Have account? Sign in" lets users go back to the login page if they already have an account.<br>
+  ->What Each Field Means:- <br>
+	  -The title "Register" lets users know they are signing up.<br>
+	  -Username: Type a username for the new account.<br>
+	  -Role: Enter a role, like "ROLE_USER," which decides user access level.<br>
+	  -Password: Type a password for security.<br>
+	  -Confirm Password: Type the same password again to make sure there are no  mistakes.<br>
+  ->Buttons:-<br>
+	  -"Register" submits the form to create an account.<br>
+	  -"Have account? Sign in" lets users go back to the login page if they already have an account.<br>
     This helps new users sign up safely and easily for the service.<br>
+    <br>
 Header :-<br>
   1.Select Project:-<br>
     ![alt text](<Screenshot 2025-09-25 193458.png>)<br>
@@ -140,16 +144,15 @@ Select Cards:-<br>
 
 Dashboard:- <br>
 ![alt text](db.jpg) <br>
-
- Dashboard page:<br><br>
-
-- Top Bar – Options like Select cards, Create Task, Standup_Wizard, and Filters are available.<br>
-- Task Board – It is divided into three columns: Ready, In Progress, and Done.<br>
-- Cards – Each card shows a small profile icon, description text, and task details.<br>
-- Card Actions – Icons at the bottom of each card allow you to comment, edit, flag, favorite, or delete tasks.<br>
-- Color Sections – Columns have different background colors (blue for Ready, yellow for In Progress, green for Done).<br>
-- Multiple Tasks – You can track several tasks under each status column.<br>
-- Purpose – The dashboard helps manage tasks visually like a Kanban board.<br>
+Dashboard page:<br><br>
+  -Top Bar – Options like Select cards, Create Task, Standup_Wizard, and  Filters  are available.<br>
+  -Task Board – It is divided into three columns: Ready, In Progress, and Done.<br>
+  -Cards – Each card shows a small profile icon, description text, and task details.<br>
+  -Card Actions – Icons at the bottom of each card allow you to comment, edit, flag, favorite, or delete tasks.<br>
+  -Color Sections – Columns have different background colors (blue for Ready, yellow for In Progress, green for Done).<br>
+  -Multiple Tasks – You can track several tasks under each status column.<br>
+  -Purpose – The dashboard helps manage tasks visually like a Kanban board.<br>
+<br>
 Create Task:-<br>
   1. Card Details Tab:-<br>
   ![alt text](carddtls.jpg)<br>
@@ -161,7 +164,7 @@ Create Task:-<br>
 	-Project List & People List → Assign task to a project and person.<br>
 	-Size & Release → Additional classification of the task.<br>
       Basically, this tab is used to create or edit the task details.<br>
-
+<br>
 2. Comments Tab:-<br>
    ![alt text](cmntd.jpg)<br>
     -This tab is for communication and collaboration.<br>
@@ -171,6 +174,7 @@ Create Task:-<br>
       -Attach files/images.<br>
       -Use emojis for quick reactions.<br>
      A list of all saved comments appears below for tracking discussions.<br>
+     <br>
 3.Standup_Wizard<br>
 ![alt text](swd.jpg)<br>
     - When you click the Standup_Wizard, the dashboard expands into full screen.<br>
@@ -179,10 +183,12 @@ Create Task:-<br>
     - Each column contains task cards with user icons and details.<br>
     - The cards include options like comment, edit, flag, favorite, and delete.<br>
     - This view helps track tasks easily in a clean, organized layout.<br>
-
+<br>
 4.Fiter<br>
   ![alt text](filter.png)<br>
- in the filter<br>
+  <img src="filter.png" alt="My Image" height="100" width="200"><br>
+  <img src="filter.png" alt="My Image" height="60" width="100"><br>
+   -In the filter<br>
   ![alt text](filt.jpg)<br>
     - This is a filter panel to refine or organize the displayed data.<br>
     - Clear Filters lets you remove all applied filters.<br>

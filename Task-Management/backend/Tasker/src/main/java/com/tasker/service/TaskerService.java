@@ -44,6 +44,8 @@ public class TaskerService {
 	}
 
 	public Project saveProject(Project req) {
+//		Person p=getCurrentPerson();
+//		req.setCreatedBy(p.getName());
         return repo.save(req);
     }
 	
@@ -51,6 +53,7 @@ public class TaskerService {
 	    return repo.findById(id)
 	            .map(project -> {
 	                project.setProjName(newProjectData.getProjName());
+	                
 	                project.setCreatedBy(newProjectData.getCreatedBy());
 	                return repo.save(project);
 	            })

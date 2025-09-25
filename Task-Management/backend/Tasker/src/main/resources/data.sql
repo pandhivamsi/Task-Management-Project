@@ -15,12 +15,12 @@ VALUES
 ('Export Data', 'Add export to CSV', 'Medium', 'Done', '2025-10-18', '2025-10-07', 'TaskerApp', 'Vamsi', 'Medium', 'Sprint 4');
 
 INSERT INTO peoples
-(name, title, organization, work_phone, mobile, email, password, user_id, profile_img)
+(name, title, organization, work_phone, mobile, role, email, password, user_id, profile_img, status)
 VALUES
-('Alice Johnson', 'Manager', 'TechCorp', 1234567890, 9876543210, 'alice@example.com', 'alice123', 'alice01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image1.jpeg')),
-('Bob Smith', 'Developer', 'DevSolutions', 2345678901, 8765432109, 'bob@example.com', 'bob123', 'bob01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image2.jpeg')),
-('Carol White', 'Designer', 'DesignHub', 3456789012, 7654321098, 'carol@example.com', 'carol123', 'carol01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image3.jpeg')),
-('David Lee', 'QA Engineer', 'TestWorks', 4567890123, 6543210987, 'david@example.com', 'david123', 'david01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image4.jpeg')),
-('Eva Brown', 'HR', 'PeopleFirst', 5678901234, 5432109876, 'eva@example.com', 'eva123', 'eva01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image5.jpeg')),
-('Frank Green', 'Support', 'HelpDesk', 6789012345, 4321098765, 'frank@example.com', 'frank123', 'frank01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image1.jpeg')),
-('Grace Hall', 'Consultant', 'BizConsult', 7890123456, 3210987654, 'grace@example.com', 'grace123', 'grace01', LOAD_FILE('C:\Users\vamsi\Task Management Project\Task-Management\frontend\task-managent\src\assets\image2.jpeg'));
+('Alice Johnson', 'Manager', 'TechCorp', 1234567890, 9876543210, 'Admin', 'alice@example.com', 'alice123', 'alice01', 'alice.jpg', 'Active'),
+('Bob Smith', 'Developer', 'DevSolutions', 2345678901, 8765432109, 'Team Member', 'bob@example.com', 'bob123', 'bob02', 'bob.jpg', 'Active'),
+('Carol Williams', 'Designer', 'DesignPro', 3456789012, 7654321098, 'Team Member', 'carol@example.com', 'carol123', 'carol03', 'carol.jpg', 'Inactive'),
+('David Brown', 'Analyst', 'DataCorp', 4567890123, 6543210987, 'Admin', 'david@example.com', 'david123', 'david04', 'david.jpg', 'Active'),
+('Eve Davis', 'Tester', 'QualityWorks', 5678901234, 5432109876, 'Team Member', 'eve@example.com', 'eve123', 'eve05', 'eve.jpg', 'Inactive'),
+('Frank Miller', 'Support', 'HelpDesk', 6789012345, 4321098765, 'Team Member', 'frank@example.com', 'frank123', 'frank06', 'frank.jpg', 'Active'),
+('Grace Lee', 'HR', 'PeopleFirst', 7890123456, 3210987654, 'Admin', 'grace@example.com', 'grace123', 'grace07', 'grace.jpg', 'Active');

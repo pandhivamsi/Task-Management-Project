@@ -8,16 +8,15 @@ import ProfileRow from "./ProfileRow";
 import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
-// import axios from "axios";
-import { DataContext } from "./DataContext";
+import { useAppData } from "./DataContext";
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const { cards, setCards} = useAppData();
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState(null);
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
-  const { projects, peoples, loading } = useContext(DataContext);
 
   const { theme } = useContext(ThemeContext);
 
@@ -25,7 +24,6 @@ const Dashboard = () => {
     setSelectedOption(option);
   };
 
-   
   const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
     setShowUsers(false);
@@ -58,7 +56,7 @@ const Dashboard = () => {
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
-      {isFullscreen && (
+       {isFullscreen && (
         <div className="d-flex justify-content-between align-items-center bg-light p-2">
           <div className="d-flex align-items-center ms-5">
             <button
@@ -77,7 +75,6 @@ const Dashboard = () => {
           </button>
         </div>
       )}
-
       {!isFullscreen && (
         <div>
           <Header />
@@ -112,7 +109,6 @@ const Dashboard = () => {
                   </li>
                 </ul>
               </div>
-
               <AppliedFilters
                 appliedFiltersList={appliedFiltersList}
                 onClear={() => {
@@ -122,7 +118,7 @@ const Dashboard = () => {
               />
             </div>
 
-            <AddTask  />
+            <AddTask />
             <StandupWizard setIsFullscreen={setIsFullscreen} />
             <Filter
               onFiltersChange={(raw, applied) => {
@@ -143,11 +139,10 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-        <KanbanBoard />
+        <KanbanBoard setCards={setCards} cards={cards} />
       </div>
     </div>
   );
 };
 
 export default Dashboard;
-

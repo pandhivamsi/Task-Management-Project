@@ -25,6 +25,8 @@ public class Person {
 
     private Long mobile;
     
+    private String status;
+    
     private String role;
 
     @Column(unique = true) 
@@ -35,7 +37,6 @@ public class Person {
     @Column(name = "user_id", unique = true)
     private String userId;
 
-    @Lob
-    @Column(name = "profile_img", columnDefinition = "LONGBLOB")
-    private byte[] profileImg;  
+    @Column(name = "profile_img")
+    private String profileImg;  
 }

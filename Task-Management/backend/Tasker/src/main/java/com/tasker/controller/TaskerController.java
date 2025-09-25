@@ -126,4 +126,22 @@ public class TaskerController {
 		return service.getAllPersons();
 	}
 	
+	@PutMapping("/peoples/{id}")
+	public ResponseEntity<Person> updateUser(
+	        @PathVariable("id") Integer id,
+	        @RequestBody Person c1) {
+	    Person c = service.updatePerson(id, c1);
+	    return ResponseEntity.ok(c);
+	}
+	
+	@DeleteMapping("/peoples/{id}")
+	public ResponseEntity<Void> deletePerson(@PathVariable Integer id) {
+        try {
+            service.deletePerson(id);
+            return ResponseEntity.noContent().build(); 
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+	
 }
