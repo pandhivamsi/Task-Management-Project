@@ -20,7 +20,7 @@ export const AppDataProvider = ({ children }) => {
   // Fetch all data
   const fetchCards = () => {
     axios
-      .get("http://localhost:8080/cards")
+      .get("http://localhost:8080/auth/cards",{ withCredentials: true })
       .then((res) => setCards(res.data))
       .catch((err) => console.error(err));
   };
@@ -28,8 +28,8 @@ export const AppDataProvider = ({ children }) => {
   const fetchProjectsAndPeoples = async () => {
     try {
       const [projRes, peopleRes] = await Promise.all([
-        axios.get("http://localhost:8080/projects"),
-        axios.get("http://localhost:8080/peoples"),
+        axios.get("http://localhost:8080/auth/projects",{ withCredentials: true }),
+        axios.get("http://localhost:8080/auth/peoples",{ withCredentials: true }),
       ]);
       setProjects(projRes.data);
       setPeoples(peopleRes.data);
