@@ -1,4 +1,4 @@
-# Task-Management-Project
+# Task-Management-Project 
 
 Steps to run the app locally:- <br>
  ---
@@ -9,10 +9,10 @@ Steps to run the app locally:- <br>
 <br>
 UseCase Diagram:-
 <br>
-![alt text](document-assets/<WhatsApp Image 2025-09-24 at 11.37.46_2bb870f1.jpg>)
+![alt text](document-assets/WhatsApp Image 2025-09-24 at 11.37.46_2bb870f1.jpg)
 <br>
 Models:-<br>
-![alt text](document-assets/<WhatsApp Image 2025-09-24 at 16.24.38_718d3aa0.jpg>)
+![alt text](document-assets/WhatsApp%20Image%202025-09-24%20at%2016.24.38_718d3aa0.jpg)
 <br>
 <br>
  1.User Model <br>
@@ -72,7 +72,7 @@ User Details(GET)<br><br>
 Login Page:-<br>
   ---
 <br>
-![alt text](document-assets/<log n.jpg>)<br>
+![alt text](document-assets/logn.jpg)<br>
 	This is a user login form.its lets users sign in to an app or website using their username and password.  <br>
   ->How It Works <br>
 	  -At the top, "User Login" tells users what to do.<br>
