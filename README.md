@@ -101,19 +101,19 @@ This helps new users sign up safely and easily for the service.
 ---  
 
 **1. Select Project:-**  
-![alt text](document-assets/Screenshot 2025-09-25 193458.png)  
+![alt text](document-assets/Screenshot%202025-09-25%20193458.png)  
 - When you click the Select Project button, a dropdown appears with an option to Add Project.  
 - Clicking on it opens a form where you can enter the Project Name.  
 - Finally, you can save it by clicking the Save Project button.  
 
 **2. Profile icon:-**  
-![alt text](document-assets/Screenshot 2025-09-25 185506.png)  
+![alt text](document-assets/Screenshot%202025-09-25%20185506.png)  
 - When you click the profile icon, a dropdown menu opens.  
 - It shows options like Edit Details, Reset Password, choose a theme color (using the color dots), and Log Out.  
 - This menu is simply for quickly accessing profile-related actions.  
 
 **3. ThreeDots icon:-**  
-![alt text](document-assets/Screenshot 2025-09-25 190038.png)  
+![alt text](document-assets/Screenshot%202025-09-25%20190038.png)  
 - When you click the three dots icon, a menu panel opens.  
 - It shows options like Peoples and Projects.  
 - This lets you quickly switch between managing people and managing projects.  
@@ -131,12 +131,12 @@ This helps new users sign up safely and easily for the service.
 - You can then choose to add the project or cancel the action.  
 
 **4. Search icon:-**  
-![alt text](document-assets/Screenshot 2025-09-25 192601.png)  
+![alt text](document-assets/Screenshot%202025-09-25%20192601.png)  
 - When you click the search icon, a text box appears.  
 - Here you can type keywords to search for items quickly.  
 
 **5. Support icon:-**  
-![alt text](document-assets/Screenshot 2025-09-25 192921.png)  
+![alt text](document-assets/Screenshot%202025-09-25%20192921.png)  
 - When you click the Support icon, a scheduling window opens.  
 - It shows an option to book a 30-minute meeting.  
 - You can select a date and time from the calendar.  
