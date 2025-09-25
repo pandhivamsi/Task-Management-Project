@@ -86,6 +86,7 @@ Login Page:-<br>
 <br>
 Registration Page:-<br>
  ---
+ 
 ![alt text](reg.jpg) <br>
 	-This is a registration form for creating a new account in an app or website.<br>
   ->What Each Field Means:- <br>
@@ -101,6 +102,7 @@ Registration Page:-<br>
     <br>
 Header :-<br>
   ---
+
   1.Select Project:-<br>
     ![alt text](<Screenshot 2025-09-25 193458.png>)<br>
    -When you click the Select Project button, a dropdown appears with an option to Add Project.<br>
