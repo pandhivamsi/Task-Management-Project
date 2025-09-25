@@ -166,7 +166,7 @@ Create Task:-<br>
       Basically, this tab is used to create or edit the task details.<br>
 <br>
 2. Comments Tab:-<br>
-   ![alt text](cmntd.jpg)<br>
+   ![alt text](cmntd.jpg) <br>
     -This tab is for communication and collaboration.<br>
    ->You (or team members) can:<br>
       -Add comments about the task.<br>
@@ -176,7 +176,7 @@ Create Task:-<br>
      A list of all saved comments appears below for tracking discussions.<br>
      <br>
 3.Standup_Wizard<br>
-![alt text](swd.jpg)<br>
+   ![alt text](swd.jpg) <br>
     - When you click the Standup_Wizard, the dashboard expands into full screen.<br>
     - In the Standup_Wizard, the "Start" button at the top left is a timer. It turns on when we click on the user profile.<br>
     - It displays three columns: Ready, In Progress, and Done.<br>
@@ -187,9 +187,9 @@ Create Task:-<br>
 4.Fiter<br>
   ![alt text](filter.png)<br>
   <img src="filter.png" alt="My Image" height="100" width="200"><br>
-  <img src="filter.png" alt="My Image" height="60" width="100"><br>
    -In the filter<br>
-  ![alt text](filt.jpg)<br>
+   ![alt text](filt-1.jpg)<br>
+   <img src="filt.png" alt="My Image" height="300" width="200"><br>
     - This is a filter panel to refine or organize the displayed data.<br>
     - Clear Filters lets you remove all applied filters.<br>
     - Categories available are Department, Role, and Priority.<br>
