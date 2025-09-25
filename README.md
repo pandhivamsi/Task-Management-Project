@@ -85,8 +85,9 @@ Login Page:-<br>
 <br>
 <br>
 Registration Page:-<br>
- ---
- 
+
+  ---
+
 ![alt text](reg.jpg) <br>
 	-This is a registration form for creating a new account in an app or website.<br>
   ->What Each Field Means:- <br>
