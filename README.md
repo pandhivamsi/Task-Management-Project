@@ -1,6 +1,7 @@
 # Task-Management-Project
 
 Steps to run the app locally:- <br>
+ ---
  1.clone the repository git clone https://github.com/pandhivamsi/Task-Management-Project.git <br>
  2.npm install <br>
  3.npm run dev <br>
@@ -69,6 +70,7 @@ User Details(GET)<br><br>
  -To fetch the details of the user.<br><br>
 
 Login Page:-<br>
+  ---
 <br>
 ![alt text](<log n.jpg>)<br>
 	This is a user login form.its lets users sign in to an app or website using their username and password.  <br>
@@ -83,6 +85,7 @@ Login Page:-<br>
 <br>
 <br>
 Registration Page:-<br>
+ ---
 ![alt text](reg.jpg) <br>
 	-This is a registration form for creating a new account in an app or website.<br>
   ->What Each Field Means:- <br>
@@ -97,6 +100,7 @@ Registration Page:-<br>
     This helps new users sign up safely and easily for the service.<br>
     <br>
 Header :-<br>
+  ---
   1.Select Project:-<br>
     ![alt text](<Screenshot 2025-09-25 193458.png>)<br>
    -When you click the Select Project button, a dropdown appears with an option to Add Project.<br>
@@ -143,6 +147,7 @@ Select Cards:-<br>
 
 
 Dashboard:- <br>
+ ---
 ![alt text](db.jpg) <br>
 Dashboard page:<br><br>
   -Top Bar – Options like Select cards, Create Task, Standup_Wizard, and  Filters  are available.<br>
@@ -188,13 +193,9 @@ Create Task:-<br>
     - This view helps track tasks easily in a clean, organized layout.<br>
 <br>
 4.Fiter<br>
-
-  ![alt text](filter.png)<br>
   <img src="filter.png" alt="My Image" height="100" width="200"><br>
    -In the filter<br>
-
-   ![alt text](filt.jpg)<br>
-   <img src="filt.png" alt="My Image" height="300" width="200"><br>
+   <img src="filt.jpg" alt="My Image" height="300" width="200"><br>
     - This is a filter panel to refine or organize the displayed data.<br>
     - Clear Filters lets you remove all applied filters.<br>
     - Categories available are Department, Role, and Priority.<br>
