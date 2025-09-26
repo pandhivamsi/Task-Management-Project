@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 import Projectlist from "./Projectlist";
 import logo from "../assets/tasklogo.png";
@@ -8,20 +8,32 @@ import { IoMdSearch } from "react-icons/io";
 import PeopleList from "./PeopleList";
 import { ThemeContext } from "./ThemeContext";
 
-const Header = () => {
-  const [showSearch, setShowSearch] = useState(false);
-  const navigate = useNavigate();
+const Header = ({ cards, onSearchSelect }) => {
+  const [searchMode, setSearchMode] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
 
   const openCalendly = () => {
     navigate("/support");
   };
-  
+
   const token = sessionStorage.getItem("token");
 
+  const matchedCards =
+    searchValue.trim() === ""
+      ? []
+      : cards.filter((c) =>
+          c.title.toLowerCase().includes(searchValue.toLowerCase())
+        );
+
   return (
-    <nav className="navbar px-4 fixed-top" style={{ backgroundColor: theme.header }}>
+    <nav
+      className="navbar px-4 fixed-top"
+      style={{ backgroundColor: theme.header }}
+    >
       <div className="container-fluid d-flex align-items-center justify-content-between">
+        {/* Left side */}
         <div className="d-flex align-items-center gap-3">
           <a
             className="navbar-brand text-white fw-bold d-flex align-items-center ms-0"
@@ -39,8 +51,10 @@ const Header = () => {
           {token && <Projectlist />}
         </div>
 
+        {/* Right side */}
         {token && (
           <div className="d-flex align-items-center position-relative">
+            {/* Support button */}
             <button
               onClick={openCalendly}
               className="btn bg-transparent border-0 text-light p-2 me-1"
@@ -48,27 +62,49 @@ const Header = () => {
               <BsQuestionCircle size={22} />
             </button>
 
-            <div
-              className="d-flex align-items-center"
-              onMouseEnter={() => setShowSearch(true)}
-              onMouseLeave={() => setShowSearch(false)}
-            >
-              {showSearch ? (
-                <div className="input-group input-group-sm" style={{ width: "200px" }}>
-                  <span className="input-group-text bg-white border-0">
-                    <IoMdSearch size={18} />
-                  </span>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Search..."
-                    autoFocus
-                  />
-                </div>
-              ) : (
-                <IoMdSearch size={22} className="text-white cursor-pointer" />
-              )}
-            </div>
+            {/* Search bar toggle */}
+            {searchMode ? (
+              <div className="position-relative">
+                <input
+                  type="text"
+                  className="form-control form-control-sm"
+                  placeholder="Search..."
+                  autoFocus
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  style={{ width: "200px" }}
+                />
+                {/* Suggestions */}
+                {matchedCards.length > 0 && (
+                  <ul
+                    className="list-group position-absolute mt-1"
+                    style={{ width: "200px", zIndex: 2000 }}
+                  >
+                    {matchedCards.map((card) => (
+                      <li
+                        key={card.id}
+                        className="list-group-item list-group-item-action"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          onSearchSelect(card);
+                          setSearchValue("");
+                          setSearchMode(false);
+                        }}
+                      >
+                        {card.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ) : (
+              <button
+                className="btn bg-transparent border-0 text-light p-2 me-1"
+                onClick={() => setSearchMode(true)}
+              >
+                <IoMdSearch size={22} />
+              </button>
+            )}
 
             <PeopleList />
             <Profile />

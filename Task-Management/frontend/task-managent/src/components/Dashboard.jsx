@@ -9,6 +9,7 @@ import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
 import { useAppData } from "./DataContext";
+import CardEdit from "./CardEdit"; // ✅ Import CardEdit
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
@@ -21,6 +22,9 @@ const Dashboard = () => {
     Priority: [],
   });
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [selectedCard, setSelectedCard] = useState(null); // ✅ For modal
 
   const { theme } = useContext(ThemeContext);
 
@@ -58,20 +62,32 @@ const Dashboard = () => {
     };
   }, []);
 
-  // ✅ Filter cards
+  // ✅ Apply filters + search
   const filteredCards = cards.filter((card) => {
     const matchDepartment =
-      filters.Department.length === 0 || filters.Department.includes(card.department);
+      filters.Department.length === 0 ||
+      filters.Department.includes(card.department);
     const matchRole =
       filters.Role.length === 0 || filters.Role.includes(card.role);
     const matchPriority =
       filters.Priority.length === 0 || filters.Priority.includes(card.priority);
-    return matchDepartment && matchRole && matchPriority;
+
+    const matchSearch =
+      searchQuery === "" ||
+      card.title.toLowerCase().includes(searchQuery.toLowerCase());
+
+    return matchDepartment && matchRole && matchPriority && matchSearch;
   });
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
-      {isFullscreen && (
+      {/* ✅ Pass cards & search handler */}
+      <Header
+        cards={cards}
+        onSearchSelect={(card) => setSelectedCard(card)}
+      />
+
+      {isFullscreen ? (
         <div className="d-flex justify-content-between align-items-center bg-light p-2">
           <div className="d-flex align-items-center ms-5">
             <button
@@ -89,14 +105,11 @@ const Dashboard = () => {
             <FaTimes />
           </button>
         </div>
-      )}
-
-      {!isFullscreen && (
+      ) : (
         <>
-          <Header />
-
           <div className="d-flex justify-content-between align-items-center mt-5 px-2 pt-4">
             <div className="d-flex align-items-center ms-1">
+              {/* Dropdown */}
               <div className="dropdown ms-1">
                 <button
                   className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold px-4 ms-1"
@@ -148,8 +161,12 @@ const Dashboard = () => {
         </>
       )}
 
+      {/* ✅ Kanban Board */}
       <div className="m-3 p-3 border">
-        <div className="p-2 text-white" style={{ backgroundColor: theme.header }}>
+        <div
+          className="p-2 text-white"
+          style={{ backgroundColor: theme.header }}
+        >
           <input
             className="p-0 ms-3 bg-transparent border-0 text-white"
             type="text"
@@ -157,10 +174,22 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-
-        {/* ✅ Only filtered cards */}
         <KanbanBoard setCards={setCards} cards={filteredCards} />
       </div>
+
+      {/* ✅ Modal for selected card */}
+      {selectedCard && (
+        <CardEdit
+          card={selectedCard}
+          onClose={() => setSelectedCard(null)}
+          onSave={(updated) => {
+            setCards((prev) =>
+              prev.map((c) => (c.id === updated.id ? updated : c))
+            );
+            setSelectedCard(null);
+          }}
+        />
+      )}
     </div>
   );
 };
