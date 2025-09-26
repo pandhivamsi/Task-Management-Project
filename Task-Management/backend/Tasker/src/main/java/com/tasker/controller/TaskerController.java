@@ -23,6 +23,8 @@ import com.tasker.entity.Card;
 import com.tasker.entity.Comment;
 import com.tasker.entity.Person;
 import com.tasker.entity.Project;
+import com.tasker.security.JwtAuthFilter;
+import com.tasker.security.JwtUtil;
 import com.tasker.service.TaskerService;
 
 
@@ -36,6 +38,9 @@ public class TaskerController {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private JwtUtil jwtUtil; 
 	
 	@GetMapping("/projects")
 	public List<Project> getProjects() {
@@ -110,20 +115,24 @@ public class TaskerController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> loginUser(@RequestBody Map<String,String> payload) {
-		String username = payload.get("username");
-		String password = payload.get("password");
-		
-	    Person user = service.findByEmail(username); 
+	public ResponseEntity<?> login(@RequestBody Map<String, String> payload) {
+	    String email = payload.get("username");
+	    String password = payload.get("password");
+
+	    Person user = service.findByEmail(email);
 	    if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
 	    }
 
-	    Map<String, Object> response = new HashMap<>();
-	    response.put("id", user.getId());
-	    response.put("role", user.getRole());
-	    response.put("username", user.getEmail());
-	    return ResponseEntity.ok(response);
+	    String token = jwtUtil.generateToken(email);
+
+	    Map<String, Object> res = new HashMap<>();
+	    res.put("token", token);
+	    res.put("id", user.getId());
+	    res.put("role", user.getRole());
+	    res.put("username", user.getEmail());
+
+	    return ResponseEntity.ok(res);
 	}
 	
 	@PostMapping("/register")

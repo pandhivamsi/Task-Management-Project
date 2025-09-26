@@ -30,7 +30,7 @@ const Login = () => {
       sessionStorage.setItem("role", res.data.role);
       sessionStorage.setItem("id", res.data.id);
       sessionStorage.setItem("username", res.data.username);
-
+      sessionStorage.setItem("token", res.data.token);
 
      navigate("/dashboard")
 
@@ -55,7 +55,7 @@ const Login = () => {
 
       <div className="flex-grow-1 d-flex align-items-center justify-content-center">
         <div className="p-4 rounded shadow bg-white" style={{ width: 400, maxWidth: "90%" }}>
-          <h2 className="text-center mb-4 text-primary">User Login</h2>
+          <h2 className="text-center mb-4 text-primary">Login Page</h2>
 
           {error && <div className="alert alert-danger py-2">{error}</div>}
 
