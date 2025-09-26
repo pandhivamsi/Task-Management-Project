@@ -44,6 +44,11 @@ public class TaskerService {
 	public List<Project> getAllProjects() {
 		return repo.findAll();
 	}
+	
+	public Optional<Person> getPerson(Integer id)
+	{
+		return prepo.findById(id);
+	}
 
 	public Project saveProject(Project req) {
 //		Person p=getCurrentPerson();
