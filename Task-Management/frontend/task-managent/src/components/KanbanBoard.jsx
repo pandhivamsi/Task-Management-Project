@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Card from "./Card";
-import axios from "axios";
+import { useAppData } from "./DataContext";
 
-const KanbanBoard = ({fetchCards ,setCards,cards}) => {
-  
+const KanbanBoard = ({ cards, setCards }) => {
+  const { selectedProject } = useAppData(); // get global selected project
+
   const columns = [
-    { name: "Ready", color: "#e3f2fd" },       
-    { name: "In Progress", color: "#fff3cd" },  
-    { name: "Done", color: "#d4edda" },         
+    { name: "Ready", color: "#e3f2fd" },
+    { name: "In Progress", color: "#fff3cd" },
+    { name: "Done", color: "#d4edda" },
   ];
-   const handleUpdateCard = (updatedCard) => {
+
+  const handleUpdateCard = (updatedCard) => {
     setCards((prev) =>
       prev.map((card) => (card.id === updatedCard.id ? updatedCard : card))
     );
   };
+
+  // Filter cards based on selected project
+  const filteredCards = selectedProject
+    ? cards.filter((card) => card.projectName === selectedProject)
+    : cards;
+
   return (
-    <div className="container mt-4  ">
+    <div className="container mt-4">
       <div className="row g-3">
-        
         {columns.map((col) => (
           <div className="col-md-4" key={col.name}>
             <div
@@ -26,13 +33,16 @@ const KanbanBoard = ({fetchCards ,setCards,cards}) => {
             >
               <h5 className="text-center mb-3">{col.name}</h5>
               <div className="d-flex flex-column gap-3">
-                {cards
-                  .filter((user) => user.status === col.name)
+                {filteredCards
+                  .filter((card) => card.status === col.name)
                   .map((card) => (
-                    <Card key={card.id} card={card} handleUpdateCard={handleUpdateCard}/>
+                    <Card
+                      key={card.id}
+                      card={card}
+                      handleUpdateCard={handleUpdateCard}
+                    />
                   ))}
               </div>
-              
             </div>
           </div>
         ))}

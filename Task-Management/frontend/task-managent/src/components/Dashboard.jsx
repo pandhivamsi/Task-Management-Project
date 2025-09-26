@@ -13,7 +13,7 @@ import { useAppData } from "./DataContext";
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
-const { cards, setCards, fetchCards } = useAppData();
+  const { cards, setCards} = useAppData();
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState(null);
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
@@ -24,7 +24,6 @@ const { cards, setCards, fetchCards } = useAppData();
     setSelectedOption(option);
   };
 
-   
   const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
     setShowUsers(false);
@@ -57,7 +56,7 @@ const { cards, setCards, fetchCards } = useAppData();
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
-      {isFullscreen && (
+       {isFullscreen && (
         <div className="d-flex justify-content-between align-items-center bg-light p-2">
           <div className="d-flex align-items-center ms-5">
             <button
@@ -76,7 +75,6 @@ const { cards, setCards, fetchCards } = useAppData();
           </button>
         </div>
       )}
-
       {!isFullscreen && (
         <div>
           <Header />
@@ -111,7 +109,6 @@ const { cards, setCards, fetchCards } = useAppData();
                   </li>
                 </ul>
               </div>
-
               <AppliedFilters
                 appliedFiltersList={appliedFiltersList}
                 onClear={() => {
@@ -121,7 +118,7 @@ const { cards, setCards, fetchCards } = useAppData();
               />
             </div>
 
-            <AddTask  />
+            <AddTask />
             <StandupWizard setIsFullscreen={setIsFullscreen} />
             <Filter
               onFiltersChange={(raw, applied) => {
@@ -142,11 +139,10 @@ const { cards, setCards, fetchCards } = useAppData();
             readOnly
           />
         </div>
-        <KanbanBoard fetchCards = {fetchCards} setCards={setCards} cards={cards}/>
+        <KanbanBoard setCards={setCards} cards={cards} />
       </div>
     </div>
   );
 };
 
 export default Dashboard;
-

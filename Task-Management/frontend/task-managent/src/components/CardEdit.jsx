@@ -1,25 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "./ThemeContext";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
 import axios from "axios";
 import { useAppData } from "./DataContext";
-// import axios from "axios";
 
 const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
   const { theme } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState(fromComment ? "comments" : "details");
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
-  const { projects, peoples, loading } = useAppData()
+  const { projects, peoples, loading } = useAppData();
+
   const [formData, setFormData] = useState({
+    id: card.id,
     title: card.title || "",
     description: card.description || "",
     priority: card.priority || "Select",
     status: card.status || "Ready",
-    dueDate: card.dueDate || "",
-    projectList: card.projectList || "",
+    dueDate: card.dueDate || card.estimateDate || "",
+    estimateDate: card.estimateDate || card.dueDate || "",
+    projectName: card.projectName || card.projectList || "",
+    personName: card.personName || card.peopleList || "",
     estimate: card.estimate || "",
-    peopleList: card.peopleList || "",
     size: card.size || "",
     release: card.release || "",
     sprint: card.sprint || ""
@@ -38,15 +40,30 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
   };
 
   const handleSave = () => {
-    const updatedCard = { ...card, ...formData };
-    console.log(updatedCard)
+    const updatedCard = {
+      ...card,
+      id: formData.id,
+      title: formData.title,
+      description: formData.description,
+      priority: formData.priority,
+      status: formData.status,
+      dueDate: formData.dueDate,
+      estimateDate: formData.estimateDate,
+      projectName: formData.projectName,
+      personName: formData.personName,
+      estimate: formData.estimate,
+      size: formData.size,
+      release: formData.release,
+      sprint: formData.sprint
+    };
 
-    // PUT request to backend
+    console.log(updatedCard);
+
     axios
       .put(`http://localhost:8080/cards/${updatedCard.id}`, updatedCard)
       .then((res) => {
-        if (onSave) onSave(res.data); // Update parent state
-        onClose(); // Close modal
+        if (onSave) onSave(res.data);
+        onClose();
       })
       .catch((err) => console.error("Failed to update card:", err));
   };
@@ -102,46 +119,44 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
                   <input type="date" name="dueDate" className="form-control" value={formData.dueDate} onChange={handleChange} />
                 </div>
 
-               <div className="col-md-6 mb-2">
-  <label className="form-label">Project List</label>
-  <select
-    className="form-select "
-    name="projectList"
-    value={formData.projectList}
-    onChange={handleChange}
-  >
-    <option value="">-- Select Project --</option>
-    {projects.map((project) => (  
-      <option key={project.id} value={project.id}>
-        {project.projName}
-      </option>
-    ))}
-  </select>
-</div>
-
+                <div className="col-md-6 mb-2">
+                  <label className="form-label">Project List</label>
+                  <select
+                    className="form-select"
+                    name="projectName"
+                    value={formData.projectName}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Select Project --</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.projName}>
+                        {project.projName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="col-md-6">
                   <label className="form-label">Estimate (Days)</label>
                   <input type="number" name="estimate" className="form-control" value={formData.estimate} onChange={handleChange} />
                 </div>
 
-             <div className="col-md-6 mb-2">
-  <label className="form-label">People List</label>
-  <select
-    className="form-select"
-    name="peopleList"
-    value={formData.peopleList}
-    onChange={handleChange}
-  >
-    <option value="">-- Select Person --</option>
-    {peoples.map((person) => (
-      <option key={person.id} value={person.id}>
-        {person.name}
-      </option>
-    ))}
-  </select>
-</div>
-
+                <div className="col-md-6 mb-2">
+                  <label className="form-label">People List</label>
+                  <select
+                    className="form-select"
+                    name="personName"
+                    value={formData.personName}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Select Person --</option>
+                    {peoples.map((person) => (
+                      <option key={person.id} value={person.name}>
+                        {person.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="col-md-6">
                   <label className="form-label">Size</label>
