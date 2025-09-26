@@ -12,10 +12,15 @@ const Profile = () => {
   const { setTheme } = useContext(ThemeContext);
   const [user, setUser] = useState({ name: "", role: "" });
   const userId = sessionStorage.getItem("id");
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/auth/people")
+      .get(`http://localhost:8080/auth/people/${userId}`,{
+        headers: {
+        Authorization: `Bearer ${token}`,
+      }
+      })
       .then((res) => {
         setUser(res.data);
       })
@@ -57,7 +62,7 @@ const Profile = () => {
             <CgProfile size={32} className="me-2 text-primary " />
             <div>
               <h6 className="mb-0">{user.name || "Loading..."}</h6>
-              <small className="text-white-50">{user.role || "Fetching..."}</small>
+              <small className="text-black-50">{user.role || "Fetching..."}</small>
             </div>
           </div>
         </li>
