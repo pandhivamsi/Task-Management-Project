@@ -10,6 +10,7 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
   const { projects, peoples, loading } = useAppData();
+  const token = sessionStorage.getItem("token");
 
   const [formData, setFormData] = useState({
     id: card.id,
@@ -60,7 +61,11 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
     console.log(updatedCard);
 
     axios
-      .put(`http://localhost:8080/cards/${updatedCard.id}`, updatedCard)
+      .put(`http://localhost:8080/auth/cards/${updatedCard.id}`, updatedCard ,{
+        headers: {
+        Authorization: `Bearer ${token}`,
+      }
+      })
       .then((res) => {
         if (onSave) onSave(res.data);
         onClose();

@@ -9,37 +9,37 @@ import axios from "axios";
 const AddTask = () => {
   const navigate = useNavigate();
   const themeCtx = useContext(ThemeContext);
-  const { projects, peoples } = useAppData();
-
+  const { projects, peoples, fetchCards, cards, setCards } = useAppData();
   const theme = themeCtx?.theme ?? { header: "#0d6efd" };
+  const token = sessionStorage.getItem("token");
+
   const [activeTab, setActiveTab] = useState("details");
   const [showModal, setShowModal] = useState(false);
-  const { fetchCards } = useAppData();
 
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     priority: "",
     dueDate: "",
-    estimate: "",
+    estimate: "", // to be mapped to estimateDate
     size: "",
-    rank: "",
     release: "",
     status: "Ready",
     sprint: "",
-    projectList: "",
-    peopleList: "",
+    projectId: "", // used for dropdown
+    personId: "",  // used for dropdown
   });
 
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAddComment = () => {
-    if (commentInput.trim() !== "") {
+    if (commentInput.trim()) {
       setComments([
         ...comments,
         { text: commentInput, user: "User", time: new Date().toLocaleString() },
@@ -49,14 +49,36 @@ const AddTask = () => {
   };
 
   const handleSave = async () => {
+    const selectedProject = projects.find(p => p.id === parseInt(formData.projectId));
+    const selectedPerson = peoples.find(p => p.id === parseInt(formData.personId));
+
+    const payload = {
+      title: formData.title,
+      description: formData.description,
+      priority: formData.priority,
+      status: formData.status,
+      dueDate: formData.dueDate || null,
+      estimateDate: formData.estimate || null,
+      projectName: selectedProject?.projName || "",
+      personName: selectedPerson?.name || "",
+      size: formData.size,
+      sprint: formData.sprint,
+      release: formData.release,
+    };
+
     try {
-      const res = await axios.post("http://localhost:8080/cards", formData);
-      console.log("Task saved:", res.data);
+      const res = await axios.post("http://localhost:8080/auth/cards", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCards([...cards, res.data]);
       fetchCards();
       setShowModal(false);
       navigate("/dashboard");
-    } catch (err) {
-      console.error("Error saving task:", err);
+    } catch (error) {
+      console.error("Error saving card:", error);
     }
   };
 
@@ -73,33 +95,19 @@ const AddTask = () => {
       </div>
 
       {showModal && (
-        <div
-          className="modal show d-block"
-          tabIndex="-1"
-          style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
-        >
+        <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
           <div className="modal-dialog modal-xl">
             <div className="modal-content">
-              {/* HEADER */}
-              <div
-                className="modal-header text-white"
-                style={{ backgroundColor: theme.header }}
-              >
+              <div className="modal-header text-white" style={{ backgroundColor: theme.header }}>
                 <h5 className="modal-title">Create Task</h5>
-                <button
-                  type="button"
-                  className="btn-close btn-close-white"
-                  onClick={() => setShowModal(false)}
-                ></button>
+                <button className="btn-close btn-close-white" onClick={() => setShowModal(false)}></button>
               </div>
 
-              {/* TABS */}
+              {/* Tabs */}
               <ul className="nav nav-tabs">
                 <li className="nav-item">
                   <button
-                    className={`nav-link ${
-                      activeTab === "details" ? "active" : ""
-                    }`}
+                    className={`nav-link ${activeTab === "details" ? "active" : ""}`}
                     onClick={() => setActiveTab("details")}
                   >
                     Card Details
@@ -107,9 +115,7 @@ const AddTask = () => {
                 </li>
                 <li className="nav-item">
                   <button
-                    className={`nav-link ${
-                      activeTab === "comments" ? "active" : ""
-                    }`}
+                    className={`nav-link ${activeTab === "comments" ? "active" : ""}`}
                     onClick={() => setActiveTab("comments")}
                   >
                     Comments
@@ -117,11 +123,8 @@ const AddTask = () => {
                 </li>
               </ul>
 
-              {/* BODY */}
-              <div
-                className="modal-body"
-                style={{ maxHeight: "500px", overflowY: "auto" }}
-              >
+              {/* Modal Body */}
+              <div className="modal-body" style={{ maxHeight: "500px", overflowY: "auto" }}>
                 {activeTab === "details" && (
                   <form>
                     <div className="mb-2">
@@ -139,22 +142,17 @@ const AddTask = () => {
                       <label className="form-label fw-bold">Description</label>
                       <textarea
                         className="form-control"
-                        rows="4"
                         name="description"
+                        rows="4"
                         value={formData.description}
                         onChange={handleInputChange}
-                      ></textarea>
+                      />
                     </div>
 
                     <div className="row">
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Priority</label>
-                        <select
-                          className="form-select"
-                          name="priority"
-                          value={formData.priority}
-                          onChange={handleInputChange}
-                        >
+                        <select className="form-select" name="priority" value={formData.priority} onChange={handleInputChange}>
                           <option value="">Select</option>
                           <option value="High">High</option>
                           <option value="Medium">Medium</option>
@@ -164,12 +162,7 @@ const AddTask = () => {
 
                       <div className="col-md-6 mb-2">
                         <label className="form-label">Status</label>
-                        <select
-                          className="form-select"
-                          name="status"
-                          value={formData.status}
-                          onChange={handleInputChange}
-                        >
+                        <select className="form-select" name="status" value={formData.status} onChange={handleInputChange}>
                           <option value="Ready">Ready</option>
                           <option value="In Progress">In Progress</option>
                           <option value="Done">Done</option>
@@ -188,26 +181,9 @@ const AddTask = () => {
                       </div>
 
                       <div className="col-md-6 mb-2">
-                        <label className="form-label">Project List</label>
-                        <select
-                          className="form-select"
-                          name="projectList"
-                          value={formData.projectList}
-                          onChange={handleInputChange}
-                        >
-                          <option value="">-- Select Project --</option>
-                          {projects.map((project) => (
-                            <option key={project.id} value={project.id}>
-                              {project.projName}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="col-md-6 mb-2">
                         <label className="form-label">Estimate (Days)</label>
                         <input
-                          type="number"
+                          type="date"
                           className="form-control"
                           name="estimate"
                           value={formData.estimate}
@@ -216,11 +192,28 @@ const AddTask = () => {
                       </div>
 
                       <div className="col-md-6 mb-2">
-                        <label className="form-label">People List</label>
+                        <label className="form-label">Project</label>
                         <select
                           className="form-select"
-                          name="peopleList"
-                          value={formData.peopleList}
+                          name="projectId"
+                          value={formData.projectId}
+                          onChange={handleInputChange}
+                        >
+                          <option value="">-- Select Project --</option>
+                          {projects.map((p) => (
+                            <option key={p.id} value={p.id}>
+                              {p.projName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="col-md-6 mb-2">
+                        <label className="form-label">Assigned Person</label>
+                        <select
+                          className="form-select"
+                          name="personId"
+                          value={formData.personId}
                           onChange={handleInputChange}
                         >
                           <option value="">-- Select Person --</option>
@@ -270,45 +263,33 @@ const AddTask = () => {
 
                 {activeTab === "comments" && (
                   <div>
-                    <div className="mb-3">
-                      <textarea
-                        className="form-control"
-                        rows="2"
-                        placeholder="Add a comment..."
-                        value={commentInput}
-                        onChange={(e) => setCommentInput(e.target.value)}
-                      ></textarea>
-
-                      <div className="d-flex justify-content-between align-items-center mt-2">
-                        <div className="d-flex gap-3 text-muted fs-5">
-                          <BsEmojiSmile />
-                          <BsPaperclip />
-                          <BsAt />
-                        </div>
-                        <div>
-                          <button
-                            className="btn btn-light btn-sm me-2"
-                            onClick={() => setCommentInput("")}
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            className="btn btn-success btn-sm"
-                            style={{ backgroundColor: theme.header }}
-                            onClick={handleAddComment}
-                          >
-                            Save
-                          </button>
-                        </div>
+                    <textarea
+                      className="form-control mb-2"
+                      rows="2"
+                      placeholder="Add a comment..."
+                      value={commentInput}
+                      onChange={(e) => setCommentInput(e.target.value)}
+                    />
+                    <div className="d-flex justify-content-between align-items-center mb-3">
+                      <div className="d-flex gap-3 text-muted fs-5">
+                        <BsEmojiSmile />
+                        <BsPaperclip />
+                        <BsAt />
+                      </div>
+                      <div>
+                        <button className="btn btn-light btn-sm me-2" onClick={() => setCommentInput("")}>
+                          Cancel
+                        </button>
+                        <button className="btn btn-success btn-sm" style={{ backgroundColor: theme.header }} onClick={handleAddComment}>
+                          Save
+                        </button>
                       </div>
                     </div>
 
                     <h6 className="mb-2">Comments</h6>
                     <div className="list-group">
                       {comments.length === 0 ? (
-                        <div className="list-group-item text-muted">
-                          No comments yet.
-                        </div>
+                        <div className="list-group-item text-muted">No comments yet.</div>
                       ) : (
                         comments.map((c, i) => (
                           <div key={i} className="list-group-item">
@@ -317,9 +298,7 @@ const AddTask = () => {
                               <small className="text-muted">{c.time}</small>
                             </div>
                             <p className="mb-1">{c.text}</p>
-                            <button className="btn btn-link btn-sm p-0">
-                              Reply
-                            </button>
+                            <button className="btn btn-link btn-sm p-0">Reply</button>
                           </div>
                         ))
                       )}
@@ -328,20 +307,13 @@ const AddTask = () => {
                 )}
               </div>
 
-              {/* FOOTER */}
+              {/* Modal Footer */}
               {activeTab === "details" && (
                 <div className="modal-footer py-2">
-                  <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => setShowModal(false)}
-                  >
+                  <button className="btn btn-secondary btn-sm" onClick={() => setShowModal(false)}>
                     Cancel
                   </button>
-                  <button
-                    className="btn btn-primary btn-sm"
-                    style={{ backgroundColor: theme.header }}
-                    onClick={handleSave}
-                  >
+                  <button className="btn btn-primary btn-sm" style={{ backgroundColor: theme.header }} onClick={handleSave}>
                     Save
                   </button>
                 </div>

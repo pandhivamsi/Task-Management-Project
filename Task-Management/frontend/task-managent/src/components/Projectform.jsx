@@ -7,7 +7,7 @@ const ProjectForm = ({ onClose }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { projects, setProjects } = useAppData(); // Use context
-
+  const token = sessionStorage.getItem("token");
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!projectName.trim()) return;
@@ -17,7 +17,11 @@ const ProjectForm = ({ onClose }) => {
 
     try {
       const newProject = { projName: projectName, createdBy: "vamsi" };
-      const res = await axios.post("http://localhost:8080/projects", newProject);
+      const res = await axios.post("http://localhost:8080/auth/projects", newProject,{
+        headers: {
+        Authorization: `Bearer ${token}`,
+      }
+      });
 
       // Update context state immediately
       setProjects([...projects, res.data]);
