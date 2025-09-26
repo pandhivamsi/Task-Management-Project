@@ -1,13 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import img from "../assets/image2.jpg";
 import Header from "./Header";
+import { ThemeContext } from "./ThemeContext";
 
 const Edit = () => {
   const { userid } = useParams();
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+
+  const { theme } = useContext(ThemeContext);
 
   const [user, setUser] = useState({
     id: "",
@@ -73,7 +76,7 @@ const Edit = () => {
       <div className="container modal-dialog mt-5 pt-4 h-100">
         <div className="modal-content h-100">
           <div className="card shadow-fullscreen border-0 rounded-0 ">
-            <div className="card-header bg-primary text-white ">
+            <div className="card-header  text-white " style={{ backgroundColor: theme.header }}>
               <h3 className="mb-1">Edit Profile</h3>
             </div>
 
@@ -206,7 +209,7 @@ const Edit = () => {
                 </button>
                 <button
                   type="submit"
-                  className="btn btn-primary px-4"
+                  className="btn text-white px-4" style={{ backgroundColor: theme.header }}
                   onClick={handleSave}
                 >
                   Save Changes

@@ -13,9 +13,13 @@ import { useAppData } from "./DataContext";
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const { cards, setCards} = useAppData();
+  const { cards, setCards } = useAppData();
   const [showUsers, setShowUsers] = useState(false);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState({
+    Department: [],
+    Role: [],
+    Priority: [],
+  });
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
 
   const { theme } = useContext(ThemeContext);
@@ -54,9 +58,20 @@ const Dashboard = () => {
     };
   }, []);
 
+  // ✅ Filter cards
+  const filteredCards = cards.filter((card) => {
+    const matchDepartment =
+      filters.Department.length === 0 || filters.Department.includes(card.department);
+    const matchRole =
+      filters.Role.length === 0 || filters.Role.includes(card.role);
+    const matchPriority =
+      filters.Priority.length === 0 || filters.Priority.includes(card.priority);
+    return matchDepartment && matchRole && matchPriority;
+  });
+
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
-       {isFullscreen && (
+      {isFullscreen && (
         <div className="d-flex justify-content-between align-items-center bg-light p-2">
           <div className="d-flex align-items-center ms-5">
             <button
@@ -75,8 +90,9 @@ const Dashboard = () => {
           </button>
         </div>
       )}
+
       {!isFullscreen && (
-        <div>
+        <>
           <Header />
 
           <div className="d-flex justify-content-between align-items-center mt-5 px-2 pt-4">
@@ -109,6 +125,8 @@ const Dashboard = () => {
                   </li>
                 </ul>
               </div>
+
+              {/* ✅ Applied filters */}
               <AppliedFilters
                 appliedFiltersList={appliedFiltersList}
                 onClear={() => {
@@ -127,7 +145,7 @@ const Dashboard = () => {
               }}
             />
           </div>
-        </div>
+        </>
       )}
 
       <div className="m-3 p-3 border">
@@ -139,7 +157,9 @@ const Dashboard = () => {
             readOnly
           />
         </div>
-        <KanbanBoard setCards={setCards} cards={cards} />
+
+        {/* ✅ Only filtered cards */}
+        <KanbanBoard setCards={setCards} cards={filteredCards} />
       </div>
     </div>
   );
