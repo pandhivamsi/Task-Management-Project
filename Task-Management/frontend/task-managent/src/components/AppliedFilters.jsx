@@ -1,7 +1,7 @@
 import React from "react";
 
 const AppliedFilters = ({ appliedFiltersList, onClear }) => {
-  if (appliedFiltersList.length === 0) return null;
+  if (!appliedFiltersList || appliedFiltersList.length === 0) return null;
 
   return (
     <div
@@ -16,15 +16,15 @@ const AppliedFilters = ({ appliedFiltersList, onClear }) => {
         e.currentTarget.scrollLeft += e.deltaY;
       }}
     >
-     
+      {/* Hide scrollbar in Webkit browsers */}
       <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
-      <span className="small text-muted  flex-grow-1  m-2 ">
+      <span className="small text-muted flex-grow-1 m-2">
         Filter: {appliedFiltersList.join(", ")}
       </span>
 
       <button
-        className="btn-close  btn-sm flex-shrink-0"
+        className="btn-close btn-sm flex-shrink-0"
         aria-label="Clear filters"
         onClick={onClear}
       ></button>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa";
-import AppliedFilters from "./AppliedFilters";
 
 const Filter = ({ onFiltersChange }) => {
   const [filters, setFilters] = useState({
@@ -21,10 +20,6 @@ const Filter = ({ onFiltersChange }) => {
     { name: "Priority", options: ["High", "Medium", "Low"] },
   ];
 
-  // const openOffcanvas = () => {
-  //   setDraftFilters({ ...filters }); 
-  // };
-
   const handleCheckboxChange = (category, value) => {
     setDraftFilters((prev) => {
       const updated = { ...prev };
@@ -37,55 +32,43 @@ const Filter = ({ onFiltersChange }) => {
     });
   };
 
- const clearFilters = () => {
-  let emptyFilters = {
-    Department: [],
-    Role: [],
-    Priority: [],
+  const clearFilters = () => {
+    const empty = {
+      Department: [],
+      Role: [],
+      Priority: [],
+    };
+    setFilters(empty);
+    setDraftFilters(empty);
+    if (onFiltersChange) {
+      onFiltersChange(empty, []);
+    }
   };
 
-  setFilters(emptyFilters);     
-  setDraftFilters(emptyFilters);  
-
-  if (onFiltersChange) {
-    
-    onFiltersChange(emptyFilters, []);
-  }
-};
-
-   const saveFilters = () => {
-  setFilters({ ...draftFilters });
-  if (onFiltersChange) {
-    const applied = Object.entries(draftFilters)
-      .flatMap(([category, values]) =>
-        values.map((val) => `${category}: ${val}`)
-      );
-    onFiltersChange(draftFilters, applied); 
-  }
-};
-
-  const appliedFiltersList = Object.entries(filters)
-    .flatMap(([category, values]) => values.map((val) => `${category}: ${val}`));
+  const saveFilters = () => {
+    setFilters({ ...draftFilters });
+    if (onFiltersChange) {
+      const applied = Object.entries(draftFilters)
+        .flatMap(([category, values]) =>
+          values.map((val) => `${category}: ${val}`)
+        );
+      onFiltersChange(draftFilters, applied);
+    }
+  };
 
   return (
     <>
-     
-       {/* <AppliedFilters
-        appliedFiltersList={appliedFiltersList}
-        onClear={clearFilters}
-      /> */}
-    <button
-  className="btn border rounded-pill shadow-sm text-dark bg-white fs-7 fw-bold d-flex align-items-center mt-3 px-3 py-1"
-  type="button"
-  data-bs-toggle="offcanvas"
-  data-bs-target="#mainFilterOffcanvas"
-  aria-controls="mainFilterOffcanvas"
->
-  <FaFilter className="me-2" /> 
-  Filters
-</button>
+      <button
+        className="btn border rounded-pill shadow-sm text-dark bg-white fs-7 fw-bold d-flex align-items-center mt-3 px-3 py-1"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#mainFilterOffcanvas"
+        aria-controls="mainFilterOffcanvas"
+      >
+        <FaFilter className="me-2" />
+        Filters
+      </button>
 
-    
       <div
         className="offcanvas offcanvas-end w-25 mt-5"
         tabIndex="-1"
@@ -96,11 +79,7 @@ const Filter = ({ onFiltersChange }) => {
           <h5 className="offcanvas-title" id="mainFilterOffcanvasLabel">
             Filters
           </h5>
-          <button
-            type="button"
-            className="btn btn-link text-danger"
-            onClick={clearFilters}
-          >
+          <button className="btn btn-link text-danger" onClick={clearFilters}>
             Clear Filters
           </button>
           <button
@@ -142,7 +121,9 @@ const Filter = ({ onFiltersChange }) => {
                           className="form-check-input"
                           type="checkbox"
                           id={`${activeCategory}-${option}`}
-                          checked={draftFilters[activeCategory]?.includes(option)}
+                          checked={draftFilters[activeCategory]?.includes(
+                            option
+                          )}
                           onChange={() =>
                             handleCheckboxChange(activeCategory, option)
                           }
