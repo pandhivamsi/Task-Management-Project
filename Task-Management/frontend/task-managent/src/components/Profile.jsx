@@ -11,10 +11,11 @@ const Profile = () => {
   const [showReset, setShowReset] = useState(false);
   const { setTheme } = useContext(ThemeContext);
   const [user, setUser] = useState({ name: "", role: "" });
+  const userId = sessionStorage.getItem("id");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/auth/1")
+      .get("http://localhost:8080/auth/people")
       .then((res) => {
         setUser(res.data);
       })
