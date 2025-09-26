@@ -189,7 +189,8 @@ A list of all saved comments appears below for tracking discussions.
 
 **3. Standup_Wizard**  
 ![alt text](document-assets/swd.jpg)  
-- When you click the Standup_Wizard, the dashboard expands into full screen.  
+- When you click the Standup_Wizard, the dashboard expands into full screen.
+ ![alt text](document-assets/swzd.jpg)   
 - In the Standup_Wizard, the "Start" button at the top left is a timer. It turns on when we click on the user profile.  
 - It displays three columns: Ready, In Progress, and Done.  
 - Each column contains task cards with user icons and details.  
