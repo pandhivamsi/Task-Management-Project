@@ -14,7 +14,7 @@ import CardEdit from "./CardEdit";
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const { cards, setCards,projects,peoples,fetchCards } = useAppData();
+  const { cards, setCards,fetchProjectsAndPeoples,fetchCards } = useAppData();
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState({
     Department: [],
@@ -36,8 +36,7 @@ const Dashboard = () => {
   const loadData = async () => {
     try {
       await Promise.all([
-        projects(),
-        peoples(),
+        fetchProjectsAndPeoples(),
         fetchCards()
       ]);
     } catch (error) {

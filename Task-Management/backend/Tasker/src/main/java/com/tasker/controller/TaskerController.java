@@ -1,5 +1,6 @@
 package com.tasker.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +19,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tasker.entity.Card;
 import com.tasker.entity.Comment;
 import com.tasker.entity.Person;
 import com.tasker.entity.Project;
-import com.tasker.security.JwtAuthFilter;
 import com.tasker.security.JwtUtil;
+import com.tasker.service.StorageService;
 import com.tasker.service.TaskerService;
-
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
@@ -42,6 +44,9 @@ public class TaskerController {
 	
 	@Autowired
 	private JwtUtil jwtUtil; 
+	
+	@Autowired
+	private StorageService storageService;
 	
 	@GetMapping("/projects")
 	public List<Project> getProjects() {
@@ -169,10 +174,30 @@ public class TaskerController {
 	
 	@PutMapping("/peoples/{id}")
 	public ResponseEntity<Person> updateUser(
-	        @PathVariable("id") Integer id,
-	        @RequestBody Person c1) {
-	    Person c = service.updatePerson(id, c1);
-	    return ResponseEntity.ok(c);
+	        @PathVariable Integer id,
+	        @RequestParam(required = false) String name,
+	        @RequestParam(required = false) String title,
+	        @RequestParam(required = false) MultipartFile photo
+	) {
+	    Person person = service.getPerson(id)
+	                           .orElseThrow(() -> new RuntimeException("Person not found"));
+
+	    if (name != null) person.setName(name);
+	    if (title != null) person.setTitle(title);
+
+	    if (photo != null && !photo.isEmpty()) {
+	        try {
+	            String fileName = storageService.save(photo);
+	            person.setProfileImg(fileName);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                                 .body(null);
+	        }
+	    }
+
+	    service.updatePerson(id, person);
+	    return ResponseEntity.ok(person);
 	}
 	
 	@DeleteMapping("/peoples/{id}")

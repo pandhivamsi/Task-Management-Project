@@ -24,3 +24,11 @@ VALUES
 ('Eve Davis', 'Tester', 'QualityWorks', 5678901234, 5432109876, 'Team Member', 'eve@example.com', 'eve123', 'eve05', 'eve.jpg', 'Inactive'),
 ('Frank Miller', 'Support', 'HelpDesk', 6789012345, 4321098765, 'Team Member', 'frank@example.com', 'frank123', 'frank06', 'frank.jpg', 'Active'),
 ('Grace Lee', 'HR', 'PeopleFirst', 7890123456, 3210987654, 'Admin', 'grace@example.com', 'grace123', 'grace07', 'grace.jpg', 'Active');
+
+INSERT INTO peoples 
+(name, title, organization, work_phone, mobile, role, email, password, user_id, profile_img, status)
+VALUES
+('Sample Name', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'pvamsi3010@gmail.com', '$2a$10$xxl.kC/TN7Tg3BjQX91La.Iuik1QucpjvFXQNRLgMbXU9UojXiuDi', 8, 'default.png', 'active'),
+('Sample Name', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'siva@gmail.com', '$2a$10$zLi..4TdPZsIXVXq6PRrg.JQxBj4wuhpdx98S4x2639Rjtv8zhWza', 10, 'default.png', 'active'),
+('Sample Name', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'lenin@gmail.com', '$2a$10$x60Fuu4kg6YErQ136x0JDODjfohJlNeLKW69uXMuQoO/YzXAmHEMy', 11, 'default.png', 'active'),
+('Sample Name', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'chandu@gmail.com', '$2a$10$JLJqeKZkSugqouWUrj0h8uJw5C8zng3fwrXpIJ2Blh8qQxnJcTLsC', 12, 'default.png', 'active');

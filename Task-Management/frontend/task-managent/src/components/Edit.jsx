@@ -22,13 +22,25 @@ const Edit = () => {
     photo: "",
   });
 
+  const token = sessionStorage.getItem("token")
+
   useEffect(() => {
-    if (userid) {
-      axios.get(`http://localhost:8081/users/${userid}`)
-        .then((res) => setUser(res.data))
-        .catch((err) => console.error("Error fetching user:", err));
-    }
-  }, [userid]);
+  if (userid && token) {
+    axios.get(`http://localhost:8080/auth/people/${userid}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then(res => setUser(res.data))
+    .catch(err => {
+      console.error("Error fetching user:", err);
+
+      if (err.response?.status === 401) {
+        sessionStorage.clear();
+        navigate("/");
+      }
+    });
+  }
+}, [userid, token]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,23 +60,34 @@ const Edit = () => {
 
  const handleSave = async (e) => {
   e.preventDefault();
+
   const formData = new FormData();
   formData.append("name", user.name);
   formData.append("title", user.title);
 
-  
-  if (fileInputRef.current && fileInputRef.current.files[0]) {
+  if (fileInputRef.current?.files[0]) {
     formData.append("photo", fileInputRef.current.files[0]);
   }
 
   try {
-    await axios.put(`http://localhost:8080/users/${userid}`, formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+    await axios.put(`http://localhost:8080/auth/peoples/${userid}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
     });
     alert("Profile updated successfully!");
     navigate("/dashboard");
   } catch (err) {
     console.error("Error updating user:", err);
+    if (err.response?.status === 401) {
+      sessionStorage.clear();
+      navigate("/");
+    } else if (err.response?.status === 403) {
+      alert("You are not allowed to update this profile.");
+    } else {
+      alert("Failed to update profile. Please try again.");
+    }
   }
 };
 
@@ -89,7 +112,7 @@ const Edit = () => {
                     >
                       <div className="rounded-circle overflow-hidden border border-3 border-primary w-100 h-100">
                         <img
-                          src={user.photo}
+                            src={user.profileImg ? `http://localhost:8080/uploads/${user.profileImg}` : '/uploads/default.png'}
                           alt="Profile"
                           className="w-100 h-100"
                           style={{ objectFit: "cover" }}

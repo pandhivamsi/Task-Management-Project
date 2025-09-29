@@ -81,7 +81,8 @@ export const AppDataProvider = ({ children }) => {
         loading,
         setSelectedProject,
         selectedProject,
-        authError, 
+        authError,
+        fetchProjectsAndPeoples, 
       }}
     >
       {children}
