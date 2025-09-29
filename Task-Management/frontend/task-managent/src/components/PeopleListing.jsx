@@ -158,7 +158,7 @@ const PeopleListing = () => {
           </tbody>
         </table>
       </div>
-      {/* Delete Confirmation Modal */}
+      
       {showDeleteModal && (
         <DeleteConfirm
           handleDelete={confirmDelete}

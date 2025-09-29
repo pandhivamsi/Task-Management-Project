@@ -16,7 +16,6 @@ const AppliedFilters = ({ appliedFiltersList, onClear }) => {
         e.currentTarget.scrollLeft += e.deltaY;
       }}
     >
-      {/* Hide scrollbar in Webkit browsers */}
       <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
       <span className="small text-muted flex-grow-1 m-2">

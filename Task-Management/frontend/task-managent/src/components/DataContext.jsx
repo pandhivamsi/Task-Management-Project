@@ -11,7 +11,7 @@ export const AppDataProvider = ({ children }) => {
   const [peoples, setPeoples] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState("");
-  const [authError, setAuthError] = useState(false); // 🔥 new state
+  const [authError, setAuthError] = useState(false); 
 
   const API_BASE = "http://localhost:8080/auth";
 
@@ -26,7 +26,7 @@ export const AppDataProvider = ({ children }) => {
 
   const handleAuthError = (err) => {
     if (err.response && err.response.status === 401) {
-      setAuthError(true); // 🔥 trigger auth redirect
+      setAuthError(true); 
       sessionStorage.clear();
     } else {
       console.error(err);
@@ -81,7 +81,7 @@ export const AppDataProvider = ({ children }) => {
         loading,
         setSelectedProject,
         selectedProject,
-        authError, // 🔥 expose to components
+        authError, 
       }}
     >
       {children}

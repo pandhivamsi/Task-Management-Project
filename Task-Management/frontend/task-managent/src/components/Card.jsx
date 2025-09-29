@@ -31,7 +31,7 @@ const Card = ({ card, handleUpdateCard }) => {
         style={{ width: 250, borderRadius: 8, cursor: "pointer" }}
         onClick={() => handleOpenModal(false)}
       >
-        {/* Avatar and Card ID */}
+        
         <div className="d-flex align-items-center p-2">
           <img
             src={img}
@@ -42,11 +42,11 @@ const Card = ({ card, handleUpdateCard }) => {
           <span className="fw-bold small text-secondary">{card.card_id}</span>
         </div>
 
-        {/* Title and Details */}
+        
         <div className="card-body p-2">
           <p className="card-text mb-1 small fw-semibold">{card.title}</p>
           
-          {/* Additional card info */}
+          
           <div className="mb-1">
             <span className="badge bg-light text-dark me-1">
               Dept: {card.department}
@@ -57,13 +57,12 @@ const Card = ({ card, handleUpdateCard }) => {
           </div>
         </div>
 
-        {/* Action Icons */}
+        
         <CardIcons
           onCommentClick={() => handleOpenModal(true)}
           onDeleteClick={() => setShowDeleteConfirm(true)}
         />
 
-        {/* Bottom Accent Bar */}
         <div
           style={{
             height: "5px",
@@ -79,7 +78,6 @@ const Card = ({ card, handleUpdateCard }) => {
         ></div>
       </div>
 
-      {/* Modal for editing card */}
       {showModal && (
         <CardEdit
           card={card}
@@ -89,7 +87,6 @@ const Card = ({ card, handleUpdateCard }) => {
         />
       )}
 
-      {/* Delete Confirmation */}
       {showDeleteConfirm && (
         <DeleteConfirmation
           id={card.id}
@@ -97,7 +94,6 @@ const Card = ({ card, handleUpdateCard }) => {
         />
       )}
 
-      {/* Toast */}
       {openToast && <Toaster />}
     </>
   );

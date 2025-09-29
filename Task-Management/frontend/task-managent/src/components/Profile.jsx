@@ -40,8 +40,8 @@ const Profile = () => {
   const applyTheme = (color) => {
     setTheme({
       header: color,
-      // dashboard: "#f8f9fa",
-      // card: "#ffffff",
+      
+      
     });
   };
 

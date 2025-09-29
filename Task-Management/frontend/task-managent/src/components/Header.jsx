@@ -33,7 +33,7 @@ const Header = ({ cards, onSearchSelect }) => {
       style={{ backgroundColor: theme.header }}
     >
       <div className="container-fluid d-flex align-items-center justify-content-between">
-        {/* Left side */}
+        
         <div className="d-flex align-items-center gap-3">
           <a
             className="navbar-brand text-white fw-bold d-flex align-items-center ms-0"
@@ -51,10 +51,10 @@ const Header = ({ cards, onSearchSelect }) => {
           {token && <Projectlist />}
         </div>
 
-        {/* Right side */}
+        
         {token && (
           <div className="d-flex align-items-center position-relative">
-            {/* Support button */}
+            
             <button
               onClick={openCalendly}
               className="btn bg-transparent border-0 text-light p-2 me-1"
@@ -62,7 +62,7 @@ const Header = ({ cards, onSearchSelect }) => {
               <BsQuestionCircle size={22} />
             </button>
 
-            {/* Search bar toggle */}
+          
             {searchMode ? (
               <div className="position-relative">
                 <input
@@ -74,7 +74,7 @@ const Header = ({ cards, onSearchSelect }) => {
                   onChange={(e) => setSearchValue(e.target.value)}
                   style={{ width: "200px" }}
                 />
-                {/* Suggestions */}
+  
                 {matchedCards.length > 0 && (
                   <ul
                     className="list-group position-absolute mt-1"

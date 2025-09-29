@@ -45,15 +45,12 @@ const Register = () => {
         }
       );
 
-      setSuccess("Registration successful ✅ Redirecting...");
-      
-      // Clear form
+      setSuccess("Registration successful Redirecting...");
       setUName("");
       setRole("");
       setPassword("");
       setCPassword("");
 
-      // Redirect to login after 2 seconds
       setTimeout(() => {
         navigate("/");
         sessionStorage.clear();
