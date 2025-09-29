@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-// import img from "../assets/image2.jpg";
 import Header from "./Header";
 import { ThemeContext } from "./ThemeContext";
 
@@ -53,7 +52,7 @@ const Edit = () => {
   formData.append("name", user.name);
   formData.append("title", user.title);
 
-  // ✅ Correct way to append the selected file
+  
   if (fileInputRef.current && fileInputRef.current.files[0]) {
     formData.append("photo", fileInputRef.current.files[0]);
   }

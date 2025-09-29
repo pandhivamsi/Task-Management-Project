@@ -3,7 +3,7 @@ import Card from "./Card";
 import { useAppData } from "./DataContext";
 
 const KanbanBoard = ({ cards, setCards }) => {
-  const { selectedProject } = useAppData(); // get global selected project
+  const { selectedProject } = useAppData(); 
 
   const columns = [
     { name: "Ready", color: "#e3f2fd" },
@@ -17,7 +17,6 @@ const KanbanBoard = ({ cards, setCards }) => {
     );
   };
 
-  // Filter cards based on selected project
   const filteredCards = selectedProject
     ? cards.filter((card) => card.projectName === selectedProject)
     : cards;

@@ -23,7 +23,7 @@ const ProjectForm = ({ onClose }) => {
       }
       });
 
-      // Update context state immediately
+      
       setProjects([...projects, res.data]);
       setProjectName("");
       onClose();

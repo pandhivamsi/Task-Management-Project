@@ -26,7 +26,7 @@ const Login = () => {
         password: upwd.current.value,
       });
 
-      // store user info in sessionStorage
+    
       sessionStorage.setItem("role", res.data.role);
       sessionStorage.setItem("id", res.data.id);
       sessionStorage.setItem("username", res.data.username);
@@ -35,9 +35,9 @@ const Login = () => {
      navigate("/dashboard")
 
     } catch (err) {
-      // Axios error handling
+      
       if (err.response) {
-        // server responded with status != 2xx
+      
         setError(err.response.data || "Invalid username or password");
       } else if (err.request) {
         setError("Server did not respond");

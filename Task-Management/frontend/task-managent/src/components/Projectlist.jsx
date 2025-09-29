@@ -5,7 +5,6 @@ import { useAppData } from "./DataContext";
 
 const ProjectList = () => {
    const { projects, selectedProject, setSelectedProject } = useAppData();
-  // const [selectedProject, setSelectedProject] = useState(projects[0]?.projName || "");
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 

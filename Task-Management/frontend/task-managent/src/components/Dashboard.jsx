@@ -9,7 +9,7 @@ import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
 import { useAppData } from "./DataContext";
-import CardEdit from "./CardEdit"; // ✅ Import CardEdit
+import CardEdit from "./CardEdit"; 
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
@@ -24,7 +24,7 @@ const Dashboard = () => {
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [selectedCard, setSelectedCard] = useState(null); // ✅ For modal
+  const [selectedCard, setSelectedCard] = useState(null); 
 
   const { theme } = useContext(ThemeContext);
 
@@ -62,7 +62,6 @@ const Dashboard = () => {
     };
   }, []);
 
-  // ✅ Apply filters + search
   const filteredCards = cards.filter((card) => {
     const matchDepartment =
       filters.Department.length === 0 ||
@@ -81,7 +80,7 @@ const Dashboard = () => {
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
-      {/* ✅ Pass cards & search handler */}
+  
       <Header
         cards={cards}
         onSearchSelect={(card) => setSelectedCard(card)}
@@ -109,7 +108,7 @@ const Dashboard = () => {
         <>
           <div className="d-flex justify-content-between align-items-center mt-5 px-2 pt-4">
             <div className="d-flex align-items-center ms-1">
-              {/* Dropdown */}
+            
               <div className="dropdown ms-1">
                 <button
                   className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold px-4 ms-1"
@@ -139,7 +138,6 @@ const Dashboard = () => {
                 </ul>
               </div>
 
-              {/* ✅ Applied filters */}
               <AppliedFilters
                 appliedFiltersList={appliedFiltersList}
                 onClear={() => {
@@ -161,7 +159,6 @@ const Dashboard = () => {
         </>
       )}
 
-      {/* ✅ Kanban Board */}
       <div className="m-3 p-3 border">
         <div
           className="p-2 text-white"
@@ -177,7 +174,6 @@ const Dashboard = () => {
         <KanbanBoard setCards={setCards} cards={filteredCards} />
       </div>
 
-      {/* ✅ Modal for selected card */}
       {selectedCard && (
         <CardEdit
           card={selectedCard}
