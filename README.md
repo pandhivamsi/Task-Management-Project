@@ -6,6 +6,8 @@
 2. npm install  
 3. npm run dev  
 4. npm start  
+5. open IDE
+6. Run the springboot App
 
 **UseCase Diagram:-**  
 ![alt text](document-assets/WhatsApp%20Image%202025-09-24%20at%2011.37.46_2bb870f1.jpg)  
