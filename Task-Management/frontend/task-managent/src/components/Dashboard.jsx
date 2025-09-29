@@ -32,21 +32,26 @@ const Dashboard = () => {
     setSelectedOption(option);
   };
 
-  useEffect(() => {
+ useEffect(() => {
   const loadData = async () => {
     try {
       await Promise.all([
-        projects(), 
-        peoples(),  
-        fetchCards() 
+        projects(),
+        peoples(),
+        fetchCards()
       ]);
     } catch (error) {
       console.error("Failed to load dashboard data:", error);
     }
   };
 
-  loadData();
+  const token = sessionStorage.getItem("token");
+  if (token) {
+    loadData();
+  }
 }, []);
+
+
 
   const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
@@ -96,12 +101,6 @@ const Dashboard = () => {
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
-  
-      <Header
-        cards={cards}
-        onSearchSelect={(card) => setSelectedCard(card)}
-      />
-
       {isFullscreen ? (
         <div className="d-flex justify-content-between align-items-center bg-light p-2">
           <div className="d-flex align-items-center ms-5">
@@ -122,6 +121,10 @@ const Dashboard = () => {
         </div>
       ) : (
         <>
+        <Header
+        cards={cards}
+        onSearchSelect={(card) => setSelectedCard(card)}
+      />
           <div className="d-flex justify-content-between align-items-center mt-5 px-2 pt-4">
             <div className="d-flex align-items-center ms-1">
             
