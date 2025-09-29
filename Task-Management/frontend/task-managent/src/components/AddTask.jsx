@@ -21,13 +21,13 @@ const AddTask = () => {
     description: "",
     priority: "",
     dueDate: "",
-    estimate: "", // to be mapped to estimateDate
+    estimate: "", 
     size: "",
     release: "",
     status: "Ready",
     sprint: "",
-    projectId: "", // used for dropdown
-    personId: "",  // used for dropdown
+    projectId: "", 
+    personId: "",  
   });
 
   const [comments, setComments] = useState([]);
@@ -307,7 +307,6 @@ const AddTask = () => {
                 )}
               </div>
 
-              {/* Modal Footer */}
               {activeTab === "details" && (
                 <div className="modal-footer py-2">
                   <button className="btn btn-secondary btn-sm" onClick={() => setShowModal(false)}>
