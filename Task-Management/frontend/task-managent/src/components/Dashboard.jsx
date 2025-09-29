@@ -14,7 +14,7 @@ import CardEdit from "./CardEdit";
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const { cards, setCards } = useAppData();
+  const { cards, setCards,projects,peoples,fetchCards } = useAppData();
   const [showUsers, setShowUsers] = useState(false);
   const [filters, setFilters] = useState({
     Department: [],
@@ -31,6 +31,22 @@ const Dashboard = () => {
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
+
+  useEffect(() => {
+  const loadData = async () => {
+    try {
+      await Promise.all([
+        projects(), 
+        peoples(),  
+        fetchCards() 
+      ]);
+    } catch (error) {
+      console.error("Failed to load dashboard data:", error);
+    }
+  };
+
+  loadData();
+}, []);
 
   const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
