@@ -1,12 +1,37 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "./ThemeContext";
 import { BsEmojiSmile, BsPaperclip, BsAt } from "react-icons/bs";
+import axios from "axios";
+import { useAppData } from "./DataContext";
 
-const CardEdit = ({ user, onClose, fromComment = false }) => {
+const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
   const { theme } = useContext(ThemeContext);
   const [activeTab, setActiveTab] = useState(fromComment ? "comments" : "details");
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState("");
+  const { projects, peoples, loading } = useAppData();
+  const token = sessionStorage.getItem("token");
+
+  const [formData, setFormData] = useState({
+    id: card.id,
+    title: card.title || "",
+    description: card.description || "",
+    priority: card.priority || "Select",
+    status: card.status || "Ready",
+    dueDate: card.dueDate || card.estimateDate || "",
+    estimateDate: card.estimateDate || card.dueDate || "",
+    projectName: card.projectName || card.projectList || "",
+    personName: card.personName || card.peopleList || "",
+    estimate: card.estimate || "",
+    size: card.size || "",
+    release: card.release || "",
+    sprint: card.sprint || ""
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleAddComment = () => {
     if (commentInput.trim()) {
@@ -15,12 +40,45 @@ const CardEdit = ({ user, onClose, fromComment = false }) => {
     }
   };
 
+  const handleSave = () => {
+    const updatedCard = {
+      ...card,
+      id: formData.id,
+      title: formData.title,
+      description: formData.description,
+      priority: formData.priority,
+      status: formData.status,
+      dueDate: formData.dueDate,
+      estimateDate: formData.estimateDate,
+      projectName: formData.projectName,
+      personName: formData.personName,
+      estimate: formData.estimate,
+      size: formData.size,
+      release: formData.release,
+      sprint: formData.sprint
+    };
+
+    console.log(updatedCard);
+
+    axios
+      .put(`http://localhost:8080/auth/cards/${updatedCard.id}`, updatedCard ,{
+        headers: {
+        Authorization: `Bearer ${token}`,
+      }
+      })
+      .then((res) => {
+        if (onSave) onSave(res.data);
+        onClose();
+      })
+      .catch((err) => console.error("Failed to update card:", err));
+  };
+
   return (
     <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
       <div className="modal-dialog modal-xl">
         <div className="modal-content">
           <div className="modal-header text-white" style={{ backgroundColor: theme.header }}>
-            <h5 className="modal-title">{user.taskId}: {user.title}</h5>
+            <h5 className="modal-title">{card.card_id}: {card.title}</h5>
             <button type="button" className="btn-close btn-close-white" onClick={onClose}></button>
           </div>
 
@@ -38,15 +96,15 @@ const CardEdit = ({ user, onClose, fromComment = false }) => {
               <form className="row g-3">
                 <div className="col-12">
                   <label className="form-label">Title</label>
-                  <input type="text" className="form-control" defaultValue={user.title} />
+                  <input type="text" name="title" className="form-control" value={formData.title} onChange={handleChange} />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Description</label>
-                  <textarea className="form-control" rows="3" defaultValue={user.description}></textarea>
+                  <textarea name="description" className="form-control" rows="3" value={formData.description} onChange={handleChange}></textarea>
                 </div>
                 <div className="col-md-6">
                   <label className="form-label">Priority</label>
-                  <select className="form-select" defaultValue={user.priority}>
+                  <select name="priority" className="form-select" value={formData.priority} onChange={handleChange}>
                     <option>Select</option>
                     <option>Low</option>
                     <option>Medium</option>
@@ -55,7 +113,7 @@ const CardEdit = ({ user, onClose, fromComment = false }) => {
                 </div>
                 <div className="col-md-6">
                   <label className="form-label">Status</label>
-                  <select className="form-select" defaultValue={user.status}>
+                  <select name="status" className="form-select" value={formData.status} onChange={handleChange}>
                     <option>Ready</option>
                     <option>In Progress</option>
                     <option>Done</option>
@@ -63,67 +121,59 @@ const CardEdit = ({ user, onClose, fromComment = false }) => {
                 </div>
                 <div className="col-md-6">
                   <label className="form-label">Due Date</label>
-                  <input type="date" className="form-control" defaultValue={user.dueDate} />
+                  <input type="date" name="dueDate" className="form-control" value={formData.dueDate} onChange={handleChange} />
                 </div>
 
                 <div className="col-md-6 mb-2">
-                          <label className="form-label">ProjectList</label>
-                          <select
-                          className="form-select"
-                          name="projectList"
-                          defaultvalue={user.projectList}
-                      >
-                        <option value="">Select Project</option>
-                        {/* {projects && projects.length > 0 ? (
-                        projects.map((p) => (
-                        <option key={p.id} value={p.projectName}>
-                        {p.projectName}
+                  <label className="form-label">Project List</label>
+                  <select
+                    className="form-select"
+                    name="projectName"
+                    value={formData.projectName}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Select Project --</option>
+                    {projects.map((project) => (
+                      <option key={project.id} value={project.projName}>
+                        {project.projName}
                       </option>
-                           ))
-                              ) : (
-                    <option disabled>No Projects Available</option>
-                  )} */}
+                    ))}
                   </select>
-                  </div>
+                </div>
 
                 <div className="col-md-6">
                   <label className="form-label">Estimate (Days)</label>
-                  <input type="number" className="form-control" defaultValue={user.estimate} />
+                  <input type="number" name="estimate" className="form-control" value={formData.estimate} onChange={handleChange} />
                 </div>
 
                 <div className="col-md-6 mb-2">
-                          <label className="form-label">PeopleList</label>
-                          <select
-                          className="form-select"
-                          name="peopleList"
-                          defaultvalue={user.peopleList}
-                         
-                      >
-                        <option value="">Select People</option>
-                        {/* {peoples && peoples.length > 0 ? (
-                        peoples.map((x) => (
-                        <option key={x.id} value={x.firstName}>
-                        {x.firstName}
+                  <label className="form-label">People List</label>
+                  <select
+                    className="form-select"
+                    name="personName"
+                    value={formData.personName}
+                    onChange={handleChange}
+                  >
+                    <option value="">-- Select Person --</option>
+                    {peoples.map((person) => (
+                      <option key={person.id} value={person.name}>
+                        {person.name}
                       </option>
-                    ))
-              ) : (
-                    <option disabled>No People Available</option>
-                  )} */}
+                    ))}
                   </select>
-                  </div>
-
+                </div>
 
                 <div className="col-md-6">
                   <label className="form-label">Size</label>
-                  <input type="text" className="form-control" defaultValue={user.size} />
+                  <input type="text" name="size" className="form-control" value={formData.size} onChange={handleChange} />
                 </div>
                 <div className="col-md-6">
                   <label className="form-label">Release</label>
-                  <input type="text" className="form-control" defaultValue={user.release} />
+                  <input type="text" name="release" className="form-control" value={formData.release} onChange={handleChange} />
                 </div>
                 <div className="col-12">
                   <label className="form-label">Sprint</label>
-                  <input type="text" className="form-control" defaultValue={user.sprint} />
+                  <input type="text" name="sprint" className="form-control" value={formData.sprint} onChange={handleChange} />
                 </div>
               </form>
             )}
@@ -168,7 +218,7 @@ const CardEdit = ({ user, onClose, fromComment = false }) => {
           {activeTab === "details" && (
             <div className="modal-footer">
               <button className="btn btn-secondary btn-sm" onClick={onClose}>Cancel</button>
-              <button className="btn btn-primary btn-sm">Save</button>
+              <button type="submit" className="btn btn-primary btn-sm" onClick={handleSave}>Save</button>
             </div>
           )}
         </div>

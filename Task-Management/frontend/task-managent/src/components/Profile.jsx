@@ -11,17 +11,34 @@ const Profile = () => {
   const [showReset, setShowReset] = useState(false);
   const { setTheme } = useContext(ThemeContext);
   const [user, setUser] = useState({ name: "", role: "" });
+  const userId = sessionStorage.getItem("id");
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8081/api/user/1")
-      .then((res) => {
+    const fetchUser = async () => {
+      if (!userId || !token) return; // safety check
+
+      try {
+        const res = await axios.get(`http://localhost:8080/auth/people/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
         setUser(res.data);
-      })
-      .catch((err) => {
+      } catch (err) {
         console.error("Error fetching user:", err);
-      });
-  }, []);
+
+        if (err.response?.status === 401) {
+          // session expired
+          sessionStorage.clear();
+          navigate("/login");
+        } else if (err.response?.status === 403) {
+          console.warn("Access forbidden: insufficient permissions.");
+          setUser(null);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [userId, token, navigate, setUser]);
 
   const colorOptions = [
     { name: "Blue", value: "#0952bfff" },
@@ -34,8 +51,8 @@ const Profile = () => {
   const applyTheme = (color) => {
     setTheme({
       header: color,
-      // dashboard: "#f8f9fa",
-      // card: "#ffffff",
+      
+      
     });
   };
 
@@ -47,7 +64,21 @@ const Profile = () => {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <CgProfile size={28} />
+        <img
+      src={
+        user.profileImg
+          ? `http://localhost:8080/uploads/${user.profileImg}`
+          : 'http://localhost:8080/uploads/default.png'
+      }
+      alt="Profile"
+      style={{
+        width: '36px',
+        height: '36px',
+        borderRadius: '50%',
+        objectFit: 'cover',
+        border: '1px solid #fff',
+      }}
+    />
       </button>
 
       <ul className="dropdown-menu dropdown-menu-end dropdown-menu shadow">
@@ -56,12 +87,12 @@ const Profile = () => {
             <CgProfile size={32} className="me-2 text-primary " />
             <div>
               <h6 className="mb-0">{user.name || "Loading..."}</h6>
-              <small className="text-white-50">{user.role || "Fetching..."}</small>
+              <small className="text-black-50">{user.role || "Fetching..."}</small>
             </div>
           </div>
         </li>
         <li>
-          <button className="dropdown-item ms-0" onClick={() => navigate("/edit/1")}>
+          <button className="dropdown-item ms-0" onClick={() => navigate(`/edit/${userId}`)}>
             Edit Details
           </button>
         </li>
@@ -106,9 +137,9 @@ const Profile = () => {
           <hr className="dropdown-divider border-secondary-subtle" />
         </li>
         <li>
-          <a className="dropdown-item text-danger ms-0 text-center" href="/">
+          <button onClick={()=>{navigate("/");sessionStorage.clear()}} className="dropdown-item text-danger ms-0 text-center">
             Log Out
-          </a>
+          </button>
         </li>
       </ul>
 

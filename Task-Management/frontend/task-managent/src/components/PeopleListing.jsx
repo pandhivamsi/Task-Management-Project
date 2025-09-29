@@ -2,63 +2,63 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import axios from "axios";
+import { useAppData } from "./DataContext";
+import DeleteConfirm from "./DeleteConfirm";
+import Toaster from "./Toaster";
 
 const PeopleListing = () => {
-  const [peoples, setPeoples] = useState([]);
+  const {peoples, setPeoples}= useAppData();
   const [showModal, setShowModal] = useState(false);
   const [editingPersonId, setEditingPersonId] = useState(null);
+  const [personToDelete, setPersonToDelete] = useState(null); 
+  const [showDeleteModal, setShowDeleteModal] = useState(false); 
+  const [showToast,setShowToast] = useState(false)
   const [newPerson, setNewPerson] = useState({
     firstName: "",
     lastName: "",
-    loginId: "",
+    userId: "",
     email: "",
-    primaryRole: "Member",
+    role: "Member",
     status: "Active",
   });
 
-  useEffect(() => {
+  const confirmDelete = () => {
+    if (!personToDelete) return;
     axios
-      .get("http://localhost:8081/peoples")
-      .then((res) => setPeoples(res.data))
+      .delete(`http://localhost:8080/peoples/${personToDelete}`)
+      .then(() => {
+        setPeoples(peoples.filter((person) => person.id !== personToDelete));
+        setPersonToDelete(null);
+        setShowDeleteModal(false);
+        setShowToast(true)
+      })
       .catch((err) => console.error(err));
-  }, []);
+  };
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this person?")) {
-      axios
-        .delete(`http://localhost:8081/peoples/${id}`)
-        .then(() => {
-          setPeoples(peoples.filter((person) => person.id !== id));
-        })
-        .catch((err) => console.error(err));
-    }
+    setPersonToDelete(id);   
+    setShowDeleteModal(true); 
   };
 
   const handleEdit = (person) => {
     setEditingPersonId(person.id);
     setNewPerson({
-      firstName: person.firstName,
-      lastName: person.lastName,
-      loginId: person.loginId,
+      name: person.name,
+      userId: person.userId,
       email: person.email,
-      primaryRole: person.primaryRole,
+      role: person.role,
       status: person.status,
     });
     setShowModal(true);
   };
 
-  const handleView = (id) => {
-    alert("View details of person with ID: " + id);
-  };
-
   const handleAdd = () => {
     setEditingPersonId(null);
     setNewPerson({
-      firstName: "",
-      lastName: "",
-      loginId: "",
+      name:"",
+      userId: "",
       email: "",
-      primaryRole: "Member",
+      role: "Member",
       status: "Active",
     });
     setShowModal(true);
@@ -67,11 +67,10 @@ const PeopleListing = () => {
   const handleClose = () => {
     setShowModal(false);
     setNewPerson({
-      firstName: "",
-      lastName: "",
-      loginId: "",
+      name:"",
+      userId: "",
       email: "",
-      primaryRole: "Member",
+      role: "Member",
       status: "Active",
     });
   };
@@ -84,7 +83,7 @@ const PeopleListing = () => {
     if (editingPersonId) {
     
       axios
-        .put(`http://localhost:8081/peoples/${editingPersonId}`, newPerson)
+        .put(`http://localhost:8080/peoples/${editingPersonId}`, newPerson)
         .then((res) => {
           const updatedPeoples = peoples.map((person) =>
             person.id === editingPersonId ? res.data : person
@@ -96,7 +95,7 @@ const PeopleListing = () => {
     } else {
     
       axios
-        .post("http://localhost:8081/peoples", newPerson)
+        .post("http://localhost:8080/register", newPerson)
         .then((res) => {
           setPeoples([...peoples, res.data]);
           handleClose();
@@ -123,8 +122,7 @@ const PeopleListing = () => {
           <thead>
             <tr>
               <th>S.No</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Name</th>
               <th>Login ID</th>
               <th>Email</th>
               <th>Status</th>
@@ -136,12 +134,11 @@ const PeopleListing = () => {
             {peoples.map((person, index) => (
               <tr key={person.id}>
                 <td>{index + 1}</td>
-                <td>{person.firstName}</td>
-                <td>{person.lastName}</td>
-                <td>{person.loginId}</td>
+                <td>{person.name}</td>
+                <td>{person.userId}</td>
                 <td>{person.email}</td>
                 <td>{person.status}</td>
-                <td>{person.primaryRole}</td>
+                <td>{person.role}</td>
                 <td>
                   <button
                     className="btn btn-sm btn-warning me-1"
@@ -161,7 +158,13 @@ const PeopleListing = () => {
           </tbody>
         </table>
       </div>
-
+      
+      {showDeleteModal && (
+        <DeleteConfirm
+          handleDelete={confirmDelete}
+          onClose={() => setShowDeleteModal(false)}
+        />
+      )}
       {showModal && (
         <div
           className="modal fade show d-block"
@@ -186,8 +189,7 @@ const PeopleListing = () => {
                   <thead>
                     <tr>
                       <th>S.No</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
+                      <th>Name</th>
                       <th>Login ID</th>
                       <th>Email</th>
                       <th>Primary Role</th>
@@ -200,8 +202,8 @@ const PeopleListing = () => {
                       <td>
                         <input
                           type="text"
-                          name="firstName"
-                          value={newPerson.firstName}
+                          name="name"
+                          value={newPerson.name}
                           onChange={handleChange}
                           className="form-control"
                         />
@@ -209,17 +211,8 @@ const PeopleListing = () => {
                       <td>
                         <input
                           type="text"
-                          name="lastName"
-                          value={newPerson.lastName}
-                          onChange={handleChange}
-                          className="form-control"
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          name="loginId"
-                          value={newPerson.loginId}
+                          name="userId"
+                          value={newPerson.userId}
                           onChange={handleChange}
                           className="form-control"
                         />
@@ -235,8 +228,8 @@ const PeopleListing = () => {
                       </td>
                       <td>
                         <select
-                          name="primaryRole"
-                          value={newPerson.primaryRole}
+                          name="role"
+                          value={newPerson.role}
                           onChange={handleChange}
                           className="form-select"
                         >
@@ -272,6 +265,9 @@ const PeopleListing = () => {
           </div>
         </div>
       )}
+      {
+        showToast && <Toaster/>
+      }
     </div>
   );
 };
