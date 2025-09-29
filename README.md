@@ -68,7 +68,8 @@
 **Login Page:-**  
 ---  
 ![alt text](document-assets/logn.jpg)  
-This is a user login form. It lets users sign in to an app or website using their username and password.  
+This is a user login form. It lets users sign in to an app or website using their username and password. 
+Implemented JWT-based authentication with secure token storage in sessionStorage and automatic session timeout. Users are automatically logged out when the session expires, with redirection to the login page. Role-based access control (RBAC) restricts features and routes based on user roles, ensuring that only authorized users can perform sensitive operations. The frontend dynamically renders UI elements according to user roles, providing a seamless and secure user experience. 
 
 **How It Works**  
 - At the top, "User Login" tells users what to do.  
