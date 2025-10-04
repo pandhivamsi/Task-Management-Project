@@ -104,6 +104,8 @@ const PeopleListing = () => {
     }
   };
 
+  const role = sessionStorage.getItem("role");
+
   return (
     <div>
       <Header />
@@ -127,7 +129,8 @@ const PeopleListing = () => {
               <th>Email</th>
               <th>Status</th>
               <th>Primary Role</th>
-              <th>Actions</th>
+              {role === "admin" &&
+              <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -139,7 +142,7 @@ const PeopleListing = () => {
                 <td>{person.email}</td>
                 <td>{person.status}</td>
                 <td>{person.role}</td>
-                <td>
+                {role === "admin" && <td>
                   <button
                     className="btn btn-sm btn-warning me-1"
                     onClick={() => handleEdit(person)}
@@ -152,7 +155,7 @@ const PeopleListing = () => {
                   >
                     🗑
                   </button>
-                </td>
+                </td>}
               </tr>
             ))}
           </tbody>
