@@ -11,22 +11,22 @@ export const AppDataProvider = ({ children }) => {
   const [peoples, setPeoples] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState("");
-  const [authError, setAuthError] = useState(false); 
+  const [authError, setAuthError] = useState(false);
 
   const API_BASE = "http://localhost:8080/auth";
 
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+
   const getAuthHeaders = () => {
     const token = sessionStorage.getItem("token");
-    return {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+    return isLoggedIn && token
+      ? { headers: { Authorization: `Bearer ${token}` } }
+      : {};
   };
 
   const handleAuthError = (err) => {
     if (err.response && err.response.status === 401) {
-      setAuthError(true); 
+      setAuthError(true);
       sessionStorage.clear();
     } else {
       console.error(err);
@@ -34,6 +34,7 @@ export const AppDataProvider = ({ children }) => {
   };
 
   const fetchCards = async () => {
+    if (!isLoggedIn) return;
     try {
       const res = await axios.get(`${API_BASE}/cards`, getAuthHeaders());
       setCards(res.data);
@@ -43,6 +44,10 @@ export const AppDataProvider = ({ children }) => {
   };
 
   const fetchProjectsAndPeoples = async () => {
+    if (!isLoggedIn) {
+      setLoading(false);
+      return;
+    }
     try {
       const [projRes, peopleRes] = await Promise.all([
         axios.get(`${API_BASE}/projects`, getAuthHeaders()),
@@ -58,9 +63,13 @@ export const AppDataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchCards();
-    fetchProjectsAndPeoples();
-  }, []);
+    if (isLoggedIn) {
+      fetchCards();
+      fetchProjectsAndPeoples();
+    } else {
+      setLoading(false);
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if (projects.length > 0 && !selectedProject) {
@@ -82,7 +91,7 @@ export const AppDataProvider = ({ children }) => {
         setSelectedProject,
         selectedProject,
         authError,
-        fetchProjectsAndPeoples, 
+        fetchProjectsAndPeoples,
       }}
     >
       {children}
