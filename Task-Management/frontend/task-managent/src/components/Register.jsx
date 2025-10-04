@@ -31,7 +31,7 @@ const Register = () => {
     }
 
     if (role !== "admin" && role !== "team member") {
-      setError("Role is not proper");
+      setError("Role is not proper (admin or team member");
       return;
     }
 
@@ -96,7 +96,7 @@ const Register = () => {
                   type="text"
                   className="form-control"
                   id="role"
-                  placeholder="Enter role : ROLE_USER"
+                  placeholder="Enter role : team member or admin"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   required

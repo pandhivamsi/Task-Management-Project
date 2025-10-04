@@ -4,6 +4,7 @@ import Header from "./Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ThemeContext } from "./ThemeContext";
 import axios from "axios";
+import { useAppData } from "./DataContext";
 
 const Login = () => {
   const uname = useRef();
@@ -11,6 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const { theme } = useContext(ThemeContext);
+  const {fetchProjectsAndPeoples,fetchCards } = useAppData();
 
   const login = async (e) => {
     e.preventDefault();
@@ -25,12 +27,29 @@ const Login = () => {
         username: uname.current.value,
         password: upwd.current.value,
       });
-
     
+      console.log("Login Response:", res.data); // debug
       sessionStorage.setItem("role", res.data.role);
       sessionStorage.setItem("id", res.data.id);
       sessionStorage.setItem("username", res.data.username);
       sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem("isLoggedIn", res.data.isLoggedIn);
+
+      const loadData = async () => {
+          try {
+            await Promise.all([
+              fetchProjectsAndPeoples(),
+              fetchCards()
+            ]);
+          } catch (error) {
+            console.error("Failed to load dashboard data:", error);
+          }
+        };
+      
+        const token = sessionStorage.getItem("token");
+        if (token) {
+          loadData();
+        }
 
      navigate("/dashboard")
 
@@ -50,7 +69,7 @@ const Login = () => {
   const register = () => navigate("/register");
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-column">
+    <div className="bg-light min-vh-100 d-flex flex-column "style={{ minHeight: "100vh", maxHeight: "100vh" }}>
       <Header />
 
       <div className="flex-grow-1 d-flex align-items-center justify-content-center">

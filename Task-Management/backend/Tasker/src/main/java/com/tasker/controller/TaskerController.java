@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -134,6 +137,7 @@ public class TaskerController {
 
 	    Map<String, Object> res = new HashMap<>();
 	    res.put("token", token);
+	    res.put("isLoggedIn", true);
 	    res.put("id", user.getId());
 	    res.put("role", user.getRole());
 	    res.put("username", user.getEmail());
@@ -177,6 +181,10 @@ public class TaskerController {
 	        @PathVariable Integer id,
 	        @RequestParam(required = false) String name,
 	        @RequestParam(required = false) String title,
+	        @RequestParam(required = false) String organization,
+	        @RequestParam(required = false) Long workPhone,
+	        @RequestParam(required = false) Long mobile,
+	        @RequestParam(required = false) String email,
 	        @RequestParam(required = false) MultipartFile photo
 	) {
 	    Person person = service.getPerson(id)
@@ -184,15 +192,22 @@ public class TaskerController {
 
 	    if (name != null) person.setName(name);
 	    if (title != null) person.setTitle(title);
+	    if (organization != null) person.setOrganization(organization);
+	    if (workPhone != null) person.setWorkPhone(workPhone);
+	    if (mobile != null) person.setMobile(mobile);
+	    if (email != null) person.setEmail(email);
 
 	    if (photo != null && !photo.isEmpty()) {
 	        try {
+	        	if (person.getProfileImg() != null) {
+	                Path oldFile = Paths.get("C:/TaskerImages").resolve(person.getProfileImg());
+	                Files.deleteIfExists(oldFile);
+	            }
 	            String fileName = storageService.save(photo);
 	            person.setProfileImg(fileName);
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                                 .body(null);
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 	        }
 	    }
 

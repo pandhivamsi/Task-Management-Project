@@ -17,7 +17,7 @@ const Edit = () => {
     title: "",
     organization: "",
     workPhone: "",
-    mobilePhone: "",
+    mobile: "",
     email: "",
     photo: "",
   });
@@ -64,6 +64,10 @@ const Edit = () => {
   const formData = new FormData();
   formData.append("name", user.name);
   formData.append("title", user.title);
+  formData.append("organization", user.organization);
+  formData.append("workPhone", user.workPhone);
+  formData.append("mobile", user.mobile);
+  formData.append("email", user.email);
 
   if (fileInputRef.current?.files[0]) {
     formData.append("photo", fileInputRef.current.files[0]);
@@ -76,6 +80,7 @@ const Edit = () => {
         "Content-Type": "multipart/form-data",
       },
     });
+    console.log(formData)
     alert("Profile updated successfully!");
     navigate("/dashboard");
   } catch (err) {
@@ -197,8 +202,8 @@ const Edit = () => {
                         </label>
                         <input
                           type="text"
-                          name="mobilePhone"
-                          value={user.mobilePhone}
+                          name="mobile"
+                          value={user.mobile}
                           onChange={handleChange}
                           className="form-control"
                           placeholder="Mobile number"

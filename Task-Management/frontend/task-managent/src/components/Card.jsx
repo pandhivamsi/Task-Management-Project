@@ -3,6 +3,7 @@ import CardIcons from "./CardIcons";
 import CardEdit from "./CardEdit";
 import DeleteConfirmation from "./DeleteConfirmation";
 import Toaster from "./Toaster";
+import { useAppData } from "./DataContext";
 
 const Card = ({ card, handleUpdateCard }) => {
   const [showModal, setShowModal] = useState(false);
@@ -10,7 +11,7 @@ const Card = ({ card, handleUpdateCard }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [openToast, setToaster] = useState(false);
 
-  const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${card.person_name}`;
+  // const img = `https://api.dicebear.com/9.x/avataaars/svg?seed=${card.person_name}`;
 
   const handleOpenModal = (fromComment = false) => {
     setOpenCommentsTab(fromComment);
@@ -23,6 +24,18 @@ const Card = ({ card, handleUpdateCard }) => {
     }
     setShowModal(false);
   };
+
+  const { peoples } = useAppData();
+
+  // find the assigned person from peoples list
+  const assignedPerson = peoples.find(
+    (p) => p.name.toLowerCase() === card.personName.toLowerCase()
+  );
+
+  // if person exists and has profileImg, use it, otherwise fallback
+  const img = assignedPerson?.profileImg
+    ? `http://localhost:8080/uploads/${assignedPerson.profileImg}`
+    : "/uploads/default.png";
 
   return (
     <>

@@ -9,13 +9,16 @@ import { ThemeContext } from "./ThemeContext";
 import { FaTimes } from "react-icons/fa";
 import AppliedFilters from "./AppliedFilters";
 import { useAppData } from "./DataContext";
-import CardEdit from "./CardEdit"; 
+import CardEdit from "./CardEdit";
 
 const Dashboard = () => {
   const [selectedOption, setSelectedOption] = useState("Select cards");
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const { cards, setCards,fetchProjectsAndPeoples,fetchCards } = useAppData();
+  const { cards, setCards,peoples } = useAppData();
+
   const [showUsers, setShowUsers] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+
   const [filters, setFilters] = useState({
     Department: [],
     Role: [],
@@ -24,33 +27,12 @@ const Dashboard = () => {
   const [appliedFiltersList, setAppliedFiltersList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [selectedCard, setSelectedCard] = useState(null); 
-
+  const [selectedCard, setSelectedCard] = useState(null);
   const { theme } = useContext(ThemeContext);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
-
- useEffect(() => {
-  const loadData = async () => {
-    try {
-      await Promise.all([
-        fetchProjectsAndPeoples(),
-        fetchCards()
-      ]);
-    } catch (error) {
-      console.error("Failed to load dashboard data:", error);
-    }
-  };
-
-  const token = sessionStorage.getItem("token");
-  if (token) {
-    loadData();
-  }
-}, []);
-
-
 
   const handleExitFullscreen = (fromEsc = false) => {
     setIsFullscreen(false);
@@ -82,7 +64,7 @@ const Dashboard = () => {
     };
   }, []);
 
-  const filteredCards = cards.filter((card) => {
+  let filteredCards = cards.filter((card) => {
     const matchDepartment =
       filters.Department.length === 0 ||
       filters.Department.includes(card.department);
@@ -90,13 +72,21 @@ const Dashboard = () => {
       filters.Role.length === 0 || filters.Role.includes(card.role);
     const matchPriority =
       filters.Priority.length === 0 || filters.Priority.includes(card.priority);
-
     const matchSearch =
       searchQuery === "" ||
       card.title.toLowerCase().includes(searchQuery.toLowerCase());
 
     return matchDepartment && matchRole && matchPriority && matchSearch;
   });
+
+  if (selectedUserId) {
+  filteredCards = filteredCards.filter((card) => {
+    return card.person_id
+      ? card.id === selectedUserId
+      : card.personName ===
+          peoples.find((p) => p.id === selectedUserId)?.name;
+  });
+}
 
   return (
     <div style={{ backgroundColor: theme.dashboard, minHeight: "80vh" }}>
@@ -109,24 +99,25 @@ const Dashboard = () => {
             >
               Start
             </button>
-            {showUsers && <ProfileRow />}
+            {showUsers && (
+              <ProfileRow
+                activeUserId={selectedUserId}
+                onUserSelect={setSelectedUserId}
+              />
+            )}
           </div>
           <button
             className="btn btn-outline-dark shadow-lg btn-lg rounded-pill me-2 px-2 py-1"
-            onClick={() => handleExitFullscreen(false)}
+            onClick={() => {handleExitFullscreen(false);setSelectedUserId(null)}}
           >
             <FaTimes />
           </button>
         </div>
       ) : (
         <>
-        <Header
-        cards={cards}
-        onSearchSelect={(card) => setSelectedCard(card)}
-      />
+          <Header cards={cards} onSearchSelect={(card) => setSelectedCard(card)} />
           <div className="d-flex justify-content-between align-items-center mt-5 px-2 pt-4">
             <div className="d-flex align-items-center ms-1">
-            
               <div className="dropdown ms-1">
                 <button
                   className="btn dropdown-toggle border rounded-pill shadow-sm bg-white text-dark bg-transparent fs-7 fw-bold px-4 ms-1"
@@ -178,10 +169,7 @@ const Dashboard = () => {
       )}
 
       <div className="m-3 p-3 border">
-        <div
-          className="p-2 text-white"
-          style={{ backgroundColor: theme.header }}
-        >
+        <div className="p-2 text-white" style={{ backgroundColor: theme.header }}>
           <input
             className="p-0 ms-3 bg-transparent border-0 text-white"
             type="text"

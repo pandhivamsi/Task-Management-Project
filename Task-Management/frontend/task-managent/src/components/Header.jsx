@@ -18,7 +18,7 @@ const Header = ({ cards, onSearchSelect }) => {
     navigate("/support");
   };
 
-  const token = sessionStorage.getItem("token");
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
 
   const matchedCards =
     searchValue.trim() === ""
@@ -48,11 +48,11 @@ const Header = ({ cards, onSearchSelect }) => {
             />
             Tasker
           </a>
-          {token && <Projectlist />}
+          {isLoggedIn && <Projectlist />}
         </div>
 
         
-        {token && (
+        {isLoggedIn && (
           <div className="d-flex align-items-center position-relative">
             
             <button
