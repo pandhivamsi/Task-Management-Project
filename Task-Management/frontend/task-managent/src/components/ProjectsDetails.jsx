@@ -88,6 +88,7 @@ const ProjectsDetails = () => {
     }
   };
 
+  const role = sessionStorage.getItem("role")
   return (
     <div>
       <Header />
@@ -108,6 +109,7 @@ const ProjectsDetails = () => {
               <th>Project Id</th>
               <th>Project Name</th>
               <th>Created By</th>
+              {role === "admin" && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -116,7 +118,7 @@ const ProjectsDetails = () => {
                 <td>{index + 1}</td>
                 <td>{project.projName}</td>
                 <td>{project.createdBy}</td>
-                <td>
+                {role === "admin" && <td>
                   <button
                     className="btn btn-sm btn-warning me-1"
                     onClick={() => handleEdit(project)}
@@ -129,7 +131,7 @@ const ProjectsDetails = () => {
                   >
                     🗑
                   </button>
-                </td>
+                </td>}
               </tr>
             ))}
           </tbody>
