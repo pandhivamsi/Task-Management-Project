@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const { theme } = useContext(ThemeContext);
-  const {fetchProjectsAndPeoples,fetchCards } = useAppData();
+  const {projects } = useAppData();
 
   const login = async (e) => {
     e.preventDefault();
@@ -35,23 +35,12 @@ const Login = () => {
       sessionStorage.setItem("token", res.data.token);
       sessionStorage.setItem("isLoggedIn", res.data.isLoggedIn);
 
-      const loadData = async () => {
-          try {
-            await Promise.all([
-              fetchProjectsAndPeoples(),
-              fetchCards()
-            ]);
-          } catch (error) {
-            console.error("Failed to load dashboard data:", error);
+        setTimeout(()=>{
+          navigate("/dashboard")
+          if(projects){
+          window.location.reload()
           }
-        };
-      
-        const token = sessionStorage.getItem("token");
-        if (token) {
-          loadData();
-        }
-
-     navigate("/dashboard")
+        },1000)
 
     } catch (err) {
       

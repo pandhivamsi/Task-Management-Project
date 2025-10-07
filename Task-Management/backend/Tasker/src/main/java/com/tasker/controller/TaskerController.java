@@ -112,9 +112,13 @@ public class TaskerController {
     }
 	
 	@GetMapping("/comments")
-	public List<Comment> getComments() {
-		return service.getAllComments();
+	public List<Comment> getComments(@RequestParam(required = false) Integer cardId) {
+	    if (cardId != null) {
+	        return service.getCommentsByCardId(cardId);
+	    }
+	    return service.getAllComments();
 	}
+
 	
 	@PostMapping("/comments")
 	public ResponseEntity<Comment> addComment(@RequestBody Comment req) {
