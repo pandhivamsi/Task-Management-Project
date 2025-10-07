@@ -118,6 +118,10 @@ public class TaskerService {
         return ccrepo.save(req);
     }
 	
+	public List<Comment> getCommentsByCardId(Integer cardId) {
+	    return ccrepo.findByCardId(cardId);
+	}
+	
 	public List<Person> getAllPersons(){
 		return prepo.findAll();
 	}

@@ -28,7 +28,7 @@ VALUES
 INSERT INTO peoples 
 (name, title, organization, work_phone, mobile, role, email, password, user_id, profile_img, status)
 VALUES
-('Vamsi', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'pvamsi3010@gmail.com', '$2a$10$xxl.kC/TN7Tg3BjQX91La.Iuik1QucpjvFXQNRLgMbXU9UojXiuDi', 1, 'fb5cee0a-70e3-4748-99d9-bfed17d274b2.jpg', 'active'),
+('Vamsi', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'pvamsi3010@gmail.com', '$2a$10$xxl.kC/TN7Tg3BjQX91La.Iuik1QucpjvFXQNRLgMbXU9UojXiuDi', 1, 'a3e9f54b-7435-4456-953b-4cfca1ef2a26.jpg', 'active'),
 ('Siva', 'N/A', 'N/A', '0000000000', '0000000000', 'team member', 'siva@gmail.com', '$2a$10$zLi..4TdPZsIXVXq6PRrg.JQxBj4wuhpdx98S4x2639Rjtv8zhWza', 2, '1759414912100_image1.jpg', 'active'),
 ('Lenin', 'N/A', 'N/A', '0000000000', '0000000000', 'team member', 'lenin@gmail.com', '$2a$10$x60Fuu4kg6YErQ136x0JDODjfohJlNeLKW69uXMuQoO/YzXAmHEMy', 3, '87118dcf-b339-4c42-a17f-35edb0cc811e.jpeg', 'active'),
 ('Chandu', 'N/A', 'N/A', '0000000000', '0000000000', 'admin', 'chandu@gmail.com', '$2a$10$JLJqeKZkSugqouWUrj0h8uJw5C8zng3fwrXpIJ2Blh8qQxnJcTLsC', 4, 'default.png', 'active'),

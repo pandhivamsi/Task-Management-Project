@@ -33,12 +33,43 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleAddComment = () => {
-    if (commentInput.trim()) {
-      setComments([...comments, { text: commentInput, user: "User", time: new Date().toLocaleString() }]);
+  const handleAddComment = async () => {
+    if (!commentInput.trim()) return;
+
+    const newComment = {
+      comment: commentInput,
+      cardId: card.id,
+      cardName: card.title,
+      commentedBy: sessionStorage.getItem("username") || "User"
+    };
+
+    try {
+      const res = await axios.post("http://localhost:8080/auth/comments", newComment, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setComments([...comments, res.data]); // add saved comment to list
       setCommentInput("");
+    } catch (err) {
+      console.error("Failed to add comment:", err);
     }
   };
+
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8080/auth/comments?cardId=${card.id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setComments(res.data);
+      } catch (err) {
+        console.error("Failed to fetch comments:", err);
+      }
+    };
+
+    fetchComments();
+  }, [card.id, token]);
+
 
   const handleSave = () => {
     const updatedCard = {
@@ -61,10 +92,10 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
     console.log(updatedCard);
 
     axios
-      .put(`http://localhost:8080/auth/cards/${updatedCard.id}`, updatedCard ,{
+      .put(`http://localhost:8080/auth/cards/${updatedCard.id}`, updatedCard, {
         headers: {
-        Authorization: `Bearer ${token}`,
-      }
+          Authorization: `Bearer ${token}`,
+        }
       })
       .then((res) => {
         if (onSave) onSave(res.data);
@@ -202,10 +233,10 @@ const CardEdit = ({ card, onClose, onSave, fromComment = false }) => {
                     comments.map((c, i) => (
                       <div key={i} className="list-group-item">
                         <div className="d-flex justify-content-between">
-                          <strong>{c.user}</strong>
-                          <small className="text-muted">{c.time}</small>
+                          <strong>{c.commentedBy}</strong>
+                          <small className="text-muted">{c.createdAt ? new Date(c.createdAt).toLocaleString() : `ID: ${c.id}`}</small>
                         </div>
-                        <p className="mb-1">{c.text}</p>
+                        <p className="mb-1">{c.comment}</p>
                         <button className="btn btn-link btn-sm p-0">Reply</button>
                       </div>
                     ))
